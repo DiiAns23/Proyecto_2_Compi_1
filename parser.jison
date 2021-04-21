@@ -92,8 +92,12 @@
                 return nuevoSimbolo(Operacion.Valor,Operacion.Tipo);
             case "cadena":
                 return nuevoSimbolo(Operacion.Valor,Operacion.Tipo);
+            case "char":
+                return nuevoSimbolo(Operacion.Valor,Operacion.Tipo)
             case "numero":
                 return nuevoSimbolo(parseFloat(Operacion.Valor),Operacion.Tipo);
+            case "double":
+                return nuevoSimbolo(parseFloat(Operacion.Valor), Operacion.Tipo);
           	case "ID":
                 var temp=ent;
                 while(temp!=null)
@@ -107,9 +111,6 @@
                 }
                 console.log("No existe la variable " + Operacion.Valor);
                 return nuevoSimbolo("@error@","error");
-            case "funcion":
-                var res = EjecutarLlamada(Llamada(Operacion.Valor.Id,Operacion.Valor.Params), ent)
-                return res
         }
       	//Operaciones
         Valorizq=Evaluar(Operacion.OperandoIzq, ent);
@@ -323,6 +324,10 @@
         if (crear && crear.Expresion)
         {
             valor = Evaluar(crear.Expresion);
+            if(valor.Tipo != crear.Tipo){
+                console.log("El tipo no coincide con la variable a crear");
+                return
+            }
         }
         else
         {
@@ -334,12 +339,15 @@
                 case "double":
                     valor = nuevoSimbolo(0.0,"double");
                     break;
-                case "boolean":
-                    valor = nuevoSimbolo(true,"boolean");
+                case "bool":
+                    valor = nuevoSimbolo(true,"bool");
+                    break;
                 case "char":
                     valor = nuevoSimbolo('\u0000',"char");
+                    break;
                 case "string":
                     valor = nuevoSimbolo("","cadena");
+                    break;
             }
         }
         //Crear objeto a insertar
@@ -488,11 +496,12 @@
     }
 
     //Mientras
-    const Mientras = function(Condicion, Bloque){
-        return{
+    const Mientras = function(Condicion, Bloque)
+    {
+        return {
             Condicion: Condicion,
-            Bloque: BloqueNinguno,
-            TipoInstruccion: "while"
+            Bloque: Bloque,
+            TipoInstruccion:"while"
         }
     }
 
@@ -586,12 +595,12 @@
 "<"                 return 'MENOR';
 "&&"                return 'AND';
 "||"                return 'OR';
-"!"               return 'NOT';
+"!"                 return 'NOT';
 
 [a-zA-Z][a-zA-Z0-9_]*   return 'ID'
 [0-9]+("."[0-9]+)?\b    return 'NUMERO';  
 \"((\\\")|[^\n\"])*\"   { yytext = yytext.substr(1,yyleng-2); return 'Cadena'; }
-\'((\\\')|[^\n\'])*\'	{ yytext = yytext.substr(1,yyleng-2); return 'Cadena'; }
+\'((\\\')|[^\n\'])*\'	{ yytext = yytext.substr(1,yyleng-2); return 'Char'; }
 \`[^\n\`]*\`			{ yytext = yytext.substr(1,yyleng-2); return 'TEMPLATE'; }
 
 <<EOF>>                 return 'EOF';
@@ -632,7 +641,7 @@ INS
     | ASIGNAR                         {$$ = $1}
     | IF                              {$$ = $1}
     | SWITCH                          {$$ = $1}
-    | Rbreak PTCOMA                  {$$ = Romper()}
+    | Rbreak PTCOMA                   {$$ = Romper()}
     | MIENTRAS                        {$$ = $1}
 ;
 
@@ -671,26 +680,27 @@ DECLARAR
 
 ;
 INT
-    : Rint ID PTCOMA                {$$ = Crear($2, "int", 0)}
-    | Rint ID IGUAL Exp PTCOMA      {$$ = Crear($2, "int", $4)}
+    : Rint ID IGUAL Exp PTCOMA      {$$ = Crear($2, "int", $4)}
+    | Rint ID PTCOMA                {$$ = Crear($2, "int", null)}
 
 ;
 DOUBLE
-    : Rdouble ID IGUAL Exp PTCOMA       {$$ = Crear($2, "double", $4)}
-    | Rdouble ID PTCOMA                 {$$ = Crear($2, "double", 0.00)}
+    : Rdouble ID PTCOMA                 {$$ = Crear($2, "double", null)}
+    | Rdouble ID IGUAL Exp PTCOMA       {$$ = Crear($2, "double", $4)}
 
 ;
 STRING
-    : Rstring ID IGUAL Exp PTCOMA       {$$ = Crear($2, "string", $4)}
-    | Rstring ID PTCOMA                 {$$ = Crear($2, "string", "")}
+    : Rstring ID PTCOMA                 {$$ = Crear($2, "string",null)}
+    | Rstring ID IGUAL Exp PTCOMA       {$$ = Crear($2, "string", $4)}
 ;
+
 BOOLEANO
-    : Rboolean ID IGUAL Exp PTCOMA      {$$ = Crear($2, "boolean", $4)}
-    | Rboolean ID PTCOMA                {$$ = Crear($2, "boolean", true)}
+    : Rboolean ID PTCOMA                {$$ = Crear($2, "bool", null)}
+    | Rboolean ID IGUAL Exp PTCOMA      {$$ = Crear($2, "bool", $4)}
 ;
 CHAR
-    : Rchar ID IGUAL Exp PTCOMA         {$$ = Crear($2, "char", $4)}
-    | Rchar ID PTCOMA                   {$$ = Crear($2, "char", '\u0000')}
+    : Rchar ID PTCOMA                   {$$ = Crear($2, "char", null)}
+    | Rchar ID IGUAL Exp PTCOMA         {$$ = Crear($2, "char", $4)}
 ;
 
 ASIGNAR
@@ -707,7 +717,7 @@ Exp
     | Exp MENOR Exp                 { $$=NuevaOperacion($1,$3,"<"); }
     | Exp MAYOR Exp                 { $$=NuevaOperacion($1,$3,">"); }
     | Exp DIFERENTE Exp             { $$=NuevaOperacion($1,$3,"!="); }
-    | Exp IGUALDAD Exp             { $$=NuevaOperacion($1,$3,"=="); }
+    | Exp IGUALDAD Exp              { $$=NuevaOperacion($1,$3,"=="); }
     | Exp MAYORI Exp                { $$=NuevaOperacion($1,$3,">="); }
     | Exp MENORI Exp                { $$=NuevaOperacion($1,$3,"<="); }
     | Exp AND Exp                   { $$=NuevaOperacion($1,$3,"&&"); }
@@ -715,8 +725,9 @@ Exp
     | NOT Exp                       { $$=NuevaOperacionUnario($2,"!"); }
     | MENOS Exp %prec UMENOS        { $$=NuevaOperacionUnario($2,"umenos"); }
     | Cadena                        { $$=nuevoSimbolo($1,"cadena"); }
+    | Char                          { $$=nuevoSimbolo($1,"char"); }
     | ID							{ $$=nuevoSimbolo($1,"ID");}
-    | NUMERO                        {$$=nuevoSimbolo(parseFloat($1),"numero"); }
+    | NUMERO                        { $$=nuevoSimbolo(parseFloat($1),"numero"); }
     | TRUE                          { $$=nuevoSimbolo(true,"bool"); }
     | FALSE                         { $$=nuevoSimbolo(false,"bool"); }
     | PARIZQ Exp PARDER             { $$=$2 }
