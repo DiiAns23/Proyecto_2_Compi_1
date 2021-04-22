@@ -72,12 +72,12 @@
   }
 */
 var parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,5],$V1=[1,10],$V2=[1,19],$V3=[1,17],$V4=[1,18],$V5=[1,20],$V6=[1,16],$V7=[1,21],$V8=[1,22],$V9=[1,23],$Va=[5,7,16,18,20,22,25,27,28,34,35,39,40,41],$Vb=[1,46],$Vc=[1,42],$Vd=[1,39],$Ve=[1,38],$Vf=[1,40],$Vg=[1,41],$Vh=[1,43],$Vi=[1,44],$Vj=[1,45],$Vk=[1,60],$Vl=[1,61],$Vm=[1,62],$Vn=[1,63],$Vo=[1,64],$Vp=[1,65],$Vq=[1,66],$Vr=[1,67],$Vs=[1,68],$Vt=[1,69],$Vu=[1,70],$Vv=[1,71],$Vw=[1,72],$Vx=[1,73],$Vy=[10,11,26,42,43,44,45,46,47,48,49,50,51,52,53,54,55],$Vz=[10,11,26,54,55],$VA=[1,102],$VB=[10,11,26,42,43,48,49,50,51,52,53,54,55],$VC=[10,11,26,42,43,44,45,47,48,49,50,51,52,53,54,55],$VD=[10,11,26,48,49,50,51,52,53,54,55],$VE=[10,11,26,50,51,54,55],$VF=[5,7,16,18,20,21,22,25,27,28,34,35,39,40,41],$VG=[25,27,28];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,5],$V1=[1,10],$V2=[1,20],$V3=[1,18],$V4=[1,19],$V5=[1,21],$V6=[1,17],$V7=[1,25],$V8=[1,22],$V9=[1,23],$Va=[1,24],$Vb=[5,7,16,18,20,22,25,27,28,35,36,38,39,40,41],$Vc=[1,49],$Vd=[1,45],$Ve=[1,42],$Vf=[1,41],$Vg=[1,43],$Vh=[1,44],$Vi=[1,46],$Vj=[1,47],$Vk=[1,48],$Vl=[1,65],$Vm=[1,66],$Vn=[1,67],$Vo=[1,68],$Vp=[1,69],$Vq=[1,70],$Vr=[1,71],$Vs=[1,72],$Vt=[1,73],$Vu=[1,74],$Vv=[1,75],$Vw=[1,76],$Vx=[1,77],$Vy=[1,78],$Vz=[10,11,26,42,43,44,45,46,47,48,49,50,51,52,53,54,55],$VA=[10,11,26,54,55],$VB=[1,108],$VC=[10,11,26,42,43,48,49,50,51,52,53,54,55],$VD=[10,11,26,42,43,44,45,47,48,49,50,51,52,53,54,55],$VE=[10,11,26,48,49,50,51,52,53,54,55],$VF=[10,11,26,50,51,54,55],$VG=[5,7,16,18,20,21,22,25,27,28,35,36,38,39,40,41],$VH=[25,27,28];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"INI":3,"LINS":4,"EOF":5,"INS":6,"Rprint":7,"PARIZQ":8,"Exp":9,"PARDER":10,"PTCOMA":11,"DECLARAR":12,"ASIGNAR":13,"IF":14,"SWITCH":15,"Rbreak":16,"MIENTRAS":17,"Rwhile":18,"BLOQUE":19,"Rif":20,"Relse":21,"Rswitch":22,"LLAVEIZQ":23,"LCASOS":24,"Rdefault":25,"DPUNTOS":26,"LLAVEDER":27,"Rcase":28,"WHILE":29,"INT":30,"STRING":31,"BOOLEANO":32,"CHAR":33,"Rint":34,"ID":35,"IGUAL":36,"DOUBLE":37,"Rdouble":38,"Rstring":39,"Rboolean":40,"Rchar":41,"MAS":42,"MENOS":43,"POR":44,"DIV":45,"POT":46,"MOD":47,"MENOR":48,"MAYOR":49,"DIFERENTE":50,"IGUALDAD":51,"MAYORI":52,"MENORI":53,"AND":54,"OR":55,"NOT":56,"Cadena":57,"Char":58,"NUMERO":59,"TRUE":60,"FALSE":61,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",7:"Rprint",8:"PARIZQ",10:"PARDER",11:"PTCOMA",16:"Rbreak",18:"Rwhile",20:"Rif",21:"Relse",22:"Rswitch",23:"LLAVEIZQ",25:"Rdefault",26:"DPUNTOS",27:"LLAVEDER",28:"Rcase",34:"Rint",35:"ID",36:"IGUAL",38:"Rdouble",39:"Rstring",40:"Rboolean",41:"Rchar",42:"MAS",43:"MENOS",44:"POR",45:"DIV",46:"POT",47:"MOD",48:"MENOR",49:"MAYOR",50:"DIFERENTE",51:"IGUALDAD",52:"MAYORI",53:"MENORI",54:"AND",55:"OR",56:"NOT",57:"Cadena",58:"Char",59:"NUMERO",60:"TRUE",61:"FALSE"},
-productions_: [0,[3,2],[3,2],[4,2],[4,1],[6,5],[6,1],[6,1],[6,1],[6,1],[6,2],[6,1],[17,5],[14,5],[14,7],[15,10],[15,7],[24,4],[24,5],[29,5],[19,3],[19,2],[12,1],[12,1],[12,1],[12,1],[30,5],[30,3],[37,3],[37,5],[31,3],[31,5],[32,3],[32,5],[33,3],[33,5],[13,4],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,2],[9,2],[9,1],[9,1],[9,1],[9,1],[9,1],[9,1],[9,3]],
+symbols_: {"error":2,"INI":3,"LINS":4,"EOF":5,"INS":6,"Rprint":7,"PARIZQ":8,"Exp":9,"PARDER":10,"PTCOMA":11,"DECLARAR":12,"ASIGNAR":13,"IF":14,"SWITCH":15,"Rbreak":16,"MIENTRAS":17,"Rwhile":18,"BLOQUE":19,"Rif":20,"Relse":21,"Rswitch":22,"LLAVEIZQ":23,"LCASOS":24,"Rdefault":25,"DPUNTOS":26,"LLAVEDER":27,"Rcase":28,"WHILE":29,"INT":30,"STRING":31,"BOOLEANO":32,"CHAR":33,"DOUBLE":34,"Rint":35,"ID":36,"IGUAL":37,"Rdouble":38,"Rstring":39,"Rboolean":40,"Rchar":41,"MAS":42,"MENOS":43,"POR":44,"DIV":45,"POT":46,"MOD":47,"MENOR":48,"MAYOR":49,"DIFERENTE":50,"IGUALDAD":51,"MAYORI":52,"MENORI":53,"AND":54,"OR":55,"NOT":56,"Cadena":57,"Char":58,"NUMERO":59,"TRUE":60,"FALSE":61,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",7:"Rprint",8:"PARIZQ",10:"PARDER",11:"PTCOMA",16:"Rbreak",18:"Rwhile",20:"Rif",21:"Relse",22:"Rswitch",23:"LLAVEIZQ",25:"Rdefault",26:"DPUNTOS",27:"LLAVEDER",28:"Rcase",35:"Rint",36:"ID",37:"IGUAL",38:"Rdouble",39:"Rstring",40:"Rboolean",41:"Rchar",42:"MAS",43:"MENOS",44:"POR",45:"DIV",46:"POT",47:"MOD",48:"MENOR",49:"MAYOR",50:"DIFERENTE",51:"IGUALDAD",52:"MAYORI",53:"MENORI",54:"AND",55:"OR",56:"NOT",57:"Cadena",58:"Char",59:"NUMERO",60:"TRUE",61:"FALSE"},
+productions_: [0,[3,2],[3,2],[4,2],[4,1],[6,5],[6,1],[6,1],[6,1],[6,1],[6,2],[6,1],[17,5],[14,5],[14,7],[15,10],[15,7],[24,4],[24,5],[29,5],[19,3],[19,2],[12,1],[12,1],[12,1],[12,1],[12,1],[30,5],[30,3],[34,3],[34,5],[31,3],[31,5],[32,3],[32,5],[33,3],[33,5],[13,4],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,2],[9,2],[9,1],[9,1],[9,1],[9,1],[9,1],[9,1],[9,3]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -98,7 +98,7 @@ break;
 case 5:
 this.$=Imprimir("print",$$[$0-2]);
 break;
-case 6: case 7: case 8: case 9: case 11: case 22: case 23: case 24: case 25:
+case 6: case 7: case 8: case 9: case 11: case 22: case 23: case 24: case 25: case 26:
 this.$ = $$[$0]
 break;
 case 10:
@@ -134,112 +134,112 @@ break;
 case 21:
 this.$ = []
 break;
-case 26:
-this.$ = Crear($$[$0-3], "int", $$[$0-1])
-break;
 case 27:
-this.$ = Crear($$[$0-1], "int", null)
+this.$ = Crear($$[$0-3], "numero", $$[$0-1])
 break;
 case 28:
-this.$ = Crear($$[$0-1], "double", null)
+this.$ = Crear($$[$0-1], "numero", null)
 break;
 case 29:
-this.$ = Crear($$[$0-3], "double", $$[$0-1])
+this.$ = Crear($$[$0-1], "decimal", null)
 break;
 case 30:
-this.$ = Crear($$[$0-1], "string",null)
+this.$ = Crear($$[$0-3], "decimal", $$[$0-1])
 break;
 case 31:
-this.$ = Crear($$[$0-3], "string", $$[$0-1])
+this.$ = Crear($$[$0-1], "cadena",null)
 break;
 case 32:
-this.$ = Crear($$[$0-1], "bool", null)
+this.$ = Crear($$[$0-3], "cadena", $$[$0-1])
 break;
 case 33:
-this.$ = Crear($$[$0-3], "bool", $$[$0-1])
+this.$ = Crear($$[$0-1], "bool", null)
 break;
 case 34:
-this.$ = Crear($$[$0-1], "char", null)
+this.$ = Crear($$[$0-3], "bool", $$[$0-1])
 break;
 case 35:
-this.$ = Crear($$[$0-3], "char", $$[$0-1])
+this.$ = Crear($$[$0-1], "char", null)
 break;
 case 36:
-this.$ = Asignar($$[$0-3],$$[$0-1])
+this.$ = Crear($$[$0-3], "char", $$[$0-1])
 break;
 case 37:
- this.$=NuevaOperacion($$[$0-2],$$[$0],"+"); 
+this.$ = Asignar($$[$0-3],$$[$0-1])
 break;
 case 38:
- this.$=NuevaOperacion($$[$0-2],$$[$0],"-"); 
+ this.$=NuevaOperacion($$[$0-2],$$[$0],"+"); 
 break;
 case 39:
- this.$=NuevaOperacion($$[$0-2],$$[$0],"*"); 
+ this.$=NuevaOperacion($$[$0-2],$$[$0],"-"); 
 break;
 case 40:
- this.$=NuevaOperacion($$[$0-2],$$[$0],"/"); 
+ this.$=NuevaOperacion($$[$0-2],$$[$0],"*"); 
 break;
 case 41:
- this.$=NuevaOperacion($$[$0-2],$$[$0],"^"); 
+ this.$=NuevaOperacion($$[$0-2],$$[$0],"/"); 
 break;
 case 42:
- this.$=NuevaOperacion($$[$0-2],$$[$0],"%"); 
+ this.$=NuevaOperacion($$[$0-2],$$[$0],"^"); 
 break;
 case 43:
- this.$=NuevaOperacion($$[$0-2],$$[$0],"<"); 
+ this.$=NuevaOperacion($$[$0-2],$$[$0],"%"); 
 break;
 case 44:
- this.$=NuevaOperacion($$[$0-2],$$[$0],">"); 
+ this.$=NuevaOperacion($$[$0-2],$$[$0],"<"); 
 break;
 case 45:
- this.$=NuevaOperacion($$[$0-2],$$[$0],"!="); 
+ this.$=NuevaOperacion($$[$0-2],$$[$0],">"); 
 break;
 case 46:
- this.$=NuevaOperacion($$[$0-2],$$[$0],"=="); 
+ this.$=NuevaOperacion($$[$0-2],$$[$0],"!="); 
 break;
 case 47:
- this.$=NuevaOperacion($$[$0-2],$$[$0],">="); 
+ this.$=NuevaOperacion($$[$0-2],$$[$0],"=="); 
 break;
 case 48:
- this.$=NuevaOperacion($$[$0-2],$$[$0],"<="); 
+ this.$=NuevaOperacion($$[$0-2],$$[$0],">="); 
 break;
 case 49:
- this.$=NuevaOperacion($$[$0-2],$$[$0],"&&"); 
+ this.$=NuevaOperacion($$[$0-2],$$[$0],"<="); 
 break;
 case 50:
- this.$=NuevaOperacion($$[$0-2],$$[$0],"||"); 
+ this.$=NuevaOperacion($$[$0-2],$$[$0],"&&"); 
 break;
 case 51:
- this.$=NuevaOperacionUnario($$[$0],"!"); 
+ this.$=NuevaOperacion($$[$0-2],$$[$0],"||"); 
 break;
 case 52:
- this.$=NuevaOperacionUnario($$[$0],"umenos"); 
+ this.$=NuevaOperacionUnario($$[$0],"!"); 
 break;
 case 53:
- this.$=nuevoSimbolo($$[$0],"cadena"); 
+ this.$=NuevaOperacionUnario($$[$0],"umenos"); 
 break;
 case 54:
- this.$=nuevoSimbolo($$[$0],"char"); 
+ this.$=nuevoSimbolo($$[$0],"cadena"); 
 break;
 case 55:
- this.$=nuevoSimbolo($$[$0],"ID");
+ this.$=nuevoSimbolo($$[$0],"char"); 
 break;
 case 56:
- this.$=nuevoSimbolo(parseFloat($$[$0]),"numero"); 
+ this.$=nuevoSimbolo($$[$0],"ID");
 break;
 case 57:
- this.$=nuevoSimbolo(true,"bool"); 
+ this.$=nuevoSimbolo(parseFloat($$[$0]),"numero"); 
 break;
 case 58:
- this.$=nuevoSimbolo(false,"bool"); 
+ this.$=nuevoSimbolo(true,"bool"); 
 break;
 case 59:
+ this.$=nuevoSimbolo(false,"bool"); 
+break;
+case 60:
  this.$=$$[$0-1] 
 break;
 }
 },
-table: [{2:[1,3],3:1,4:2,6:4,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,30:12,31:13,32:14,33:15,34:$V5,35:$V6,39:$V7,40:$V8,41:$V9},{1:[3]},{5:[1,24],6:25,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,30:12,31:13,32:14,33:15,34:$V5,35:$V6,39:$V7,40:$V8,41:$V9},{5:[1,26]},o($Va,[2,4]),{8:[1,27]},o($Va,[2,6]),o($Va,[2,7]),o($Va,[2,8]),o($Va,[2,9]),{11:[1,28]},o($Va,[2,11]),o($Va,[2,22]),o($Va,[2,23]),o($Va,[2,24]),o($Va,[2,25]),{36:[1,29]},{8:[1,30]},{8:[1,31]},{8:[1,32]},{35:[1,33]},{35:[1,34]},{35:[1,35]},{35:[1,36]},{1:[2,1]},o($Va,[2,3]),{1:[2,2]},{8:$Vb,9:37,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},o($Va,[2,10]),{8:$Vb,9:47,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:48,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:49,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:50,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{11:[1,52],36:[1,51]},{11:[1,53],36:[1,54]},{11:[1,55],36:[1,56]},{11:[1,57],36:[1,58]},{10:[1,59],42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,50:$Vs,51:$Vt,52:$Vu,53:$Vv,54:$Vw,55:$Vx},{8:$Vb,9:74,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:75,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},o($Vy,[2,53]),o($Vy,[2,54]),o($Vy,[2,55]),o($Vy,[2,56]),o($Vy,[2,57]),o($Vy,[2,58]),{8:$Vb,9:76,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{11:[1,77],42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,50:$Vs,51:$Vt,52:$Vu,53:$Vv,54:$Vw,55:$Vx},{10:[1,78],42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,50:$Vs,51:$Vt,52:$Vu,53:$Vv,54:$Vw,55:$Vx},{10:[1,79],42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,50:$Vs,51:$Vt,52:$Vu,53:$Vv,54:$Vw,55:$Vx},{10:[1,80],42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,50:$Vs,51:$Vt,52:$Vu,53:$Vv,54:$Vw,55:$Vx},{8:$Vb,9:81,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},o($Va,[2,27]),o($Va,[2,30]),{8:$Vb,9:82,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},o($Va,[2,32]),{8:$Vb,9:83,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},o($Va,[2,34]),{8:$Vb,9:84,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{11:[1,85]},{8:$Vb,9:86,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:87,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:88,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:89,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:90,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:91,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:92,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:93,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:94,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:95,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:96,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:97,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:98,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{8:$Vb,9:99,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},o($Vz,[2,51],{42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,50:$Vs,51:$Vt,52:$Vu,53:$Vv}),o($Vy,[2,52]),{10:[1,100],42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,50:$Vs,51:$Vt,52:$Vu,53:$Vv,54:$Vw,55:$Vx},o($Va,[2,36]),{19:101,23:$VA},{23:[1,103]},{19:104,23:$VA},{11:[1,105],42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,50:$Vs,51:$Vt,52:$Vu,53:$Vv,54:$Vw,55:$Vx},{11:[1,106],42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,50:$Vs,51:$Vt,52:$Vu,53:$Vv,54:$Vw,55:$Vx},{11:[1,107],42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,50:$Vs,51:$Vt,52:$Vu,53:$Vv,54:$Vw,55:$Vx},{11:[1,108],42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,50:$Vs,51:$Vt,52:$Vu,53:$Vv,54:$Vw,55:$Vx},o($Va,[2,5]),o($VB,[2,37],{44:$Vm,45:$Vn,46:$Vo,47:$Vp}),o($VB,[2,38],{44:$Vm,45:$Vn,46:$Vo,47:$Vp}),o($VC,[2,39],{46:$Vo}),o($VC,[2,40],{46:$Vo}),o($Vy,[2,41]),o($VC,[2,42],{46:$Vo}),o($VD,[2,43],{42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp}),o($VD,[2,44],{42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp}),o($VE,[2,45],{42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,52:$Vu,53:$Vv}),o($VE,[2,46],{42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,52:$Vu,53:$Vv}),o($VD,[2,47],{42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp}),o($VD,[2,48],{42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp}),o($Vz,[2,49],{42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,50:$Vs,51:$Vt,52:$Vu,53:$Vv}),o([10,11,26,55],[2,50],{42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,50:$Vs,51:$Vt,52:$Vu,53:$Vv,54:$Vw}),o($Vy,[2,59]),o($Va,[2,13],{21:[1,109]}),{4:110,6:4,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,27:[1,111],30:12,31:13,32:14,33:15,34:$V5,35:$V6,39:$V7,40:$V8,41:$V9},{24:112,28:[1,113]},o($Va,[2,12]),o($Va,[2,26]),o($Va,[2,31]),o($Va,[2,33]),o($Va,[2,35]),{19:114,23:$VA},{6:25,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,27:[1,115],30:12,31:13,32:14,33:15,34:$V5,35:$V6,39:$V7,40:$V8,41:$V9},o($VF,[2,21]),{25:[1,116],27:[1,117],28:[1,118]},{8:$Vb,9:119,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},o($Va,[2,14]),o($VF,[2,20]),{26:[1,120]},o($Va,[2,16]),{8:$Vb,9:121,35:$Vc,43:$Vd,56:$Ve,57:$Vf,58:$Vg,59:$Vh,60:$Vi,61:$Vj},{26:[1,122],42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,50:$Vs,51:$Vt,52:$Vu,53:$Vv,54:$Vw,55:$Vx},{4:123,6:4,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,30:12,31:13,32:14,33:15,34:$V5,35:$V6,39:$V7,40:$V8,41:$V9},{26:[1,124],42:$Vk,43:$Vl,44:$Vm,45:$Vn,46:$Vo,47:$Vp,48:$Vq,49:$Vr,50:$Vs,51:$Vt,52:$Vu,53:$Vv,54:$Vw,55:$Vx},{4:125,6:4,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,30:12,31:13,32:14,33:15,34:$V5,35:$V6,39:$V7,40:$V8,41:$V9},{6:25,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,27:[1,126],30:12,31:13,32:14,33:15,34:$V5,35:$V6,39:$V7,40:$V8,41:$V9},{4:127,6:4,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,30:12,31:13,32:14,33:15,34:$V5,35:$V6,39:$V7,40:$V8,41:$V9},o($VG,[2,17],{12:6,13:7,14:8,15:9,17:11,30:12,31:13,32:14,33:15,6:25,7:$V0,16:$V1,18:$V2,20:$V3,22:$V4,34:$V5,35:$V6,39:$V7,40:$V8,41:$V9}),o($Va,[2,15]),o($VG,[2,18],{12:6,13:7,14:8,15:9,17:11,30:12,31:13,32:14,33:15,6:25,7:$V0,16:$V1,18:$V2,20:$V3,22:$V4,34:$V5,35:$V6,39:$V7,40:$V8,41:$V9})],
-defaultActions: {24:[2,1],26:[2,2]},
+table: [{2:[1,3],3:1,4:2,6:4,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,30:12,31:13,32:14,33:15,34:16,35:$V5,36:$V6,38:$V7,39:$V8,40:$V9,41:$Va},{1:[3]},{5:[1,26],6:27,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,30:12,31:13,32:14,33:15,34:16,35:$V5,36:$V6,38:$V7,39:$V8,40:$V9,41:$Va},{5:[1,28]},o($Vb,[2,4]),{8:[1,29]},o($Vb,[2,6]),o($Vb,[2,7]),o($Vb,[2,8]),o($Vb,[2,9]),{11:[1,30]},o($Vb,[2,11]),o($Vb,[2,22]),o($Vb,[2,23]),o($Vb,[2,24]),o($Vb,[2,25]),o($Vb,[2,26]),{37:[1,31]},{8:[1,32]},{8:[1,33]},{8:[1,34]},{36:[1,35]},{36:[1,36]},{36:[1,37]},{36:[1,38]},{36:[1,39]},{1:[2,1]},o($Vb,[2,3]),{1:[2,2]},{8:$Vc,9:40,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},o($Vb,[2,10]),{8:$Vc,9:50,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:51,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:52,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:53,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{11:[1,55],37:[1,54]},{11:[1,56],37:[1,57]},{11:[1,58],37:[1,59]},{11:[1,60],37:[1,61]},{11:[1,62],37:[1,63]},{10:[1,64],42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw,54:$Vx,55:$Vy},{8:$Vc,9:79,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:80,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},o($Vz,[2,54]),o($Vz,[2,55]),o($Vz,[2,56]),o($Vz,[2,57]),o($Vz,[2,58]),o($Vz,[2,59]),{8:$Vc,9:81,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{11:[1,82],42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw,54:$Vx,55:$Vy},{10:[1,83],42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw,54:$Vx,55:$Vy},{10:[1,84],42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw,54:$Vx,55:$Vy},{10:[1,85],42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw,54:$Vx,55:$Vy},{8:$Vc,9:86,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},o($Vb,[2,28]),o($Vb,[2,31]),{8:$Vc,9:87,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},o($Vb,[2,33]),{8:$Vc,9:88,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},o($Vb,[2,35]),{8:$Vc,9:89,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},o($Vb,[2,29]),{8:$Vc,9:90,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{11:[1,91]},{8:$Vc,9:92,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:93,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:94,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:95,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:96,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:97,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:98,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:99,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:100,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:101,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:102,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:103,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:104,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{8:$Vc,9:105,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},o($VA,[2,52],{42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw}),o($Vz,[2,53]),{10:[1,106],42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw,54:$Vx,55:$Vy},o($Vb,[2,37]),{19:107,23:$VB},{23:[1,109]},{19:110,23:$VB},{11:[1,111],42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw,54:$Vx,55:$Vy},{11:[1,112],42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw,54:$Vx,55:$Vy},{11:[1,113],42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw,54:$Vx,55:$Vy},{11:[1,114],42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw,54:$Vx,55:$Vy},{11:[1,115],42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw,54:$Vx,55:$Vy},o($Vb,[2,5]),o($VC,[2,38],{44:$Vn,45:$Vo,46:$Vp,47:$Vq}),o($VC,[2,39],{44:$Vn,45:$Vo,46:$Vp,47:$Vq}),o($VD,[2,40],{46:$Vp}),o($VD,[2,41],{46:$Vp}),o($Vz,[2,42]),o($VD,[2,43],{46:$Vp}),o($VE,[2,44],{42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq}),o($VE,[2,45],{42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq}),o($VF,[2,46],{42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,52:$Vv,53:$Vw}),o($VF,[2,47],{42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,52:$Vv,53:$Vw}),o($VE,[2,48],{42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq}),o($VE,[2,49],{42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq}),o($VA,[2,50],{42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw}),o([10,11,26,55],[2,51],{42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw,54:$Vx}),o($Vz,[2,60]),o($Vb,[2,13],{21:[1,116]}),{4:117,6:4,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,27:[1,118],30:12,31:13,32:14,33:15,34:16,35:$V5,36:$V6,38:$V7,39:$V8,40:$V9,41:$Va},{24:119,28:[1,120]},o($Vb,[2,12]),o($Vb,[2,27]),o($Vb,[2,32]),o($Vb,[2,34]),o($Vb,[2,36]),o($Vb,[2,30]),{19:121,23:$VB},{6:27,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,27:[1,122],30:12,31:13,32:14,33:15,34:16,35:$V5,36:$V6,38:$V7,39:$V8,40:$V9,41:$Va},o($VG,[2,21]),{25:[1,123],27:[1,124],28:[1,125]},{8:$Vc,9:126,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},o($Vb,[2,14]),o($VG,[2,20]),{26:[1,127]},o($Vb,[2,16]),{8:$Vc,9:128,36:$Vd,43:$Ve,56:$Vf,57:$Vg,58:$Vh,59:$Vi,60:$Vj,61:$Vk},{26:[1,129],42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw,54:$Vx,55:$Vy},{4:130,6:4,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,30:12,31:13,32:14,33:15,34:16,35:$V5,36:$V6,38:$V7,39:$V8,40:$V9,41:$Va},{26:[1,131],42:$Vl,43:$Vm,44:$Vn,45:$Vo,46:$Vp,47:$Vq,48:$Vr,49:$Vs,50:$Vt,51:$Vu,52:$Vv,53:$Vw,54:$Vx,55:$Vy},{4:132,6:4,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,30:12,31:13,32:14,33:15,34:16,35:$V5,36:$V6,38:$V7,39:$V8,40:$V9,41:$Va},{6:27,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,27:[1,133],30:12,31:13,32:14,33:15,34:16,35:$V5,36:$V6,38:$V7,39:$V8,40:$V9,41:$Va},{4:134,6:4,7:$V0,12:6,13:7,14:8,15:9,16:$V1,17:11,18:$V2,20:$V3,22:$V4,30:12,31:13,32:14,33:15,34:16,35:$V5,36:$V6,38:$V7,39:$V8,40:$V9,41:$Va},o($VH,[2,17],{12:6,13:7,14:8,15:9,17:11,30:12,31:13,32:14,33:15,34:16,6:27,7:$V0,16:$V1,18:$V2,20:$V3,22:$V4,35:$V5,36:$V6,38:$V7,39:$V8,40:$V9,41:$Va}),o($Vb,[2,15]),o($VH,[2,18],{12:6,13:7,14:8,15:9,17:11,30:12,31:13,32:14,33:15,34:16,6:27,7:$V0,16:$V1,18:$V2,20:$V3,22:$V4,35:$V5,36:$V6,38:$V7,39:$V8,40:$V9,41:$Va})],
+defaultActions: {26:[2,1],28:[2,2]},
 parseError: function parseError (str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -569,6 +569,636 @@ _handle_error:
             Tipo:Tipo
         }
     }
+    function TipoRetorno(Valorizq, Valorder, Operacion)
+    {
+        var tipoRetorno = "error";
+        switch (Operacion.Tipo)
+        {
+            case "+":
+                switch(Valorizq.Tipo)
+                {
+                    case "numero":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="numero";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "bool":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "char":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "cadena":
+                                tipoRetorno = "cadena";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "decimal":
+                        // decimal puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "bool":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "char":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "cadena":
+                                tipoRetorno = "cadena";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "bool":
+                        // bool puede sumarse con numero, decimal y cadena
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "cadena":
+                                tipoRetorno = "cadena";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "char":
+                        // char puede sumarse con numero, decimal, char y cadena
+                        if(!Valorder){
+                            tipoRetorno="char";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "char":
+                                tipoRetorno = "cadena";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "cadena":
+                                tipoRetorno = "cadena";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "cadena":
+                        // cadena puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                            case "decimal":
+                            case "bool":
+                            case "char":
+                            case "cadena":
+                                tipoRetorno = "cadena";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+
+                }
+            case "-":
+                switch(Valorizq.Tipo)
+                {
+                    case "numero":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="numero";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "bool":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                            case "char":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "decimal":
+                        // decimal puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                            case "bool":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                            case "char":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "bool":
+                        // bool puede sumarse con numero, decimal y cadena
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "char":
+                        // char puede sumarse con numero, decimal, char y cadena
+                        if(!Valorder){
+                            tipoRetorno="char";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                }
+            case "*":
+                switch(Valorizq.Tipo)
+                {
+                    case "numero":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="numero";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "char":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "decimal":
+                        // decimal puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "char":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
+                    case "char":
+                        // char puede sumarse con numero, decimal, char y cadena
+                        if(!Valorder){
+                            tipoRetorno="char";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                }
+            case "/":
+                switch(Valorizq.Tipo)
+                {
+                    case "numero":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="numero";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);
+                                break;
+                            case "char":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
+                    case "decimal":
+                        // decimal puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);
+                                break;
+                            case "char":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "char":
+                        // char puede sumarse con numero, decimal, char y cadena
+                        if(!Valorder){
+                            tipoRetorno="char";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                }
+            case "^":
+                switch(Valorizq.Tipo)
+                {
+                    case "numero":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="numero";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Math.pow(Valorizq.Valor , Valorder.Valor), tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Math.pow(Valorizq.Valor , Valorder.Valor), tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "decimal":
+                        // decimal puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Math.pow(Valorizq.Valor , Valorder.Valor), tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Math.pow(Valorizq.Valor , Valorder.Valor), tipoRetorno);	
+                                break;
+                        }
+                        break;
+                }
+            case "%":
+                switch(Valorizq.Tipo)
+                {
+                    case "numero":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="numero";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor % Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor % Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "decimal":
+                        // decimal puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor % Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor % Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                }
+            case "umenos":
+                switch(Valorizq.Tipo)
+                {
+                    case "numero":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="numero";
+                            return nuevoSimbolo(0-Valorizq.Valor, tipoRetorno);
+                            break;
+                        }
+                        break;
+                    case "decimal":
+                        // decimal puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            return nuevoSimbolo(0-Valorizq.Valor, tipoRetorno);
+                            break;
+                        }
+                        break;
+                }
+                break;
+            case "!":
+                switch(Valorizq.Tipo)
+                {
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            return nuevoSimbolo(!Valorizq.Valor, tipoRetorno);
+                            break;
+                        }
+                        break;
+                }
+                break;
+            case "&&":
+                switch(Valorizq.Tipo)
+                {
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "bool":
+                                tipoRetorno = "bool";	
+                                return nuevoSimbolo(Valorizq.Valor && Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case "||":
+                switch(Valorizq.Tipo)
+                {
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "bool":
+                                tipoRetorno = "bool";	
+                                return nuevoSimbolo(Valorizq.Valor || Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case "==":
+                switch(Valorizq.Tipo)
+                {
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "bool":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor == Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case "!=":
+                switch(Valorizq.Tipo)
+                {
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "bool":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor != Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case ">":
+                switch(Valorizq.Tipo)
+                {
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "bool":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor > Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case "<":
+                switch(Valorizq.Tipo)
+                {
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "bool":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor < Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case ">=":
+                switch(Valorizq.Tipo)
+                {
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "bool":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor >= Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case "<=":
+                switch(Valorizq.Tipo)
+                {
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "bool":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor <= Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
+                }
+                break;
+        }      
+                
+
+    }
 
     function Evaluar(Operacion,ent)
     {
@@ -582,11 +1212,11 @@ _handle_error:
             case "cadena":
                 return nuevoSimbolo(Operacion.Valor,Operacion.Tipo);
             case "char":
-                return nuevoSimbolo(Operacion.Valor,Operacion.Tipo)
+                return nuevoSimbolo(Operacion.Valor.charAt(0),Operacion.Tipo)
             case "numero":
                 return nuevoSimbolo(parseFloat(Operacion.Valor),Operacion.Tipo);
-            case "double":
-                return nuevoSimbolo(parseFloat(Operacion.Valor), Operacion.Tipo);
+            case "decimal":
+                return nuevoSimbolo(parseFloat(Operacion.Valor),Operacion.Tipo);
           	case "ID":
                 var temp=ent;
                 while(temp!=null)
@@ -609,168 +1239,668 @@ _handle_error:
         }
       	var tipoRetorno = "error";
       	// identificar qué operaciones sí podemos realizar dependiendo del tipo
-    	switch(Valorizq.Tipo)
-        {
-          case "cadena":
-            // cadena puede sumarse con cualquier otro tipo
-            if(!Valorder){
-            	tipoRetorno="cadena";
-            	break;
-            }
-            switch(Valorder.Tipo)
-            {
-            	case "cadena":
-              	case "numero":
-                case "bool":
-                	tipoRetorno = "cadena";	
-                	break;
-            }
-            break;
-          case "numero":
-            if(!Valorder){
-            	tipoRetorno="numero";
-              	break;
-            }
-            switch(Valorder.Tipo)
-            {
-            	case "cadena":
-                	tipoRetorno = "cadena";
-                	break;
-              	case "numero":
-                	tipoRetorno = "numero";	
-                	break;
-            }
-            break;
-          case "bool":
-            if(!Valorder){
-            	tipoRetorno="bool";
-              	break;
-            }
-            if(!Valorder){
-            	break;
-            }
-            switch(Valorder.Tipo)
-            {
-            	case "bool":
-                	tipoRetorno = "bool";
-              		break;
-            }
-            break;
-        }
-      
-        switch (Operacion.Tipo)
+        
+    	switch (Operacion.Tipo)
         {
             case "+":
-                switch(tipoRetorno)
+                switch(Valorizq.Tipo)
                 {
-                	case "cadena":
-                	case "numero":
-            			return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
-                		break;
+                    case "numero":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="numero";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "bool":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "char":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "cadena":
+                                tipoRetorno = "cadena";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "decimal":
+                        // decimal puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "bool":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "char":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "cadena":
+                                tipoRetorno = "cadena";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "bool":
+                        // bool puede sumarse con numero, decimal y cadena
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "cadena":
+                                tipoRetorno = "cadena";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "char":
+                        // char puede sumarse con numero, decimal, char y cadena
+                        if(!Valorder){
+                            tipoRetorno="char";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "char":
+                                tipoRetorno = "cadena";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                            case "cadena":
+                                tipoRetorno = "cadena";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "cadena":
+                        // cadena puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                            case "decimal":
+                            case "bool":
+                            case "char":
+                            case "cadena":
+                                tipoRetorno = "cadena";	
+                                return nuevoSimbolo(Valorizq.Valor + Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+
                 }
             case "-":
-                switch(tipoRetorno)
+                switch(Valorizq.Tipo)
                 {
-                	case "numero":
-            			return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
-                		break;
-                }
-            case "umenos":
-                switch(tipoRetorno)
-                {
-                	case "numero":
-            			return nuevoSimbolo(0-Valorizq.Valor, tipoRetorno);
+                    case "numero":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="numero";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "bool":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                            case "char":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "decimal":
+                        // decimal puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                            case "bool":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                            case "char":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "bool":
+                        // bool puede sumarse con numero, decimal y cadena
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "char":
+                        // char puede sumarse con numero, decimal, char y cadena
+                        if(!Valorder){
+                            tipoRetorno="char";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor - Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
                 }
             case "*":
-                switch(tipoRetorno)
+                switch(Valorizq.Tipo)
                 {
-                	case "numero":
-                    	return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);
+                    case "numero":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="numero";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "char":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "decimal":
+                        // decimal puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "char":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
+                    case "char":
+                        // char puede sumarse con numero, decimal, char y cadena
+                        if(!Valorder){
+                            tipoRetorno="char";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor * Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
                 }
             case "/":
-                switch(tipoRetorno)
+                switch(Valorizq.Tipo)
                 {
-                	case "numero":	
-                    	return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);
-                }
-            case "%":
-                switch(tipoRetorno)
-                {
-                	case "numero":
-            			return nuevoSimbolo(Valorizq.Valor % Valorder.Valor, tipoRetorno);
+                    case "numero":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="numero";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);
+                                break;
+                            case "char":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
+                    case "decimal":
+                        // decimal puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);	
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);
+                                break;
+                            case "char":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "char":
+                        // char puede sumarse con numero, decimal, char y cadena
+                        if(!Valorder){
+                            tipoRetorno="char";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor / Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
                 }
             case "^":
-                switch(tipoRetorno)
+                switch(Valorizq.Tipo)
                 {
-                	case "numero":
-            			return nuevoSimbolo(Math.pow(Valorizq.Valor,Valorder.Valor), tipoRetorno);
+                    case "numero":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="numero";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "numero";	
+                                return nuevoSimbolo(Math.pow(Valorizq.Valor , Valorder.Valor), tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Math.pow(Valorizq.Valor , Valorder.Valor), tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "decimal":
+                        // decimal puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Math.pow(Valorizq.Valor , Valorder.Valor), tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";
+                                return nuevoSimbolo(Math.pow(Valorizq.Valor , Valorder.Valor), tipoRetorno);	
+                                break;
+                        }
+                        break;
                 }
+            case "%":
+                switch(Valorizq.Tipo)
+                {
+                    case "numero":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="numero";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor % Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor % Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                    case "decimal":
+                        // decimal puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor % Valorder.Valor, tipoRetorno);
+                                break;
+                            case "decimal":
+                                tipoRetorno = "decimal";	
+                                return nuevoSimbolo(Valorizq.Valor % Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
+                }
+            case "umenos":
+                switch(Valorizq.Tipo)
+                {
+                    case "numero":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="numero";
+                            return nuevoSimbolo(0-Valorizq.Valor, tipoRetorno);
+                            break;
+                        }
+                        break;
+                    case "decimal":
+                        // decimal puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="decimal";
+                            return nuevoSimbolo(0-Valorizq.Valor, tipoRetorno);
+                            break;
+                        }
+                        break;
+                }
+                break;
             case "!":
-                switch(tipoRetorno)
+                switch(Valorizq.Tipo)
                 {
-                	case "bool":
-            			return nuevoSimbolo(!Valorizq.Valor, tipoRetorno);
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            return nuevoSimbolo(!Valorizq.Valor, tipoRetorno);
+                            break;
+                        }
+                        break;
                 }
+                break;
             case "&&":
-                switch(tipoRetorno)
+                switch(Valorizq.Tipo)
                 {
-                	case "bool":
-            			return nuevoSimbolo(Valorizq.Valor && Valorder.Valor, tipoRetorno);
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "bool":
+                                tipoRetorno = "bool";	
+                                return nuevoSimbolo(Valorizq.Valor && Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
                 }
+                break;
             case "||":
-                switch(tipoRetorno)
+                switch(Valorizq.Tipo)
                 {
-                	case "bool":
-                		return nuevoSimbolo(Valorizq.Valor || Valorder.Valor, tipoRetorno);
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "bool":
+                                tipoRetorno = "bool";	
+                                return nuevoSimbolo(Valorizq.Valor || Valorder.Valor, tipoRetorno);
+                                break;
+                        }
+                        break;
                 }
-            case ">":
-                switch(tipoRetorno)
-                {
-                	case "cadena":
-                	case "numero":
-                	case "bool":
-                    	return nuevoSimbolo(Valorizq.Valor > Valorder.Valor, "bool");
-                }
-            case "<":
-                switch(tipoRetorno)
-                {
-                	case "cadena":
-                	case "numero":
-                	case "bool":
-                    	return nuevoSimbolo(Valorizq.Valor < Valorder.Valor, "bool");
-                }
-            case ">=":
-                switch(tipoRetorno)
-                {
-                	case "cadena":
-                	case "numero":
-                	case "bool":
-                    	return nuevoSimbolo(Valorizq.Valor >= Valorder.Valor, "bool");
-                }
-            case "<=":
-                switch(tipoRetorno)
-                {
-                	case "cadena":
-                	case "numero":
-                	case "bool":
-                    	return nuevoSimbolo(Valorizq.Valor <= Valorder.Valor, "bool");
-                }
+                break;
             case "==":
-                switch(tipoRetorno)
+                switch(Valorizq.Tipo)
                 {
-                	case "cadena":
-                	case "numero":
-                	case "bool":
-                    	return nuevoSimbolo(Valorizq.Valor == Valorder.Valor, "bool");
+                    case "numero":
+                    case "cadena":
+                    case "decimal":
+                    case "char":
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                            case "cadena":
+                            case "decimal":
+                            case "char":
+                            case "bool":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor == Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
                 }
+                break;
             case "!=":
-                switch(tipoRetorno)
+                switch(Valorizq.Tipo)
                 {
-                	case "cadena":
-                	case "numero":
-                	case "bool":
-                		return nuevoSimbolo(Valorizq.Valor != Valorder.Valor, "bool");
+                    case "numero":
+                    case "decimal":
+                    case "char":
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                            case "decimal":
+                            case "char":
+                            case "bool":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor != Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
                 }
+                break;
+            case ">":
+                switch(Valorizq.Tipo)
+                {
+                    case "numero":
+                    case "decimal":
+                    case "char":
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                            case "decimal":
+                            case "char":
+                            case "bool":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor > Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case "<":
+                switch(Valorizq.Tipo)
+                {
+                    case "numero":
+                    case "decimal":
+                    case "char":
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                            case "decimal":
+                            case "char":
+                            case "bool":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor < Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case ">=":
+                switch(Valorizq.Tipo)
+                {
+                    case "numero":
+                    case "decimal":
+                    case "char":
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                            case "decimal":
+                            case "char":
+                            case "bool":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor >= Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case "<=":
+                switch(Valorizq.Tipo)
+                {
+                    case "numero":
+                    case "decimal":
+                    case "char":
+                    case "bool":
+                        // numero puede sumarse con cualquier otro tipo
+                        if(!Valorder){
+                            tipoRetorno="bool";
+                            break;
+                        }
+                        switch(Valorder.Tipo)
+                        {
+                            case "numero":
+                            case "decimal":
+                            case "char":
+                            case "bool":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor <= Valorder.Valor, tipoRetorno);	
+                                break;
+                        }
+                        break;
+                }
+                break;
         }
       	console.log(
           "Tipos incompatibles " + ( Valorizq ? Valorizq.Tipo : "" ) + 
@@ -813,20 +1943,35 @@ _handle_error:
         if (crear && crear.Expresion)
         {
             valor = Evaluar(crear.Expresion);
-            if(valor.Tipo != crear.Tipo){
-                console.log("El tipo no coincide con la variable a crear");
-                return
+            if(crear.Tipo == "decimal" && valor.Tipo =="numero")
+            {
+                valor.Tipo = "decimal";
+            }
+            if(crear.Tipo == "numero" && valor.Tipo == "numero")
+            {
+                if(valor.Valor % 1 !=0)
+                {
+                    console.log("El tipo no coincide con la variable a crear");
+                    return
+                }
+            }
+            else
+            {
+                if(valor.Tipo != crear.Tipo){
+                    console.log("El tipo no coincide con la variable a crear");
+                    return
+                }
             }
         }
         else
         {
             switch(crear.Tipo)
             {
-                case "int":
-                    valor = nuevoSimbolo(0,"int");
+                case "numero":
+                    valor = nuevoSimbolo(0,"numero");
                     break;
-                case "double":
-                    valor = nuevoSimbolo(0.0,"double");
+                case "decimal":
+                    valor = nuevoSimbolo(parseFloat(0.00),"decimal");
                     break;
                 case "bool":
                     valor = nuevoSimbolo(true,"bool");
@@ -834,7 +1979,7 @@ _handle_error:
                 case "char":
                     valor = nuevoSimbolo('\u0000',"char");
                     break;
-                case "string":
+                case "cadena":
                     valor = nuevoSimbolo("","cadena");
                     break;
             }
@@ -865,7 +2010,19 @@ _handle_error:
                 var simbolotabla = temp.tablaSimbolos.get(asignar.Id);	
               	
                 // comparar los tipos
-                if (simbolotabla.Tipo === valor.Tipo)
+                if(simbolotabla.Tipo =="decimal" && valor.Tipo =="numero")
+                {
+                    valor.Tipo = "decimal"
+                }
+                if(simbolotabla.Tipo == "numero" && valor.Tipo =="numero")
+                {
+                    if(valor.Valor % 1 != 0)
+                    {
+                        console.log("Tipo incompatibles ",simbolotabla.Tipo,", double")
+                        return
+                    }
+                }
+                if (simbolotabla.Tipo == valor.Tipo)
                 {
                 	// reasignar el valor
                     temp.tablaSimbolos.set(asignar.Id, valor);
@@ -1419,7 +2576,7 @@ case 28:return 51;
 break;
 case 29:return 50;
 break;
-case 30:return 36;
+case 30:return 37;
 break;
 case 31:return 42;
 break;
@@ -1441,7 +2598,7 @@ case 39:return 55;
 break;
 case 40:return 56;
 break;
-case 41:return 35
+case 41:return 36
 break;
 case 42:return 59;  
 break;

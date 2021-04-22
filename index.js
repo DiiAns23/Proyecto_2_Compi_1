@@ -1,8 +1,14 @@
 const parse = require('./parser');
 
 parse.parse(`
-print("Hola mundo" + " Diego Obin");
-print("Adios gente");
-double a = 10.5;
-print(a);
+int a = 6;
+int b = 6;
+if(a != b){
+    print("Esto esta bien :3");
+}else {
+    print("Esto si esta malo :c");
+}
+boolean z = false;
+z = ("hola" == "hola");
+print(z);
 `);
