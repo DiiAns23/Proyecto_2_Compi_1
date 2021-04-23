@@ -37,6 +37,8 @@
                 case "switch":
                     retorno = EjecutarSeleccionar(elemento, ent);
                     break;
+                case "for":
+                    break;
                 case "return":
                     if (pilaFunciones.length>0)
                     {
@@ -633,51 +635,67 @@
             case "==":
                 switch(Valorizq.Tipo)
                 {
-                    case "numero":
                     case "cadena":
-                    case "decimal":
-                    case "char":
-                    case "bool":
-                        // numero puede sumarse con cualquier otro tipo
-                        if(!Valorder){
-                            tipoRetorno="bool";
-                            break;
+                        switch(Valorder.Tipo)
+                        {
+                            case "cadena":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor == Valorder.Valor, tipoRetorno);	
                         }
+                        break;
+                    case "bool":
+                        switch(Valorder.Tipo)
+                        {
+                            case "bool":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor == Valorder.Valor, tipoRetorno) 
+                        }
+                        break;
+                    case "char":
+                    case "numero":
+                    case "decimal":
                         switch(Valorder.Tipo)
                         {
                             case "numero":
-                            case "cadena":
                             case "decimal":
                             case "char":
-                            case "bool":
                                 tipoRetorno = "bool";
-                                return nuevoSimbolo(Valorizq.Valor == Valorder.Valor, tipoRetorno);	
-                                break;
+                                return nuevoSimbolo(Valorizq.Valor == Valorder.Valor, tipoRetorno)    
                         }
                         break;
+                    
+                    
                 }
                 break;
             case "!=":
                 switch(Valorizq.Tipo)
                 {
+                    case "char":
                     case "numero":
                     case "decimal":
-                    case "char":
-                    case "bool":
-                        // numero puede sumarse con cualquier otro tipo
-                        if(!Valorder){
-                            tipoRetorno="bool";
-                            break;
-                        }
                         switch(Valorder.Tipo)
                         {
                             case "numero":
                             case "decimal":
                             case "char":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor != Valorder.Valor, tipoRetorno)    
+                        }
+                        break;
+                    case "bool":
+                        switch(Valorder.Tipo)
+                        {
                             case "bool":
                                 tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor != Valorder.Valor, tipoRetorno) 
+                        }
+                        break;
+                    case "cadena":
+                        switch(Valorder.Tipo)
+                        {
+                            case "cadena":
+                                tipoRetorno = "bool";
                                 return nuevoSimbolo(Valorizq.Valor != Valorder.Valor, tipoRetorno);	
-                                break;
                         }
                         break;
                 }
@@ -685,24 +703,32 @@
             case ">":
                 switch(Valorizq.Tipo)
                 {
+                    case "char":
                     case "numero":
                     case "decimal":
-                    case "char":
-                    case "bool":
-                        // numero puede sumarse con cualquier otro tipo
-                        if(!Valorder){
-                            tipoRetorno="bool";
-                            break;
-                        }
                         switch(Valorder.Tipo)
                         {
                             case "numero":
                             case "decimal":
                             case "char":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor > Valorder.Valor, tipoRetorno)    
+                        }
+                        break;
+                    case "bool":
+                        switch(Valorder.Tipo)
+                        {
                             case "bool":
                                 tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor > Valorder.Valor, tipoRetorno) 
+                        }
+                        break;
+                    case "cadena":
+                        switch(Valorder.Tipo)
+                        {
+                            case "cadena":
+                                tipoRetorno = "bool";
                                 return nuevoSimbolo(Valorizq.Valor > Valorder.Valor, tipoRetorno);	
-                                break;
                         }
                         break;
                 }
@@ -710,24 +736,32 @@
             case "<":
                 switch(Valorizq.Tipo)
                 {
+                    case "char":
                     case "numero":
                     case "decimal":
-                    case "char":
-                    case "bool":
-                        // numero puede sumarse con cualquier otro tipo
-                        if(!Valorder){
-                            tipoRetorno="bool";
-                            break;
-                        }
                         switch(Valorder.Tipo)
                         {
                             case "numero":
                             case "decimal":
                             case "char":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor < Valorder.Valor, tipoRetorno)    
+                        }
+                        break;
+                    case "bool":
+                        switch(Valorder.Tipo)
+                        {
                             case "bool":
                                 tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor < Valorder.Valor, tipoRetorno) 
+                        }
+                        break;
+                    case "cadena":
+                        switch(Valorder.Tipo)
+                        {
+                            case "cadena":
+                                tipoRetorno = "bool";
                                 return nuevoSimbolo(Valorizq.Valor < Valorder.Valor, tipoRetorno);	
-                                break;
                         }
                         break;
                 }
@@ -735,49 +769,66 @@
             case ">=":
                 switch(Valorizq.Tipo)
                 {
+                    case "char":
                     case "numero":
                     case "decimal":
-                    case "char":
-                    case "bool":
-                        // numero puede sumarse con cualquier otro tipo
-                        if(!Valorder){
-                            tipoRetorno="bool";
-                            break;
-                        }
                         switch(Valorder.Tipo)
                         {
                             case "numero":
                             case "decimal":
                             case "char":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor >= Valorder.Valor, tipoRetorno)    
+                        }
+                        break;
+                    case "bool":
+                        switch(Valorder.Tipo)
+                        {
                             case "bool":
                                 tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor >= Valorder.Valor, tipoRetorno) 
+                        }
+                        break;
+                    case "cadena":
+                        switch(Valorder.Tipo)
+                        {
+                            case "cadena":
+                                tipoRetorno = "bool";
                                 return nuevoSimbolo(Valorizq.Valor >= Valorder.Valor, tipoRetorno);	
-                                break;
                         }
                         break;
                 }
                 break;
+                break;
             case "<=":
                 switch(Valorizq.Tipo)
                 {
+                    case "char":
                     case "numero":
                     case "decimal":
-                    case "char":
-                    case "bool":
-                        // numero puede sumarse con cualquier otro tipo
-                        if(!Valorder){
-                            tipoRetorno="bool";
-                            break;
-                        }
                         switch(Valorder.Tipo)
                         {
                             case "numero":
                             case "decimal":
                             case "char":
+                                tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor <= Valorder.Valor, tipoRetorno)    
+                        }
+                        break;
+                    case "bool":
+                        switch(Valorder.Tipo)
+                        {
                             case "bool":
                                 tipoRetorno = "bool";
+                                return nuevoSimbolo(Valorizq.Valor <= Valorder.Valor, tipoRetorno) 
+                        }
+                        break;
+                    case "cadena":
+                        switch(Valorder.Tipo)
+                        {
+                            case "cadena":
+                                tipoRetorno = "bool";
                                 return nuevoSimbolo(Valorizq.Valor <= Valorder.Valor, tipoRetorno);	
-                                break;
                         }
                         break;
                 }
@@ -798,14 +849,16 @@
         }
     }
     //Imprimir
-    const Imprimir=function(TipoInstruccion,Operacion){
+    const Imprimir=function(TipoInstruccion,Operacion)
+    {
         return {
             TipoInstruccion:TipoInstruccion,
             Operacion:Operacion
         }
     }
     //Crear
-    const Crear = function(id, tipo, expresion){
+    const Crear = function(id, tipo, expresion)
+    {
         return {
             Id: id,
             Tipo: tipo,
@@ -817,13 +870,23 @@
     {
         if(ent.tablaSimbolos.has(crear.Id)) //Validar si existe la variable
         {
+            //error
             console.log("La variable ",crear.Id," ya ha sido declarada en este ambito");
-      		return;     //Aca se regresa el valor :3
+      		return;
         }
         var valor;
         if (crear && crear.Expresion)
         {
             valor = Evaluar(crear.Expresion);
+            if(crear.Tipo =="char" && valor.Tipo == "char")
+            {
+                if(crear.Expresion.Valor.length!=1)
+                {
+                    //error
+                    console.log("No se puede asignar "+crear.Expresion.Valor+" tipo no compatible con char")
+                    return
+                }
+            }
             if(crear.Tipo == "decimal" && valor.Tipo =="numero")
             {
                 valor.Tipo = "decimal";
@@ -832,6 +895,7 @@
             {
                 if(valor.Valor % 1 !=0)
                 {
+                    //error
                     console.log("El tipo no coincide con la variable a crear");
                     return
                 }
@@ -839,6 +903,7 @@
             else
             {
                 if(valor.Tipo != crear.Tipo){
+                    //error
                     console.log("El tipo no coincide con la variable a crear");
                     return
                 }
@@ -869,7 +934,8 @@
         ent.tablaSimbolos.set(crear.Id, valor);
     }
     //Asignar
-    const Asignar = function(id,Expresion){
+    const Asignar = function(id,Expresion)
+    {
         return{
             Id: id,
             Expresion: Expresion,
@@ -899,7 +965,17 @@
                 {
                     if(valor.Valor % 1 != 0)
                     {
+                        //error
                         console.log("Tipo incompatibles ",simbolotabla.Tipo,", double")
+                        return
+                    }
+                }
+                if(valor.Tipo =="char")
+                {
+                    if(valor.Valor.length!=0)
+                    {
+                        //error
+                        console.log("No se puede asignar "+valor.Valor+" tipo no compatible con char")
                         return
                     }
                 }
@@ -911,6 +987,7 @@
                 }
                 else
                 {
+                    //error
                     console.log("Tipos incompatibles ",simbolotabla.Tipo," , ",valor.Tipo)
                     return
                 }
@@ -1170,6 +1247,7 @@ INS
     | SWITCH                          {$$ = $1}
     | Rbreak PTCOMA                   {$$ = Romper()}
     | MIENTRAS                        {$$ = $1}
+    | FOR                             {$$ = $1}
 ;
 
 MIENTRAS
@@ -1193,6 +1271,11 @@ LCASOS
 
 WHILE
     :Rwhile PARIZQ Exp PARDER BLOQUE        {$$ = new Mientras($3,$5);}
+;
+
+FOR
+    :Rfor PARIZQ ASIGNAR Exp PTCOMA Exp PARDER BLOQUE         {}
+    |Rfor PARIZQ DECLARAR Exp PTCOMA Exp PARIZQ BLOQUE        {}
 ;
 BLOQUE
     : LLAVEIZQ LINS LLAVEDER    {$$ = $2}
