@@ -1,14 +1,13 @@
 const parse = require('./parser');
 
 parse.parse(`
-int a = 6;
-int b = 6;
-if(a != b){
-    print("Esto esta bien :3");
-}else {
-    print("Esto si esta malo :c");
+string Hola(string Nombre, string Apell)
+{
+    print("Hola "+ Nombre +" "+ Apell + " tu funcion ha sido implementada con exito :3");
+    return "Diego";
 }
-boolean z = false;
-z = ("hola" == "hola");
-print(z);
+string a = Hola("Diego", "Obin");
+
+print("Si llego hasta aca ;3");
 `);
+
