@@ -105,7 +105,7 @@
     {
         var Valorizq=null;
         var Valorder=null;
-      	//Simbolos
+        //Simbolos
         switch(Operacion.Tipo)
         {
             case "bool":
@@ -118,7 +118,7 @@
                 return nuevoSimbolo(parseFloat(Operacion.Valor),Operacion.Tipo);
             case "decimal":
                 return nuevoSimbolo(parseFloat(Operacion.Valor),Operacion.Tipo);
-          	case "ID":
+            case "ID":
                 var temp=ent;
                 while(temp!=null)
                 {
@@ -134,16 +134,19 @@
             case "funcion":
                 var res = EjecutarLlamada(Llamada(Operacion.Valor.Id,Operacion.Valor.Params), ent)
                 return res
+            case "casteo":
+                var res = EjecutarCasteo(Casteo(Operacion.Valor.Id,Operacion.Valor.Tipo), ent)
+                return res;
         }
-      	//Operaciones
+        //Operaciones
         Valorizq = Evaluar(Operacion.OperandoIzq, ent);
         if(Operacion.OperandoDer!=null)
         {
             Valorder=Evaluar(Operacion.OperandoDer, ent);
         }
-      	var tipoRetorno = "error";
-      	// identificar qué operaciones sí podemos realizar dependiendo del tipo
-    	switch (Operacion.Tipo)
+        var tipoRetorno = "error";
+        // identificar qué operaciones sí podemos realizar dependiendo del tipo
+        switch (Operacion.Tipo)
         {
             case "+":
                 switch(Valorizq.Tipo)
@@ -854,10 +857,11 @@
                 }
                 break;
         }
-      	console.log(
-          "Tipos incompatibles " + ( Valorizq ? Valorizq.Tipo : "" ) + 
-          " y " + ( Valorder ? Valorder.Tipo : "" )); 
-      	return nuevoSimbolo("@error@", "error");
+        console.log(
+        "Tipos incompatibles " + ( Valorizq ? Valorizq.Tipo : "" ) + 
+        " y " + ( Valorder ? Valorder.Tipo : "" )); 
+        return nuevoSimbolo("@error@", "error");
+
     }
  
     //Imprimir
@@ -890,15 +894,6 @@
         if (crear && crear.Expresion)
         {
             valor = Evaluar(crear.Expresion,ent);
-            if(crear.Tipo =="char" && valor.Tipo == "char")
-            {
-                if(crear.Expresion.Valor.length!=1)
-                {
-                    //error
-                    console.log("No se puede asignar "+crear.Expresion.Valor+" tipo no compatible con char")
-                    return
-                }
-            }
             if(crear.Tipo == "decimal" && valor.Tipo =="numero")
             {
                 valor.Tipo = "decimal";
@@ -913,6 +908,7 @@
                     return
                 }
             }
+    
             if(valor.Tipo != crear.Tipo)
             {
                 //error
@@ -1185,7 +1181,6 @@
 
     const Actualizacion = function(id, Expresion)
     {
-        console.log(Expresion)
         return{
             Id: id,
             Expresion: Expresion
@@ -1351,6 +1346,228 @@
         return retorno;
     }
     
+    const Casteo = function(Valor, Casteo)
+    {
+        return{
+            Valor: Valor,
+            Casteo: Casteo,
+            TipoInstruccion:"casteo"
+        }
+    }
+    function EjecutarCasteo(casteo,ent)
+    {
+        if(casteo.Casteo != "round" && casteo.Casteo != "truncate")
+        {
+            switch(casteo.Valor.Tipo)
+            {
+                case "numero":
+                    switch(casteo.Casteo)
+                    {
+                        case "cadena":
+                            return nuevoSimbolo(casteo.Valor.Valor+"","cadena");
+                        case "decimal":
+                            return nuevoSimbolo(casteo.Valor.Valor,"decimal");
+                        case "char":
+                            return nuevoSimbolo(String.fromCharCode(casteo.Valor.Valor)+"","char")
+                        default:
+                            console.log("Tipo de casteo no definida :c");
+                            return nuevoSimbolo("@error@","error");
+                    }
+                case "decimal":
+                    switch(casteo.Casteo)
+                    {
+                        case "numero":
+                            return nuevoSimbolo(Math.trunc(casteo.Valor.Valor),"numero");
+                        case "cadena":
+                            return nuevoSimbolo(casteo.Valor.Valor+"","cadena");
+                        default:
+                            console.log("Tipo de casteo no definida :c");
+                            return nuevoSimbolo("@error@","error");
+                    }
+                case "char":
+                    switch(casteo.Casteo)
+                    {
+                        case "numero":
+                            return nuevoSimbolo(casteo.Valor.Valor.charCodeAt(0),"numero");
+                        case "double":
+                            return nuevoSimbolo(casteo.Valor.Valor.charCodeAt(0),"decimal");
+                        default:
+                            console.log("Tipo de casteo no definida :c");
+                            return nuevoSimbolo("@error@","error");
+                    }
+
+                case "ID":
+                    var temp=ent;
+                    var encontrada = false
+                    while(temp!=null)
+                    {
+                        if(temp.tablaSimbolos.has(casteo.Valor.Valor+""))
+                        {
+                            valorID = temp.tablaSimbolos.get(casteo.Valor.Valor); 
+                            var cast = Casteo(valorID, casteo.Casteo)
+                            return EjecutarCasteo(cast,ent)
+                            
+                        }
+                        temp=temp.anterior;
+                    }
+                    if(!encontrada)
+                    {
+                        console.log("No se encontro la variable a castear");
+                        return nuevoSimbolo("@error@","error");
+                    }
+            }
+        }
+        // Si no es casteo normal, entonces es un toString(), toLower() o toUpper()
+        switch(casteo.Casteo)
+        {
+            case "cadena":
+                switch(casteo.Valor.Tipo)
+                {
+                    case "bool":
+                    case "numero":
+                    case "decimal":
+                        return nuevoSimbolo(casteo.Valor.Valor+"","cadena");
+                    case "ID":
+                        var temp=ent;
+                        var encontrada = false
+                        while(temp!=null)
+                        {
+                            if(temp.tablaSimbolos.has(casteo.Valor.Valor+""))
+                            {
+                                valorID = temp.tablaSimbolos.get(casteo.Valor.Valor); 
+                                var cast = Casteo(valorID, "cadena")
+                                return EjecutarCasteo(cast,ent)
+                            }
+                            temp=temp.anterior;
+                        }
+                        if(!encontrada)
+                        {
+                            console.log("No se encontro la variable a castear");
+                            return nuevoSimbolo("@error@","error");
+                        }
+                    default:
+                        console.log("Tipo de casteo no definida F");
+                        return nuevoSimbolo("@error@","error");
+                }
+                break;
+            case "lower":
+                if(casteo.Valor.Tipo=="ID")
+                {   
+                    var temp=ent;
+                    var encontrada = false
+                    while(temp!=null)
+                    {
+                        if(temp.tablaSimbolos.has(casteo.Valor.Valor+""))
+                        {
+                            valorID = temp.tablaSimbolos.get(casteo.Valor.Valor); 
+                            var cast = Casteo(valorID, "cadena")
+                            return EjecutarCasteo(cast,ent)
+                        }
+                        temp=temp.anterior;
+                    }
+                    if(!encontrada)
+                    {
+                        console.log("No se encontro la variable a castear");
+                        return nuevoSimbolo("@error@","error");
+                    }
+                }
+                if(casteo.Valor.Tipo=="cadena")
+                {
+                    return nuevoSimbolo(casteo.Valor.Valor.toLowerCase(),"cadena");
+                }
+                console.log("Error semantico en la funcion toLower")
+                return nuevoSimbolo("@error","error");
+                break;
+            case "upper":
+                if(casteo.Valor.Tipo=="ID")
+                    {   
+                        var temp=ent;
+                        var encontrada = false
+                        while(temp!=null)
+                        {
+                            if(temp.tablaSimbolos.has(casteo.Valor.Valor+""))
+                            {
+                                valorID = temp.tablaSimbolos.get(casteo.Valor.Valor); 
+                                var cast = Casteo(valorID, "cadena")
+                                return EjecutarCasteo(cast,ent)
+                            }
+                            temp=temp.anterior;
+                        }
+                        if(!encontrada)
+                        {
+                            console.log("No se encontro la variable a castear");
+                            return nuevoSimbolo("@error@","error");
+                        }
+                    }
+                if(casteo.Valor.Tipo=="cadena")
+                {
+                    return nuevoSimbolo(casteo.Valor.Valor.toUpperCase(),"cadena");
+                }
+                console.log("Error semantico en la funcion toLower")
+                return nuevoSimbolo("@error","error");
+                break;
+            case "truncate":
+                if(casteo.Valor.Tipo=="ID")
+                {   
+                    var temp=ent;
+                    var encontrada = false
+                    while(temp!=null)
+                    {
+                        if(temp.tablaSimbolos.has(casteo.Valor.Valor+""))
+                        {
+                            valorID = temp.tablaSimbolos.get(casteo.Valor.Valor); 
+                            var cast = Casteo(valorID, "truncate")
+                            return EjecutarCasteo(cast,ent)
+                        }
+                        temp=temp.anterior;
+                    }
+                    if(!encontrada)
+                    {
+                        console.log("No se encontro la variable a castear");
+                        return nuevoSimbolo("@error@","error");
+                    }
+                }
+                if(casteo.Valor.Tipo=="decimal")
+                {
+                    return nuevoSimbolo(Math.trunc(casteo.Valor.Valor),"numero")
+                }
+                console.log("Se esperaba una expresion de tipo double")
+                return nuevoSimbolo("@error","error");
+                break;
+            case "round":
+                if(casteo.Valor.Tipo=="ID")
+                {   
+                    var temp=ent;
+                    var encontrada = false
+                    while(temp!=null)
+                    {
+                        if(temp.tablaSimbolos.has(casteo.Valor.Valor+""))
+                        {
+                            valorID = temp.tablaSimbolos.get(casteo.Valor.Valor); 
+                            var cast = Casteo(valorID, "round")
+                            return EjecutarCasteo(cast,ent)
+                        }
+                        temp=temp.anterior;
+                    }
+                    if(!encontrada)
+                    {
+                        console.log("No se encontro la variable a castear");
+                        return nuevoSimbolo("@error@","error");
+                    }
+                }
+                if(casteo.Valor.Tipo=="numero" || casteo.Valor.Tipo=="decimal")
+                {
+                    return nuevoSimbolo(Math.round(casteo.Valor.Valor),"numero")
+                }
+                console.log("Se esperaba una expresion de tipo double")
+                return nuevoSimbolo("@error","error"); 
+                break;
+
+        
+        }
+        
+    }
+    
     
 %}
 /* Definición Léxica */
@@ -1361,9 +1578,10 @@
 %%
 /* Espacios en blanco */
 "//".*            	{}
-[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]           {}
 [ \r\t]+            {}
 \n                  {}
+(\/\/).*                             {} 
+[/][][^][]+([^/][^][]+)*[/]  {}
 
 "print"		        return "Rprint";
 "if"                return "Rif";
@@ -1378,6 +1596,11 @@
 "string"            return "Rstring";
 "void"              return "Rvoid";
 "return"            return "Rretorno";
+"toString"          return "RtoString";
+"toLower"           return "RtoLower";
+"toUpper"           return "RtoUpper";
+"round"             return "Rround";
+"truncate"          return "Rtruncate"
 
 
 "while"             return "Rwhile";
@@ -1412,8 +1635,6 @@
 "&&"                return 'AND';
 "||"                return 'OR';
 "!"                 return 'NOT';
-"++"                return 'U_MAS';
-"--"                return 'U_MENOS'
 
 [a-zA-Z][a-zA-Z0-9_]*   return 'ID';
 [0-9]+("."[0-9]+)?\b    return 'NUMERO';  
@@ -1432,13 +1653,13 @@
 %left 'OR'
 %left 'AND'
 %right 'NOT'
+%right 'FCAST'
 %left 'IGUALDAD' 'DIFERENTE'
 %left 'MENOR' 'MAYOR' 'MAYORI' 'MENORI'
 %left 'MAS' 'MENOS' 
 %left 'POR' 'DIV' 'MOD'
 %left 'POT'
 %left UMENOS
-%right 'FCAST'
 %left 'U_MAS' 'U_MENOS'
 
 %start INI
@@ -1467,7 +1688,7 @@ INS
     | FUNCIONES                       {$$ = $1}
     | LLAMADA  PTCOMA                 {$$ = $1}
     | RETORNO                         {$$ = $1}
-	//| error INS {console.log("Se recupero en ",yytext," (",this._$.last_line,",",this._$.last_column,")");}
+	| error INS {console.log("Se recupero en ",yytext," (",this._$.last_line,",",this._$.last_column,")");}
 ;
 
 RETORNO   
@@ -1553,6 +1774,10 @@ LLAMADA
     : ID PARIZQ PARDER            { $$=Llamada($1,[]); }
     | ID PARIZQ L_EXP PARDER      { $$=Llamada($1,$3); }
 ;
+CASTEO
+    : PARIZQ TIPO2 PARDER Exp       {$$ = Casteo({Expresion:$4,Tipo:$2}, "casteo") }
+    | PARIZQ error Exp              {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
+;
 
 TIPO2
     : Rint          {$$ = "numero"}
@@ -1597,7 +1822,14 @@ Exp
     | TRUE                          { $$=nuevoSimbolo(true,"bool"); }
     | FALSE                         { $$=nuevoSimbolo(false,"bool"); }
     | PARIZQ Exp PARDER             { $$=$2}
-    //| PARIZQ TIPO2 PARDER Exp %prec FCAST    {$$ = nuevoSimbolo($4, $2) }
+    | PARIZQ TIPO2 PARDER Exp     %prec FCAST    {$$ = nuevoSimbolo({Id:$4,Tipo:$2}, "casteo") }
+    | RtoString PARIZQ Exp PARDER %prec FCAST    {$$ = nuevoSimbolo({Id:$3,Tipo:"cadena"}, "casteo") }
+    | RtoLower PARIZQ Exp PARDER  %prec FCAST    {$$ = nuevoSimbolo({Id:$3,Tipo:"lower"}, "casteo") }
+    | RtoUpper PARIZQ Exp PARDER  %prec FCAST    {$$ = nuevoSimbolo({Id:$3,Tipo:"upper"}, "casteo") }
+    | Rtruncate PARIZQ Exp PARDER  %prec FCAST    {$$ = nuevoSimbolo({Id:$3,Tipo:"truncate"}, "casteo") }
+    | Rround PARIZQ Exp PARDER  %prec FCAST    {$$ = nuevoSimbolo({Id:$3,Tipo:"round"}, "casteo") }
+    
+    
 ;
 
 L_EXP 
