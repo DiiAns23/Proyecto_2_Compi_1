@@ -1,10 +1,8 @@
 const parse = require('./parser');
 
-parse.parse(`
-double a = 8.99;
-int b = truncate(a);
-print(b);
-
+parse.parse(` 
+string [] a = {"Diego","Obin","Rosales", "201903865"};
+int [] b = new int[4];
 `);
 /*
 void metodo1(){
