@@ -1,4 +1,5 @@
 %{
+    var imprimibles = [];
     var pilaCiclosSw = [];
     var pilaFunciones = [];
   	// entorno
@@ -129,6 +130,30 @@
                 }
                 console.log("No existe la variable " + Operacion.Valor);
                 return nuevoSimbolo("@error@","error");
+            case "vector":
+                var temp=ent;
+                while(temp!=null)
+                {
+                    if(temp.tablaSimbolos.has(Operacion.Valor.Id))
+                    {
+                        var valorID = temp.tablaSimbolos.get(Operacion.Valor.Id);
+                        // nombre    ["Diego","Obin", "Rosales"] 3 < 3
+                        if(Operacion.Valor.Params.Tipo =="numero" && Operacion.Valor.Params.Valor>=0 && Operacion.Valor.Params.Valor<valorID.length)
+                        {
+                            valorID = valorID[Operacion.Valor.Params.Valor]
+                            return nuevoSimbolo(valorID.Valor,valorID.Tipo);
+                        }
+                        else
+                        {
+                            console.log("No existe la posicion " + Operacion.Valor.Params.Valor);
+                            return nuevoSimbolo("@error@","error");
+                        }
+                    }
+                    temp=temp.anterior;
+                }
+                console.log("No existe la variable " + Operacion.Valor);
+                return nuevoSimbolo("@error@","error");
+                break;
             case "funcion":
                 var res = EjecutarLlamada(Llamada(Operacion.Valor.Id,Operacion.Valor.Params), ent)
                 return res
@@ -875,7 +900,9 @@
         var dam;
         if(dimension)
         {
-            dam = dimension.Valor
+            dam = dimension
+        }else{
+            dam = null
         }
         return {
             Id: id,
@@ -911,13 +938,14 @@
             {
                 if(crear.Tipo == crear.Tipo2)
                 {
+                    crear.Tipo2 = "vector";
                     valor = []
                     for(var exp of crear.Expresion)
                     {
                         valore = Evaluar(exp,ent)
-                        valor.push(valore)
                         if(valore.Tipo == crear.Tipo)
                         {
+                            valor.push(valore)
                         }
                         else
                         {
@@ -925,6 +953,7 @@
                             return
                         }
                     }
+
                 }
                 else
                 {
@@ -961,10 +990,11 @@
             {
                 if(crear.Tipo == crear.Tipo2)
                 {
-                    var dimension = crear.Dimension
-                    var valor = []
+                    crear.Tipo2 = "vector";
+                    var dimension = Evaluar(crear.Dimension,ent)
+                    valor = []
                     var tmp = ""
-                    for(var exp = 0; exp<dimension; exp++)
+                    for(var exp = 0; exp<dimension.Valor; exp++)
                     {
                         switch(crear.Tipo)
                         {
@@ -973,9 +1003,6 @@
                                 break;
                             case "decimal":
                                 tmp = nuevoSimbolo("0.00","decimal");
-                                break;
-                            case "bool":
-                                tmp = nuevoSimbolo(true,"bool");
                                 break;
                             case "char":
                                 tmp = nuevoSimbolo('\u0000',"char");
@@ -994,16 +1021,17 @@
                 }
             }
         }
-        console.log(valor)
         //Crear objeto a insertar
+        //console.log(valor)
         ent.tablaSimbolos.set(crear.Id, valor);
     }
     //Asignar
-    const Asignar = function(id,Expresion)
+    const Asignar = function(id,Expresion,Expresion2)
     {
         return{
             Id: id,
             Expresion: Expresion,
+            Expresion2: Expresion2,
             TipoInstruccion: "asignar"
         }
     }
@@ -1020,26 +1048,50 @@
             {
                 // evaluar el resultado de la expresión 
                 var simbolotabla = temp.tablaSimbolos.get(asignar.Id);
-                if(valor.Tipo =="char")
+                if(!asignar.Expresion2)
                 {
-                    if(valor.Valor.length!=0)
+                    if(valor.Tipo =="char")
                     {
-                        //error
-                        console.log("No se puede asignar "+valor.Valor+" tipo no compatible con char")
+                        if(valor.Valor.length!=0)
+                        {
+                            //error
+                            console.log("No se puede asignar "+valor.Valor+" tipo no compatible con char")
+                            return
+                        }
+                    }
+                    if (simbolotabla.Tipo == valor.Tipo)
+                    {
+                        // reasignar el valor
+                        temp.tablaSimbolos.set(asignar.Id, valor);
                         return
                     }
-                }
-                if (simbolotabla.Tipo == valor.Tipo)
+                    else
+                    {
+                        //error
+                        console.log("Tipos incompatibles ",simbolotabla.Tipo," , ",valor.Tipo)
+                        return
+                    }
+                }else
                 {
-                	// reasignar el valor
-                    temp.tablaSimbolos.set(asignar.Id, valor);
-                    return
-                }
-                else
-                {
-                    //error
-                    console.log("Tipos incompatibles ",simbolotabla.Tipo," , ",valor.Tipo)
-                    return
+                    var aux = Evaluar(asignar.Expresion2,ent)
+                    if(aux.Tipo == "numero" && valor.Tipo == simbolotabla[0].Tipo)
+                    {
+                        if(aux.Valor >=0 && aux.Valor<simbolotabla.length)
+                        {
+                            simbolotabla[aux.Valor] = valor
+                            return;
+                        }
+                        else
+                        {
+                            console.log("Ocurrio un error durante la asignacion del valor en el vector: ", asignar.Id)
+                            return
+                        }
+                    }
+                    else
+                    {
+                        console.log("Ocurrio un error durante la asignacion del valor en el vector: ", asignar.Id)
+                        return
+                    }
                 }
             }
             temp=temp.anterior;
@@ -1770,8 +1822,9 @@ PARAMETROS
 ;
 
 ASIGNAR
-    : ID IGUAL Exp              {$$ = Asignar($1,$3)}
-    | ID INCRE                  {$$ = Asignar($1,NuevaOperacion(nuevoSimbolo($1,"ID"),nuevoSimbolo(parseFloat(1),"numero"),$2))}
+    : ID IGUAL Exp              {$$ = Asignar($1,$3,null)}
+    | ID INCRE                  {$$ = Asignar($1,NuevaOperacion(nuevoSimbolo($1,"ID"),nuevoSimbolo(parseFloat(1),"numero"),$2),null)}
+    | ID CORIZR Exp CORDER IGUAL Exp {$$ = Asignar($1,$6,$3)}
     | ID error PTCOMA           {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")")}
 ;
 
@@ -1850,8 +1903,6 @@ TIPO
     | Rchar         {$$ = "char"}
 ;
 
-
-
 Exp 
     : Exp MAS Exp                   { $$=NuevaOperacion($1,$3,"+"); }
     | Exp MENOS Exp                 { $$=NuevaOperacion($1,$3,"-"); }
@@ -1876,7 +1927,7 @@ Exp
     | ID							{ $$=nuevoSimbolo($1,"ID");}
     | ID PARIZQ PARDER              { $$=nuevoSimbolo({Id:$1,Params:[]},"funcion"); }
     | ID PARIZQ L_EXP PARDER        { $$=nuevoSimbolo({Id:$1,Params:$3},"funcion"); }
-    | ID CORIZR Exp CORDER          { $$}
+    | ID CORIZR Exp CORDER          { $$=nuevoSimbolo({Id:$1,Params:$3},"vector")}
     | NUMERO                        { $$=nuevoSimbolo(parseFloat($1),"numero"); }
     | DECIMAL                        { $$=nuevoSimbolo(parseFloat($1),"decimal"); }
     | TRUE                          { $$=nuevoSimbolo(true,"bool"); }

@@ -1,8 +1,10 @@
 const parse = require('./parser');
 
-parse.parse(` 
-string [] a = {"Diego","Obin","Rosales", "201903865"};
-int [] b = new int[4];
+parse.parse(`
+//COMENTARIO
+INT A = 6*4 + -5;
+print(9-8*7+90);
+
 `);
 /*
 void metodo1(){
