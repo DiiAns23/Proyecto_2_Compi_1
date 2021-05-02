@@ -1,4 +1,5 @@
 %{
+    var imprimibles = [];
     var pilaCiclosSw = [];
     var pilaFunciones = [];
   	// entorno
@@ -47,7 +48,6 @@
                     EjecutarLlamada(elemento,ent);
                     retorno = null
                     break
-                case "exec":
 
                 case "return":
                     if (pilaFunciones.length>0)
@@ -100,7 +100,6 @@
             Tipo:Tipo
         }
     }
-
     function Evaluar(Operacion,ent)
     {
         var Valorizq=null;
@@ -131,6 +130,53 @@
                 }
                 console.log("No existe la variable " + Operacion.Valor);
                 return nuevoSimbolo("@error@","error");
+            case "vector":
+                var temp=ent;
+                while(temp!=null)
+                {
+                    if(temp.tablaSimbolos.has(Operacion.Valor.Id))
+                    {
+                        var valorID = temp.tablaSimbolos.get(Operacion.Valor.Id);
+                        // nombre    ["Diego","Obin", "Rosales"] 3 < 3
+                        if(Operacion.Valor.Params.Tipo =="numero" && Operacion.Valor.Params.Valor>=0 && Operacion.Valor.Params.Valor<valorID.length)
+                        {
+                            valorID = valorID[Operacion.Valor.Params.Valor]
+                            return nuevoSimbolo(valorID.Valor,valorID.Tipo);
+                        }
+                        else
+                        {
+                            console.log("No existe la posicion " + Operacion.Valor.Params.Valor);
+                            return nuevoSimbolo("@error@","error");
+                        }
+                    }
+                    temp=temp.anterior;
+                }
+                console.log("No existe la variable " + Operacion.Valor);
+                return nuevoSimbolo("@error@","error");
+                break;
+            case "lista":
+                var temp=ent;
+                while(temp!=null)
+                {
+                    if(temp.tablaSimbolos.has(Operacion.Valor.Id))
+                    {
+                        var valorID = temp.tablaSimbolos.get(Operacion.Valor.Id);
+                        if(Operacion.Valor.Params.Tipo =="numero" && Operacion.Valor.Params.Valor>=0 && Operacion.Valor.Params.Valor<valorID.length)
+                        {
+                            valorID = valorID[Operacion.Valor.Params.Valor+1]
+                            return nuevoSimbolo(valorID.Valor,valorID.Tipo);
+                        }
+                        else
+                        {
+                            console.log("No existe la posicion " + Operacion.Valor.Params.Valor);
+                            return nuevoSimbolo("@error@","error");
+                        }
+                    }
+                    temp=temp.anterior;
+                }
+                console.log("No existe la variable " + Operacion.Valor);
+                return nuevoSimbolo("@error@","error");
+                break;
             case "funcion":
                 var res = EjecutarLlamada(Llamada(Operacion.Valor.Id,Operacion.Valor.Params), ent)
                 return res
@@ -863,7 +909,6 @@
         return nuevoSimbolo("@error@", "error");
 
     }
- 
     //Imprimir
     const Imprimir=function(TipoInstruccion,Operacion)
     {
@@ -873,11 +918,14 @@
         }
     }
     //Crear
-    const Crear = function(id, tipo, expresion)
+    const Crear = function(id, tipo,tipo2,dimension,expresion)
     {
+
         return {
             Id: id,
             Tipo: tipo,
+            Tipo2: tipo2,
+            Dimension: dimension,
             Expresion: expresion,
             TipoInstruccion: "crear"
         }
@@ -893,60 +941,122 @@
         var valor;
         if (crear && crear.Expresion)
         {
-            valor = Evaluar(crear.Expresion,ent);
-            if(crear.Tipo == "decimal" && valor.Tipo =="numero")
+            if(!crear.Tipo2)
             {
-                valor.Tipo = "decimal";
-            }
-            if(crear.Tipo == "numero" && valor.Tipo == "numero")
-            {
-                if(valor.Valor)
-                if(valor.Valor % 1 !=0)
+                valor = Evaluar(crear.Expresion,ent);    
+                if(valor.Tipo != crear.Tipo)
                 {
                     //error
-                    console.log("El tipo no coincide con la variable a crear");
+                    console.log("El tipo no coincide con la variable a crear");                    
                     return
                 }
             }
-    
-            if(valor.Tipo != crear.Tipo)
+            else
             {
-                //error
-                console.log("El tipo no coincide con la variable a crear");                    
-                return
+                if(crear.Tipo == crear.Tipo2)
+                {
+                    crear.Tipo2 = "vector";
+                    valor = []
+                    for(var exp of crear.Expresion)
+                    {
+                        valore = Evaluar(exp,ent)
+                        if(valore.Tipo == crear.Tipo)
+                        {
+                            valor.push(valore)
+                        }
+                        else
+                        {
+                            console.log("Los tipos de datos no coinciden")
+                            return
+                        }
+                    }
+
+                }
+                else
+                {
+                    console.log("Los tipos de datos no coinciden")
+                    return
+                }
             }
 
         }
         else
         {
-            switch(crear.Tipo)
+            if(!crear.Tipo2)
             {
-                case "numero":
-                    valor = nuevoSimbolo(0,"numero");
-                    break;
-                case "decimal":
-                    valor = nuevoSimbolo("0.00","decimal");
-                    break;
-                case "bool":
-                    valor = nuevoSimbolo(true,"bool");
-                    break;
-                case "char":
-                    valor = nuevoSimbolo('\u0000',"char");
-                    break;
-                case "cadena":
-                    valor = nuevoSimbolo("","cadena");
-                    break;
+                switch(crear.Tipo)
+                {
+                    case "numero":
+                        valor = nuevoSimbolo(0,"numero");
+                        break;
+                    case "decimal":
+                        valor = nuevoSimbolo("0.00","decimal");
+                        break;
+                    case "bool":
+                        valor = nuevoSimbolo(true,"bool");
+                        break;
+                    case "char":
+                        valor = nuevoSimbolo('\u0000',"char");
+                        break;
+                    case "cadena":
+                        valor = nuevoSimbolo("","cadena");
+                        break;
+                }
+            }
+            else
+            {
+                if(crear.Tipo == crear.Tipo2)
+                {
+                    var dimension;
+                    valor = []
+                    if(crear.Dimension)
+                    {
+                        crear.Tipo2 = "vector";
+                        dimension = Evaluar(crear.Dimension,ent)
+                        var tmp = ""
+                        for(var exp = 0; exp<dimension.Valor; exp++)
+                        {
+                            switch(crear.Tipo)
+                            {
+                                case "numero":
+                                    tmp = nuevoSimbolo(0,"numero");
+                                    break;
+                                case "decimal":
+                                    tmp = nuevoSimbolo("0.00","decimal");
+                                    break;
+                                case "char":
+                                    tmp = nuevoSimbolo('\u0000',"char");
+                                    break;
+                                case "cadena":
+                                    tmp = nuevoSimbolo("","cadena");
+                                    break;
+                            }
+                            valor.push(tmp)
+                        }
+                    }
+                    else
+                    {
+                        crear.Tipo2 = "lista";
+                        valor.push(nuevoSimbolo("lista",crear.Tipo))
+                    }
+                }
+                else
+                {
+                    console.log("Los tipos de datos no coinciden")
+                    return
+                }
             }
         }
         //Crear objeto a insertar
         ent.tablaSimbolos.set(crear.Id, valor);
     }
     //Asignar
-    const Asignar = function(id,Expresion)
+    const Asignar = function(id,Expresion,Expresion2)
     {
         return{
             Id: id,
             Expresion: Expresion,
+            Expresion2: Expresion2,
             TipoInstruccion: "asignar"
         }
     }
@@ -962,49 +1072,77 @@
             if (temp.tablaSimbolos.has(asignar.Id))
             {
                 // evaluar el resultado de la expresión 
-                var simbolotabla = temp.tablaSimbolos.get(asignar.Id);	
-              	
-                // comparar los tipos
-                if(simbolotabla.Tipo =="decimal" && valor.Tipo =="numero")
+                var simbolotabla = temp.tablaSimbolos.get(asignar.Id);
+                if(!asignar.Expresion2)
                 {
-                    valor.Tipo = "decimal"
-                }
-                if(simbolotabla.Tipo == "numero" && valor.Tipo =="numero")
-                {
-                    if(valor.Valor % 1 != 0)
+                    //console.log("Chale entro aqui :c")
+                    if(valor.Tipo =="char")
                     {
-                        //error
-                        console.log("Tipo incompatibles ",simbolotabla.Tipo,", double")
+                        if(valor.Valor.length!=0)
+                        {
+                            //error
+                            console.log("No se puede asignar "+valor.Valor+" tipo no compatible con char")
+                            return
+                        }
+                    }
+                    if(simbolotabla.Tipo =="decimal" && valor.Tipo =="numero")
+                    {
+                        valor.Tipo = "decimal";
+                    }
+
+                    if (simbolotabla.Tipo == valor.Tipo)
+                    {
+                        // reasignar el valor
+                        temp.tablaSimbolos.set(asignar.Id, valor);
                         return
                     }
-                }
-                if(valor.Tipo =="char")
-                {
-                    if(valor.Valor.length!=0)
+                    else
                     {
                         //error
-                        console.log("No se puede asignar "+valor.Valor+" tipo no compatible con char")
+                        console.log("Tipos incompatibles ",simbolotabla.Tipo," , ",valor.Tipo)
                         return
                     }
-                }
-                if (simbolotabla.Tipo == valor.Tipo)
-                {
-                	// reasignar el valor
-                    temp.tablaSimbolos.set(asignar.Id, valor);
-                    return
                 }
                 else
                 {
-                    //error
-                    console.log("Tipos incompatibles ",simbolotabla.Tipo," , ",valor.Tipo)
-                    return
+
+                    if(asignar.Expresion2.Tipo != "lista")
+                    {
+                        var aux = Evaluar(asignar.Expresion2,ent)
+                        if(aux.Tipo == "numero" && valor.Tipo == simbolotabla[0].Tipo)
+                        {
+                            if(aux.Valor >=0 && aux.Valor<simbolotabla.length)
+                            {
+                                simbolotabla[aux.Valor] = valor
+                                return;
+                            }
+                            else
+                            {
+                                console.log("Ocurrio un error durante la asignacion del valor en el vector: ", asignar.Id)
+                                return
+                            }
+                        }
+                        else
+                        {
+                            console.log("Ocurrio un error durante la asignacion del valor en el vector: ", asignar.Id)
+                            return
+                        }
+                    }
+                    else
+                    {
+                        if(valor.Tipo == simbolotabla[0].Tipo)
+                        {                              
+                            simbolotabla.push(valor);
+                            temp.tablaSimbolos.set(asignar.Id, simbolotabla);
+                            return
+                        }
+                    }
                 }
             }
             temp=temp.anterior;
         }
         console.log("No se encontro la variable ",asignar.Id);
     }
-
     //If
     const Si=function(Condicion,BloqueSi,BloqueElse)
     {
@@ -1037,6 +1175,14 @@
             console.log("Se esperaba una condicion dentro del If");
         }
     }
+    
+    const ElseIf = function(Expresion,Bloque)
+    {
+        return{
+            Expresion: Expresion,
+            Bloque: Bloque
+        }
+    }
     const Ternario = function(Condicion,BloqueSi, BloqueSino)
     {
         return{
@@ -1044,6 +1190,12 @@
             BloqueSi: BloqueSi,
             BloqueSino: BloqueSino,
             TipoInstruccion: "ternario"
+        }
+    }
+    function EjecutarTernario(ternario,ent)
+    {
+        return{
+            Ternario:null
         }
     }
     //Switch 
@@ -1068,16 +1220,16 @@
     function EjecutarSeleccionar(seleccionar,ent)
     {
         pilaCiclosSw.push("seleccionar");
-		var ejecutado = false;  
+		var ejecutado = false; //esta variable hace que se ejecute el DEFAULT;
       	var nuevo = Entorno(ent);
         for(var elemento of seleccionar.LCasos)
         {
             var condicion=Evaluar(NuevaOperacion(seleccionar.Expresion,elemento.Expresion,"=="), ent)
             if(condicion.Tipo=="bool")
             {
-              	if(condicion.Valor || ejecutado)
+              	if(condicion.Valor)//Se le puede poner || ejecutado para que evalue todas las demas expresiones aunque no se cumplan
               	{
-                	ejecutado=true;
+                	//ejecutado=true;
                 	var res = EjecutarBloque(elemento.Bloque, nuevo)
                 	if(res && res.TipoInstruccion=="romper")
                 	{
@@ -1350,13 +1502,13 @@
     {
         return{
             Valor: Valor,
-            Casteo: Casteo,
+            Casteo: Casteo, //cadena
             TipoInstruccion:"casteo"
         }
     }
     function EjecutarCasteo(casteo,ent)
     {
-        if(casteo.Casteo != "round" && casteo.Casteo != "truncate")
+        if(casteo.Casteo != "round" && casteo.Casteo != "truncate" && casteo.Casteo != "typeof" && casteo.Casteo != "length")
         {
             switch(casteo.Valor.Tipo)
             {
@@ -1415,6 +1567,7 @@
                         console.log("No se encontro la variable a castear");
                         return nuevoSimbolo("@error@","error");
                     }
+                
             }
         }
         // Si no es casteo normal, entonces es un toString(), toLower() o toUpper()
@@ -1562,18 +1715,96 @@
                 console.log("Se esperaba una expresion de tipo double")
                 return nuevoSimbolo("@error","error"); 
                 break;
-
-        
+            case "length":
+                var aux = Evaluar(casteo.Valor,ent)
+                switch(aux.Tipo)
+                {
+                    case "cadena":
+                        return nuevoSimbolo(aux.Valor.length,"numero")
+                        break;
+                    default:
+                        if(aux.Tipo!="numero" && aux.Tipo!="bool" && aux.Tipo!="decimal" && aux.Tipo!="char")
+                        {
+                            var temp=ent;
+                            var encontrada = false
+                            while(temp!=null)
+                            {
+                                if(temp.tablaSimbolos.has(casteo.Valor.Valor+""))
+                                {
+                                    valorID = temp.tablaSimbolos.get(casteo.Valor.Valor); 
+                                    if(valorID[0].Valor =="lista")
+                                    {
+                                        return nuevoSimbolo(valorID.length-1,"numero")
+                                    }
+                                    else
+                                    {
+                                        return nuevoSimbolo(valorID.length,"numero")
+                                    }
+                                }
+                                temp=temp.anterior;
+                            }
+                            if(!encontrada)
+                            {
+                                console.log("No se encontro la variable a castear");
+                                return nuevoSimbolo("@error@","error");
+                            }
+                        }
+                        else
+                        {
+                            console.log("No se puede realizar :c");
+                            return nuevoSimbolo("@error@","error");
+                        }
+                    
+                }
+                break;
+            case "typeof":
+                var aux = Evaluar(casteo.Valor,ent)
+                switch(aux.Tipo)
+                {
+                    case "cadena":
+                        return nuevoSimbolo("string","cadena")
+                    case "numero":
+                        return nuevoSimbolo("int","cadena")
+                    case "decimal":
+                        return nuevoSimbolo("double","cadena")
+                    case "bool":
+                        return nuevoSimbolo("bool","cadena")
+                    case "char":
+                        return nuevoSimbolo("char","cadena")
+                    default:
+                        var temp=ent;
+                        var encontrada = false
+                        while(temp!=null)
+                        {
+                            if(temp.tablaSimbolos.has(casteo.Valor.Valor+""))
+                            {
+                                valorID = temp.tablaSimbolos.get(casteo.Valor.Valor); 
+                                if(valorID[0].Valor =="lista")
+                                {
+                                    return nuevoSimbolo("list","cadena")
+                                }
+                                else
+                                {
+                                    return nuevoSimbolo("vector","cadena")
+                                }
+                            }
+                            temp=temp.anterior;
+                        }
+                         if(!encontrada)
+                        {
+                            console.log("No se encontro la variable a castear");
+                            return nuevoSimbolo("@error@","error");
+                        }
+                }
         }
         
-    }
-    
-    
+    } 
 %}
 /* Definición Léxica */
 %lex
 
 %options case-insensitive
+%x string
 
 %%
 /* Espacios en blanco */
@@ -1581,7 +1812,7 @@
 [ \r\t]+            {}
 \n                  {}
 (\/\/).*                             {} 
-[/][][^][]+([^/][^][]+)*[/]  {}
+[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]  {}
 
 "print"		        return "Rprint";
 "if"                return "Rif";
@@ -1601,18 +1832,24 @@
 "toUpper"           return "RtoUpper";
 "round"             return "Rround";
 "truncate"          return "Rtruncate"
-
-
 "while"             return "Rwhile";
 "break"             return "Rbreak";
-
 "for"               return "Rfor";
+"new"               return "Rnew";
+"list"              return "Rlist";
+"add"               return "Radd";
+"exec"              return "Rexec";
+"length"            return "Rlength";
+"typeof"            return "Rtypeof";
 
+"."                 return "PUNTO";
 ":"                 return 'DPUNTOS'
 ";"                 return 'PTCOMA';
 ","                 return 'COMA';
 "("                 return 'PARIZQ';
 ")"                 return 'PARDER';
+"["                 return 'CORIZR';
+"]"                 return 'CORDER';
 "{"                 return 'LLAVEIZQ';
 "}"                 return "LLAVEDER";
 "true"              return 'TRUE';
@@ -1637,8 +1874,17 @@
 "!"                 return 'NOT';
 
 [a-zA-Z][a-zA-Z0-9_]*   return 'ID';
-[0-9]+("."[0-9]+)?\b    return 'NUMERO';  
-\"((\\\")|[^\n\"])*\"   { yytext = yytext.substr(1,yyleng-2); return 'Cadena'; }
+[0-9]+("."[0-9]+)+\b    return 'DECIMAL';  
+[0-9]+\b                return 'NUMERO';  
+["]                             {cadena="";this.begin("string");}
+<string>[^"\\]+                 {cadena+=yytext;}
+<string>"\\\""                  {cadena+="\"";}
+<string>"\\n"                   {cadena+="\n";}
+<string>"\\t"                   {cadena+="\t";}
+<string>"\\\\"                  {cadena+="\\";}
+<string>"\\\'"                  {cadena+="\'";}
+<string>["]                     {yytext=cadena; this.popState(); return 'Cadena';}
+
 \'((\\\')|[^\n\'])*\'	{ yytext = yytext.substr(1,yyleng-2); return 'Char'; }
 \`[^\n\`]*\`			{ yytext = yytext.substr(1,yyleng-2); return 'TEMPLATE'; }
 
@@ -1660,7 +1906,6 @@
 %left 'POR' 'DIV' 'MOD'
 %left 'POT'
 %left UMENOS
-%left 'U_MAS' 'U_MENOS'
 
 %start INI
 
@@ -1681,6 +1926,8 @@ INS
     | DECLARAR  PTCOMA                {$$ = $1}
     | ASIGNAR   PTCOMA                {$$ = $1}
     | IF                              {$$ = $1}
+    //| IFELSEIF                        {$$ = $1}
+    //| TERNARIO                        {$$ = $1}
     | WHILE                           {$$ = $1}
     | FOR                             {$$ = $1}
     | SWITCH                          {$$ = $1}
@@ -1697,8 +1944,11 @@ RETORNO
 ;
 
 DECLARAR
-    : TIPO ID                 {$$ = Crear($2,$1,null)}
-    | TIPO ID IGUAL Exp       {$$ = Crear($2,$1,$4)}
+    : TIPO ID                 {$$ = Crear($2,$1,null,null,null)}
+    | TIPO ID IGUAL Exp       {$$ = Crear($2,$1,null,null,$4)}
+    | TIPO CORIZR CORDER ID IGUAL Rnew TIPO CORIZR Exp CORDER       {$$ = Crear($4,$1,$7,$9,null)}
+    | TIPO CORIZR CORDER ID IGUAL LLAVEIZQ L_EXP LLAVEDER           {$$ = Crear($4,$1,$1,null,$7)}
+    | Rlist MENOR TIPO MAYOR ID IGUAL Rnew Rlist MENOR TIPO MAYOR  {$$ = Crear($5,$3,$10,null,null)}
     | TIPO error PTCOMA       {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")")}
 ;
 
@@ -1711,13 +1961,16 @@ FUNCIONES
 ;
 
 PARAMETROS
-    : PARAMETROS COMA TIPO ID   { $$=$1;$$.push(Crear($4,$3,null)) }
-    | TIPO ID                   { $$=[];$$.push(Crear($2,$1,null)) }
+    : PARAMETROS COMA TIPO ID   { $$=$1;$$.push(Crear($4,$3,null,null)) }
+    | TIPO ID                   { $$=[];$$.push(Crear($2,$1,null,null)) }
 ;
 
 ASIGNAR
-    : ID IGUAL Exp              {$$ = Asignar($1,$3)}
-    | ID INCRE                  {$$ = Asignar($1,NuevaOperacion(nuevoSimbolo($1,"ID"),nuevoSimbolo(parseFloat(1),"numero"),$2))}
+    : ID IGUAL Exp                                      {$$ = Asignar($1,$3,null)}
+    | ID INCRE                                          {$$ = Asignar($1,NuevaOperacion(nuevoSimbolo($1,"ID"),nuevoSimbolo(parseFloat(1),"numero"),$2),null)}
+    | ID CORIZR Exp CORDER IGUAL Exp                    {$$ = Asignar($1,$6,$3)}
+    | ID PUNTO Radd PARIZQ Exp PARDER                   {$$ = Asignar($1,$5,nuevoSimbolo("","lista"))}
+    | ID CORIZR CORIZR Exp CORDER CORDER IGUAL Exp      {$$ = Asignar($1,$8,NuevaOperacion($4,nuevoSimbolo(parseFloat(1),"numero"),"+"))}
     | ID error PTCOMA           {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")")}
 ;
 
@@ -1727,11 +1980,14 @@ INCRE
 ;
 
 TERNARIO
-    : Exp RTER   
+    : Exp RTER Exp DPUNTOS Exp                  {$$ = Ternario($1,$3,$5)} 
+    | Exp error PTCOMA                        {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
 ;
+
 IF
     : Rif PARIZQ Exp PARDER BLOQUE              {$$ = Si($3,$5,null)}       //If(){}
     | Rif PARIZQ Exp PARDER BLOQUE Relse BLOQUE {$$ = Si($3,$5,$7)}         //If(){}else{}
+    //| Rif PARIZQ Exp PARDER BLOQUE Relse IF 
     | Rif error LLAVEDER                        {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
 ;
 
@@ -1739,6 +1995,12 @@ SWITCH
     : Rswitch PARIZQ Exp PARDER LLAVEIZQ LCASOS Rdefault DPUNTOS LINS LLAVEDER  {$$ = Seleccionar($3,$6,$9)}
     | Rswitch PARIZQ Exp PARDER LLAVEIZQ LCASOS LLAVEDER                {$$ = Seleccionar($3,$6,null)}
     | Rswitch error LLAVEDER                    {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
+;
+
+ELSEIF
+    : Rif PARIZQ Exp PARDER BLOQUE        {$$=[];$$.push(ElseIf($3,$5))}
+    | ELSEIF Rif PARIZQ Exp PARDER BLOQUE {$$=$1;$$.push(ElseIf($4,$6))}
+    | Rif error PARDER
 ;
 
 LCASOS
@@ -1773,7 +2035,10 @@ ACTUALIZAR
 LLAMADA 
     : ID PARIZQ PARDER            { $$=Llamada($1,[]); }
     | ID PARIZQ L_EXP PARDER      { $$=Llamada($1,$3); }
+    | Rexec ID PARIZQ PARDER            { $$=Llamada($2,[]); }
+    | Rexec ID PARIZQ L_EXP PARDER      { $$=Llamada($2,$4); }
 ;
+
 CASTEO
     : PARIZQ TIPO2 PARDER Exp       {$$ = Casteo({Expresion:$4,Tipo:$2}, "casteo") }
     | PARIZQ error Exp              {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
@@ -1818,18 +2083,21 @@ Exp
     | ID							{ $$=nuevoSimbolo($1,"ID");}
     | ID PARIZQ PARDER              { $$=nuevoSimbolo({Id:$1,Params:[]},"funcion"); }
     | ID PARIZQ L_EXP PARDER        { $$=nuevoSimbolo({Id:$1,Params:$3},"funcion"); }
-    | NUMERO                        { $$=nuevoSimbolo(parseFloat($1),"numero"); }
-    | TRUE                          { $$=nuevoSimbolo(true,"bool"); }
-    | FALSE                         { $$=nuevoSimbolo(false,"bool"); }
-    | PARIZQ Exp PARDER             { $$=$2}
-    | PARIZQ TIPO2 PARDER Exp     %prec FCAST    {$$ = nuevoSimbolo({Id:$4,Tipo:$2}, "casteo") }
-    | RtoString PARIZQ Exp PARDER %prec FCAST    {$$ = nuevoSimbolo({Id:$3,Tipo:"cadena"}, "casteo") }
-    | RtoLower PARIZQ Exp PARDER  %prec FCAST    {$$ = nuevoSimbolo({Id:$3,Tipo:"lower"}, "casteo") }
-    | RtoUpper PARIZQ Exp PARDER  %prec FCAST    {$$ = nuevoSimbolo({Id:$3,Tipo:"upper"}, "casteo") }
-    | Rtruncate PARIZQ Exp PARDER  %prec FCAST    {$$ = nuevoSimbolo({Id:$3,Tipo:"truncate"}, "casteo") }
-    | Rround PARIZQ Exp PARDER  %prec FCAST    {$$ = nuevoSimbolo({Id:$3,Tipo:"round"}, "casteo") }
-    
-    
+    | ID CORIZR Exp CORDER          { $$=nuevoSimbolo({Id:$1,Params:$3},"vector")}
+    | ID CORIZR CORIZR Exp CORDER CORDER            { $$=nuevoSimbolo({Id:$1,Params:$4},"lista")}
+    | NUMERO                                        { $$=nuevoSimbolo(parseFloat($1),"numero"); }
+    | DECIMAL                                       { $$=nuevoSimbolo(parseFloat($1),"decimal"); }
+    | TRUE                                          { $$=nuevoSimbolo(true,"bool"); }
+    | FALSE                                         { $$=nuevoSimbolo(false,"bool"); }
+    | PARIZQ Exp PARDER                             { $$=$2}
+    | PARIZQ TIPO2 PARDER Exp     %prec FCAST       { $$ = nuevoSimbolo({Id:$4,Tipo:$2}, "casteo") }
+    | RtoString PARIZQ Exp PARDER %prec FCAST       { $$ = nuevoSimbolo({Id:$3,Tipo:"cadena"}, "casteo") }
+    | RtoLower PARIZQ Exp PARDER  %prec FCAST       { $$ = nuevoSimbolo({Id:$3,Tipo:"lower"}, "casteo") }
+    | RtoUpper PARIZQ Exp PARDER  %prec FCAST       { $$ = nuevoSimbolo({Id:$3,Tipo:"upper"}, "casteo") } //toString(Exp)
+    | Rtruncate PARIZQ Exp PARDER  %prec FCAST      { $$ = nuevoSimbolo({Id:$3,Tipo:"truncate"}, "casteo") }
+    | Rround PARIZQ Exp PARDER  %prec FCAST         { $$ = nuevoSimbolo({Id:$3,Tipo:"round"}, "casteo") }
+    | Rlength PARIZQ Exp PARDER %prec FCAST         { $$ = nuevoSimbolo({Id:$3,Tipo:"length"}, "casteo")}
+    | Rtypeof PARIZQ Exp PARDER %prec FCAST         { $$ = nuevoSimbolo({Id:$3,Tipo:"typeof"}, "casteo")}
 ;
 
 L_EXP 

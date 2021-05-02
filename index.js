@@ -1,10 +1,13 @@
 const parse = require('./parser');
 
 parse.parse(`
-double a = 8.99;
-int b = truncate(a);
-print(b);
-
+//COMENTARIo
+list <string> nombres = new list<string>;
+nombres.add("Diego");
+nombres.add("Jose");
+nombres.add("Kristian");
+nombres.add("Juan");
+print(length(nombres));
 `);
 /*
 void metodo1(){
