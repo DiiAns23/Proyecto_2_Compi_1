@@ -1,10 +1,13 @@
 const parse = require('./parser');
 
 parse.parse(`
-//COMENTARIO
-INT A = 6*4 + -5;
-print(9-8*7+90);
-
+//COMENTARIo
+list <string> nombres = new list<string>;
+nombres.add("Diego");
+nombres.add("Jose");
+nombres.add("Kristian");
+nombres.add("Juan");
+print(length(nombres));
 `);
 /*
 void metodo1(){
