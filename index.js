@@ -1,13 +1,20 @@
 const parse = require('./parser');
 
 parse.parse(`
-//COMENTARIo
+string [] a = new string[4];
+a[0] = "a";
+a[1] = "b";
+a[2] = "c";
+a[3] = "d";
 list <string> nombres = new list<string>;
 nombres.add("Diego");
-nombres.add("Jose");
-nombres.add("Kristian");
-nombres.add("Juan");
-print(length(nombres));
+nombres.add("Andres");
+nombres.add("Julissa");
+nombres.add("Claudia");
+for(int b = 0; b<length(nombres);b++)
+{
+    print(nombres[[b]]);
+}
 `);
 /*
 void metodo1(){

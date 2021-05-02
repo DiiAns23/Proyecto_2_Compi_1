@@ -746,21 +746,22 @@ _handle_error:
                 console.log("No existe la variable " + Operacion.Valor);
                 return nuevoSimbolo("@error@","error");
             case "vector":
+                var aux1 = Evaluar(Operacion.Valor.Params,ent)
                 var temp=ent;
                 while(temp!=null)
                 {
                     if(temp.tablaSimbolos.has(Operacion.Valor.Id))
                     {
                         var valorID = temp.tablaSimbolos.get(Operacion.Valor.Id);
-                        // nombre    ["Diego","Obin", "Rosales"] 3 < 3
-                        if(Operacion.Valor.Params.Tipo =="numero" && Operacion.Valor.Params.Valor>=0 && Operacion.Valor.Params.Valor<valorID.length)
+                        var aux = Evaluar(Operacion.Valor.Params,ent)
+                        if(aux1.Tipo =="numero" && aux1.Valor>=0 && aux1.Valor<valorID.length)
                         {
-                            valorID = valorID[Operacion.Valor.Params.Valor]
+                            valorID = valorID[aux1.Valor]
                             return nuevoSimbolo(valorID.Valor,valorID.Tipo);
                         }
                         else
                         {
-                            console.log("No existe la posicion " + Operacion.Valor.Params.Valor);
+                            console.log("No existe la posicion " + aux1.Valor);
                             return nuevoSimbolo("@error@","error");
                         }
                     }
@@ -770,20 +771,21 @@ _handle_error:
                 return nuevoSimbolo("@error@","error");
                 break;
             case "lista":
+                var aux1 = Evaluar(Operacion.Valor.Params,ent)
                 var temp=ent;
                 while(temp!=null)
                 {
                     if(temp.tablaSimbolos.has(Operacion.Valor.Id))
                     {
                         var valorID = temp.tablaSimbolos.get(Operacion.Valor.Id);
-                        if(Operacion.Valor.Params.Tipo =="numero" && Operacion.Valor.Params.Valor>=0 && Operacion.Valor.Params.Valor<valorID.length)
+                        if(aux1.Tipo =="numero" && aux1.Valor>=0 && aux1.Valor<valorID.length)
                         {
-                            valorID = valorID[Operacion.Valor.Params.Valor+1]
+                            valorID = valorID[aux1.Valor+1]
                             return nuevoSimbolo(valorID.Valor,valorID.Tipo);
                         }
                         else
                         {
-                            console.log("No existe la posicion " + Operacion.Valor.Params.Valor);
+                            console.log("No existe la posicion " + aux1.Valor);
                             return nuevoSimbolo("@error@","error");
                         }
                     }
@@ -813,7 +815,6 @@ _handle_error:
                 switch(Valorizq.Tipo)
                 {
                     case "numero":
-                        // numero puede sumarse con cualquier otro tipo
                         if(!Valorder){
                             tipoRetorno="numero";
                             break;
@@ -2123,19 +2124,20 @@ _handle_error:
     }
     function EjecutarCasteo(casteo,ent)
     {
+        var aux = Evaluar(casteo.Valor,ent)
         if(casteo.Casteo != "round" && casteo.Casteo != "truncate" && casteo.Casteo != "typeof" && casteo.Casteo != "length")
         {
-            switch(casteo.Valor.Tipo)
+            switch(aux.Tipo)
             {
                 case "numero":
                     switch(casteo.Casteo)
                     {
                         case "cadena":
-                            return nuevoSimbolo(casteo.Valor.Valor+"","cadena");
+                            return nuevoSimbolo(aux.Valor+"","cadena");
                         case "decimal":
-                            return nuevoSimbolo(casteo.Valor.Valor,"decimal");
+                            return nuevoSimbolo(aux.Valor,"decimal");
                         case "char":
-                            return nuevoSimbolo(String.fromCharCode(casteo.Valor.Valor)+"","char")
+                            return nuevoSimbolo(String.fromCharCode(aux.Valor)+"","char")
                         default:
                             console.log("Tipo de casteo no definida :c");
                             return nuevoSimbolo("@error@","error");
@@ -2144,9 +2146,9 @@ _handle_error:
                     switch(casteo.Casteo)
                     {
                         case "numero":
-                            return nuevoSimbolo(Math.trunc(casteo.Valor.Valor),"numero");
+                            return nuevoSimbolo(Math.trunc(aux.Valor),"numero");
                         case "cadena":
-                            return nuevoSimbolo(casteo.Valor.Valor+"","cadena");
+                            return nuevoSimbolo(aux.Valor+"","cadena");
                         default:
                             console.log("Tipo de casteo no definida :c");
                             return nuevoSimbolo("@error@","error");
@@ -2155,15 +2157,15 @@ _handle_error:
                     switch(casteo.Casteo)
                     {
                         case "numero":
-                            return nuevoSimbolo(casteo.Valor.Valor.charCodeAt(0),"numero");
+                            return nuevoSimbolo(aux.Valor.charCodeAt(0),"numero");
                         case "double":
-                            return nuevoSimbolo(casteo.Valor.Valor.charCodeAt(0),"decimal");
+                            return nuevoSimbolo(aux.Valor.charCodeAt(0),"decimal");
                         default:
                             console.log("Tipo de casteo no definida :c");
                             return nuevoSimbolo("@error@","error");
                     }
 
-                case "ID":
+       
                     var temp=ent;
                     var encontrada = false
                     while(temp!=null)
@@ -2185,145 +2187,47 @@ _handle_error:
                 
             }
         }
-        // Si no es casteo normal, entonces es un toString(), toLower() o toUpper()
+        // Si no es casteo normal, entonces es un toString(), toLower(), toUpper()
         switch(casteo.Casteo)
         {
             case "cadena":
-                switch(casteo.Valor.Tipo)
+                switch(aux.Tipo)
                 {
                     case "bool":
                     case "numero":
                     case "decimal":
-                        return nuevoSimbolo(casteo.Valor.Valor+"","cadena");
-                    case "ID":
-                        var temp=ent;
-                        var encontrada = false
-                        while(temp!=null)
-                        {
-                            if(temp.tablaSimbolos.has(casteo.Valor.Valor+""))
-                            {
-                                valorID = temp.tablaSimbolos.get(casteo.Valor.Valor); 
-                                var cast = Casteo(valorID, "cadena")
-                                return EjecutarCasteo(cast,ent)
-                            }
-                            temp=temp.anterior;
-                        }
-                        if(!encontrada)
-                        {
-                            console.log("No se encontro la variable a castear");
-                            return nuevoSimbolo("@error@","error");
-                        }
+                        return nuevoSimbolo(aux.Valor+"","cadena");
                     default:
                         console.log("Tipo de casteo no definida F");
                         return nuevoSimbolo("@error@","error");
                 }
                 break;
             case "lower":
-                if(casteo.Valor.Tipo=="ID")
-                {   
-                    var temp=ent;
-                    var encontrada = false
-                    while(temp!=null)
-                    {
-                        if(temp.tablaSimbolos.has(casteo.Valor.Valor+""))
-                        {
-                            valorID = temp.tablaSimbolos.get(casteo.Valor.Valor); 
-                            var cast = Casteo(valorID, "cadena")
-                            return EjecutarCasteo(cast,ent)
-                        }
-                        temp=temp.anterior;
-                    }
-                    if(!encontrada)
-                    {
-                        console.log("No se encontro la variable a castear");
-                        return nuevoSimbolo("@error@","error");
-                    }
-                }
-                if(casteo.Valor.Tipo=="cadena")
+                if(aux.Tipo=="cadena")
                 {
-                    return nuevoSimbolo(casteo.Valor.Valor.toLowerCase(),"cadena");
+                    return nuevoSimbolo(aux.Valor.toLowerCase(),"cadena");
                 }
                 console.log("Error semantico en la funcion toLower")
                 return nuevoSimbolo("@error","error");
                 break;
             case "upper":
-                if(casteo.Valor.Tipo=="ID")
-                    {   
-                        var temp=ent;
-                        var encontrada = false
-                        while(temp!=null)
-                        {
-                            if(temp.tablaSimbolos.has(casteo.Valor.Valor+""))
-                            {
-                                valorID = temp.tablaSimbolos.get(casteo.Valor.Valor); 
-                                var cast = Casteo(valorID, "cadena")
-                                return EjecutarCasteo(cast,ent)
-                            }
-                            temp=temp.anterior;
-                        }
-                        if(!encontrada)
-                        {
-                            console.log("No se encontro la variable a castear");
-                            return nuevoSimbolo("@error@","error");
-                        }
-                    }
-                if(casteo.Valor.Tipo=="cadena")
+                if(aux.Tipo=="cadena")
                 {
-                    return nuevoSimbolo(casteo.Valor.Valor.toUpperCase(),"cadena");
+                    return nuevoSimbolo(aux.Valor.toUpperCase(),"cadena");
                 }
                 console.log("Error semantico en la funcion toLower")
                 return nuevoSimbolo("@error","error");
                 break;
             case "truncate":
-                if(casteo.Valor.Tipo=="ID")
-                {   
-                    var temp=ent;
-                    var encontrada = false
-                    while(temp!=null)
-                    {
-                        if(temp.tablaSimbolos.has(casteo.Valor.Valor+""))
-                        {
-                            valorID = temp.tablaSimbolos.get(casteo.Valor.Valor); 
-                            var cast = Casteo(valorID, "truncate")
-                            return EjecutarCasteo(cast,ent)
-                        }
-                        temp=temp.anterior;
-                    }
-                    if(!encontrada)
-                    {
-                        console.log("No se encontro la variable a castear");
-                        return nuevoSimbolo("@error@","error");
-                    }
-                }
-                if(casteo.Valor.Tipo=="decimal")
+                if(aux.Tipo=="decimal")
                 {
-                    return nuevoSimbolo(Math.trunc(casteo.Valor.Valor),"numero")
+                    return nuevoSimbolo(Math.trunc(aux.Valor),"numero")
                 }
                 console.log("Se esperaba una expresion de tipo double")
                 return nuevoSimbolo("@error","error");
                 break;
             case "round":
-                if(casteo.Valor.Tipo=="ID")
-                {   
-                    var temp=ent;
-                    var encontrada = false
-                    while(temp!=null)
-                    {
-                        if(temp.tablaSimbolos.has(casteo.Valor.Valor+""))
-                        {
-                            valorID = temp.tablaSimbolos.get(casteo.Valor.Valor); 
-                            var cast = Casteo(valorID, "round")
-                            return EjecutarCasteo(cast,ent)
-                        }
-                        temp=temp.anterior;
-                    }
-                    if(!encontrada)
-                    {
-                        console.log("No se encontro la variable a castear");
-                        return nuevoSimbolo("@error@","error");
-                    }
-                }
-                if(casteo.Valor.Tipo=="numero" || casteo.Valor.Tipo=="decimal")
+                if(aux.Tipo=="numero" || aux.Tipo=="decimal")
                 {
                     return nuevoSimbolo(Math.round(casteo.Valor.Valor),"numero")
                 }
@@ -2331,7 +2235,6 @@ _handle_error:
                 return nuevoSimbolo("@error","error"); 
                 break;
             case "length":
-                var aux = Evaluar(casteo.Valor,ent)
                 switch(aux.Tipo)
                 {
                     case "cadena":
@@ -2371,11 +2274,8 @@ _handle_error:
                         }
                     
                 }
-                console.log("Samira samira he he ",aux)
-                return nuevoSimbolo(aux.Tipo,"cadena")
                 break;
             case "typeof":
-                var aux = Evaluar(casteo.Valor,ent)
                 switch(aux.Tipo)
                 {
                     case "cadena":
