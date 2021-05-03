@@ -35,6 +35,9 @@
                 case "while":
                     retorno = EjecutarMientras(elemento, ent);
                     break;
+                case "dowhile":
+                    retorno = EjecutarHacerMientras(elemento,ent);
+                    break;
                 case "for":
                     retorno = EjecutarDesde(elemento, ent);
                     break;
@@ -66,8 +69,18 @@
                     }
                     else
                     {
-                        console.log("Intruccion romper fuera de un seleccionar o un ciclo")
+                        console.log("Intruccion romper fuera de un switch o un ciclo")
                     }
+                case "continue":
+                    if(pilaCiclosSw.length>0)
+                    {
+                        return elemento
+                    }
+                    else
+                    {
+                        console.log("Intruccion continue fuera de un ciclo")
+                    }
+
                     
           	}
             if(retorno)
@@ -138,7 +151,6 @@
                     if(temp.tablaSimbolos.has(Operacion.Valor.Id))
                     {
                         var valorID = temp.tablaSimbolos.get(Operacion.Valor.Id);
-                        var aux = Evaluar(Operacion.Valor.Params,ent)
                         if(aux1.Tipo =="numero" && aux1.Valor>=0 && aux1.Valor<valorID.length)
                         {
                             valorID = valorID[aux1.Valor]
@@ -1009,8 +1021,8 @@
                 if(crear.Tipo == crear.Tipo2)
                 {
                     var dimension;
-                    valor = []
-                    if(crear.Dimension)
+                    valor = []   // string[expresion]
+                    if(crear.Dimension) 
                     {
                         crear.Tipo2 = "vector";
                         dimension = Evaluar(crear.Dimension,ent)
@@ -1048,7 +1060,7 @@
                 }
             }
         }
-        //Crear objeto a insertar
+        //Crear objeto a insertar  []
         ent.tablaSimbolos.set(crear.Id, valor);
     }
     //Asignar
@@ -1265,6 +1277,14 @@
             TipoInstruccion: "break"
         }
     }
+    //Continue
+    const Continuar = function()
+    {
+        return{
+            TipoInstruccion: "continue"
+        }
+    }
+    // Return
     const Retorno = function(Expresion)
     {
         return {
@@ -1299,6 +1319,10 @@
                 	{
                 		break;
                 	}
+                    if(res && res.TipoInstruccion=="continue")
+                    {
+                        continue;
+                    }
                     else if (res)
                     {
                         pilaCiclosSw.pop();
@@ -1320,7 +1344,63 @@
         pilaCiclosSw.pop();
         return
     }
+    //Do While
+    const HacerMientras = function(Condicion, Bloque)
+    {
+        return{
+            Condicion: Condicion,
+            Bloque: Bloque,
+            TipoInstruccion: "dowhile"
+        }
+    }
 
+    function EjecutarHacerMientras(hacer,ent)
+    {
+        pilaCiclosSw.push("ciclo")
+        do
+        {
+            nuevo = Entorno(ent)
+            var res = EjecutarBloque(hacer.Bloque, nuevo);
+            if(res && res.TipoInstruccion=="romper")
+            {
+                break;
+            }
+            if(res && res.TipoInstruccion=="continue")
+            {
+                var resultadoCondicion = Evaluar(hacer.Condicion, nuevo)
+                if(resultadoCondicion.Tipo == "bool")
+                {
+                    if(!resultadoCondicion.Valor)
+                    {   
+                        break;
+                    }
+                }                 
+                continue;
+            }
+            else if (res)
+            {
+                pilaCiclosSw.pop();
+                return res
+            }
+            var resultadoCondicion = Evaluar(hacer.Condicion, nuevo)
+            if(resultadoCondicion.Tipo == "bool")
+            {
+                if(!resultadoCondicion.Valor)
+                {   
+                    break;
+                }
+            }
+            else
+            {
+                console.log("Se esperaba una condicion dentro del Do while")
+                pilaCiclosSw.pop();
+                return
+            }
+
+        }while(true);
+        pilaCiclosSw.pop();
+    }
+    //For
     const Desde = function(ExpDesde, ExpHasta, ExpPaso, Bloque, ent)
     {
         return {
@@ -1331,7 +1411,7 @@
             TipoInstruccion:"for"
         }
     }
-
+    
     const Actualizacion = function(id, Expresion)
     {
         return{
@@ -1369,6 +1449,14 @@
             {
                 break;
             }
+            if(res && res.TipoInstruccion=="continue")
+            {
+                if(Desde.ExpPaso.Expresion.OperandoDer)
+                {
+                    EjecutarAsignar(Asignar(Desde.ExpPaso.Id,NuevaOperacion(Desde.ExpPaso.Expresion.OperandoIzq,Desde.ExpPaso.Expresion.OperandoDer,Desde.ExpPaso.Expresion.Tipo)), nuevo)                            
+                }
+                continue;
+            }
             else if (res)
             {
                 pilaCiclosSw.pop();
@@ -1382,7 +1470,7 @@
         pilaCiclosSw.pop();
         return;
 	}
-
+    //Funciones
     const Funcion=function(Id, Parametros, Tipo, Bloque)
     {
         return{
@@ -1498,7 +1586,7 @@
         pilaFunciones.pop();
         return retorno;
     }
-    
+    //Casteos
     const Casteo = function(Valor, Casteo)
     {
         return{
@@ -1507,6 +1595,7 @@
             TipoInstruccion:"casteo"
         }
     }
+    
     function EjecutarCasteo(casteo,ent)
     {
         var aux = Evaluar(casteo.Valor,ent)
@@ -1572,7 +1661,7 @@
                 
             }
         }
-        // Si no es casteo normal, entonces es un toString(), toLower(), toUpper()
+        // Si no es casteo normal, entonces es un toString(), toLower(), toUpper(), truncate(), round(), length() o typeof()
         switch(casteo.Casteo)
         {
             case "cadena":
@@ -1635,7 +1724,7 @@
                                 if(temp.tablaSimbolos.has(casteo.Valor.Valor+""))
                                 {
                                     valorID = temp.tablaSimbolos.get(casteo.Valor.Valor); 
-                                    if(valorID[0].Valor =="lista")
+                                    if(valorID[0].Valor == "lista")
                                     {
                                         return nuevoSimbolo(valorID.length-1,"numero")
                                     }
@@ -1670,7 +1759,7 @@
                     case "decimal":
                         return nuevoSimbolo("double","cadena")
                     case "bool":
-                        return nuevoSimbolo("bool","cadena")
+                        return nuevoSimbolo("boolean","cadena")
                     case "char":
                         return nuevoSimbolo("char","cadena")
                     default:
@@ -1729,6 +1818,7 @@
 "string"            return "Rstring";
 "void"              return "Rvoid";
 "return"            return "Rretorno";
+"continue"          return "Rcontinue";
 "toString"          return "RtoString";
 "toLower"           return "RtoLower";
 "toUpper"           return "RtoUpper";
@@ -1743,6 +1833,7 @@
 "exec"              return "Rexec";
 "length"            return "Rlength";
 "typeof"            return "Rtypeof";
+"do"                return "Rdo";
 
 "."                 return "PUNTO";
 ":"                 return 'DPUNTOS'
@@ -1812,7 +1903,7 @@
 %start INI
 
 %% /* Definición de la gramática */
-
+//console.log(JSON.stringify($1,null,2));
 INI
     : LINS EOF  {EjecutarBloque($1, EntornoGlobal) }
     | error EOF {console.log("Sintactico","Error en : '"+yytext+"'",this._$.first_line,this._$.first_column)}
@@ -1828,12 +1919,12 @@ INS
     | DECLARAR  PTCOMA                {$$ = $1}
     | ASIGNAR   PTCOMA                {$$ = $1}
     | IF                              {$$ = $1}
-    //| IFELSEIF                        {$$ = $1}
-    //| TERNARIO                        {$$ = $1}
+    | DOWHILE PTCOMA                  {$$ = $1}
     | WHILE                           {$$ = $1}
     | FOR                             {$$ = $1}
     | SWITCH                          {$$ = $1}
     | Rbreak PTCOMA                   {$$ = Romper()}
+    | Rcontinue PTCOMA                    {$$ = Continuar()}
     | FUNCIONES                       {$$ = $1}
     | LLAMADA  PTCOMA                 {$$ = $1}
     | RETORNO                         {$$ = $1}
@@ -1909,6 +2000,11 @@ LCASOS
     :Rcase Exp DPUNTOS LINS               {$$=[];$$.push(Caso($2,$4));}
     |LCASOS Rcase Exp DPUNTOS LINS        {$$=$1;$$.push(Caso($3,$5));}
     |Rcase error PARDER                   {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
+;
+
+DOWHILE
+    :Rdo BLOQUE Rwhile PARIZQ Exp PARDER    {$$ = HacerMientras($5,$2)}
+    |Rdo error PTCOMA                       {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
 ;
 
 WHILE

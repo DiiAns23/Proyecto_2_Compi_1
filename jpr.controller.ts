@@ -1,8 +1,5 @@
 import {Request,Response} from 'express';
-
-
 class rjpController{
-
     public interpretar (req:Request,res:Response){
         var parser = require("./parser")
         parser.parse(`
@@ -14,6 +11,5 @@ class rjpController{
         }
         `);
     }
-    
 }   
 export const controller = new rjpController();
