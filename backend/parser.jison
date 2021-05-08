@@ -1,7 +1,9 @@
 %{
     var imprimibles = [];
+    var errores = [];
     var pilaCiclosSw = [];
     var pilaFunciones = [];
+
   	// entorno
   	const Entorno = function(anterior)
     {
@@ -20,8 +22,8 @@
         	switch(elemento.TipoInstruccion)
           	{
             	case "print":
-                    var res=Evaluar(elemento.Operacion, ent);
-                    console.log(res.Valor);
+                    var res = Evaluar(elemento.Operacion, ent);
+                    imprimibles.push(res.Valor+"");
                     break;
                 case "crear":
                     retorno = EjecutarCrear(elemento, ent);
@@ -69,8 +71,18 @@
                     }
                     else
                     {
-                        console.log("Intruccion romper fuera de un seleccionar o un ciclo")
+                        console.log("Intruccion break fuera de un switch o un ciclo")
                     }
+                case "continue":
+                    if(pilaCiclosSw.length>0)
+                    {
+                        return elemento
+                    }
+                    else
+                    {
+                        console.log("Intruccion continue fuera de un ciclo")
+                    }
+
                     
           	}
             if(retorno)
@@ -906,6 +918,8 @@
                 }
                 break;
         }
+        errores.push("Error Semantico: Tipos incompatibles " + ( Valorizq ? Valorizq.Tipo : "" ) + 
+        " y " + ( Valorder ? Valorder.Tipo : "" ))
         console.log(
         "Tipos incompatibles " + ( Valorizq ? Valorizq.Tipo : "" ) + 
         " y " + ( Valorder ? Valorder.Tipo : "" )); 
@@ -938,6 +952,7 @@
         if(ent.tablaSimbolos.has(crear.Id)) //Validar si existe la variable
         {
             //error
+            errores.push("La variable ",crear.Id," ya ha sido declarada en este ambito")
             console.log("La variable ",crear.Id," ya ha sido declarada en este ambito");
       		return;
         }
@@ -950,12 +965,14 @@
                 if(valor.Tipo != crear.Tipo)
                 {
                     //error
+                    errores.push("El tipo no coincide con la variable a crear: ", crear.Tipo)
                     console.log("El tipo no coincide con la variable a crear");                    
                     return
                 }
             }
             else
             {
+                //string [] a = {"Diego"};
                 if(crear.Tipo == crear.Tipo2)
                 {
                     crear.Tipo2 = "vector";
@@ -969,7 +986,8 @@
                         }
                         else
                         {
-                            console.log("Los tipos de datos no coinciden")
+                            errores.push("Los tipos de datos no coinciden: ", valore.Tipo, " y ", crear.Tipo)
+                            console.log("Los tipos de datos no coinciden: ", valore.Tipo, " y ", crear.Tipo)
                             return
                         }
                     }
@@ -977,7 +995,8 @@
                 }
                 else
                 {
-                    console.log("Los tipos de datos no coinciden")
+                    errores.push("Los tipos de datos no coinciden: ", crear.Tipo, " y ", crear.Tipo2)
+                    console.log("Los tipos de datos no coinciden", crear.Tipo, " y ", crear.Tipo2)
                     return
                 }
             }
@@ -1008,10 +1027,10 @@
             }
             else
             {
-                if(crear.Tipo == crear.Tipo2)
+                if(crear.Tipo == crear.Tipo2) 
                 {
                     var dimension;
-                    valor = []   // string[expresion]
+                    valor = []
                     if(crear.Dimension) 
                     {
                         crear.Tipo2 = "vector";
@@ -1045,6 +1064,7 @@
                 }
                 else
                 {
+                    errores.push("Los tipos de datos no coinciden: ", crear.Tipo, " y ", crear.Tipo2)
                     console.log("Los tipos de datos no coinciden")
                     return
                 }
@@ -1063,7 +1083,6 @@
             TipoInstruccion: "asignar"
         }
     }
-
     function EjecutarAsignar (asignar,ent) 
 	{
       	//Evaluar la expresion
@@ -1084,6 +1103,7 @@
                         if(valor.Valor.length!=0)
                         {
                             //error
+                            errores.push("No se puede asignar "+valor.Valor+" tipo no compatible con char")
                             console.log("No se puede asignar "+valor.Valor+" tipo no compatible con char")
                             return
                         }
@@ -1114,19 +1134,21 @@
                         var aux = Evaluar(asignar.Expresion2,ent)
                         if(aux.Tipo == "numero" && valor.Tipo == simbolotabla[0].Tipo)
                         {
-                            if(aux.Valor >=0 && aux.Valor<simbolotabla.length)
+                            if(aux.Valor >=0 && aux.Valor<simbolotabla.length)// 2-> 0,1
                             {
                                 simbolotabla[aux.Valor] = valor
                                 return;
                             }
                             else
                             {
+                                errores.push("Ocurrio un error durante la asignacion del valor en el vector: ", asignar.Id)
                                 console.log("Ocurrio un error durante la asignacion del valor en el vector: ", asignar.Id)
                                 return
                             }
                         }
                         else
                         {
+                            errores.push("Ocurrio un error durante la asignacion del valor en el vector: ", asignar.Id)
                             console.log("Ocurrio un error durante la asignacion del valor en el vector: ", asignar.Id)
                             return
                         }
@@ -1144,6 +1166,7 @@
             }
             temp=temp.anterior;
         }
+        errores.push("No se encontro la varible ", asignar.Id);
         console.log("No se encontro la variable ",asignar.Id);
     }
     //If
@@ -1156,7 +1179,6 @@
             TipoInstruccion:"if"
           }
     }
-
     function EjecutarSi (si,ent)
     {
     	var res = Evaluar(si.Condicion, ent);
@@ -1175,10 +1197,10 @@
     	}
         else
         {
+            errores.push("Se esperaba una condicion dentro del If");
             console.log("Se esperaba una condicion dentro del If");
         }
     }
-    
     const ElseIf = function(Expresion,Bloque)
     {
         return{
@@ -1211,7 +1233,6 @@
             TipoInstruccion: "switch"
         }
     }
-    
     const Caso = function(Expresion,Bloque)
     {
         return {
@@ -1219,7 +1240,6 @@
             Bloque:Bloque
         }
     }
-
     function EjecutarSeleccionar(seleccionar,ent)
     {
         pilaCiclosSw.push("seleccionar");
@@ -1259,12 +1279,18 @@
         pilaCiclosSw.pop();
         return
     }
-
     // Break
     const Romper = function()
     {
         return{
             TipoInstruccion: "break"
+        }
+    }
+    //Continue
+    const Continuar = function()
+    {
+        return{
+            TipoInstruccion: "continue"
         }
     }
     // Return
@@ -1275,7 +1301,6 @@
         	TipoInstruccion: "return"
         }
     }
-
     //Mientras
     const Mientras = function(Condicion, Bloque)
     {
@@ -1285,7 +1310,6 @@
             TipoInstruccion:"while"
         }
     }
-
     function EjecutarMientras(mientras,ent)
     {
         pilaCiclosSw.push("ciclo");        
@@ -1302,6 +1326,10 @@
                 	{
                 		break;
                 	}
+                    if(res && res.TipoInstruccion=="continue")
+                    {
+                        continue;
+                    }
                     else if (res)
                     {
                         pilaCiclosSw.pop();
@@ -1315,6 +1343,7 @@
             }
             else
             {
+                errores.push("Se esperaba una condicion dentro del Switch");
                 console.log("Se esperaba una condicion dentro del Mientras")
                 pilaCiclosSw.pop();
                 return
@@ -1332,7 +1361,6 @@
             TipoInstruccion: "dowhile"
         }
     }
-
     function EjecutarHacerMientras(hacer,ent)
     {
         pilaCiclosSw.push("ciclo")
@@ -1343,6 +1371,18 @@
             if(res && res.TipoInstruccion=="romper")
             {
                 break;
+            }
+            if(res && res.TipoInstruccion=="continue")
+            {
+                var resultadoCondicion = Evaluar(hacer.Condicion, nuevo)
+                if(resultadoCondicion.Tipo == "bool")
+                {
+                    if(!resultadoCondicion.Valor)
+                    {   
+                        break;
+                    }
+                }                 
+                continue;
             }
             else if (res)
             {
@@ -1359,6 +1399,7 @@
             }
             else
             {
+                errores.push("Se esperaba una condicion dentro del Do While");
                 console.log("Se esperaba una condicion dentro del Do while")
                 pilaCiclosSw.pop();
                 return
@@ -1378,7 +1419,6 @@
             TipoInstruccion:"for"
         }
     }
-    
     const Actualizacion = function(id, Expresion)
     {
         return{
@@ -1386,7 +1426,6 @@
             Expresion: Expresion
         }
     }
-    
     function EjecutarDesde(Desde, ent)
 	{
         pilaCiclosSw.push("ciclo"); 
@@ -1416,6 +1455,14 @@
             {
                 break;
             }
+            if(res && res.TipoInstruccion=="continue")
+            {
+                if(Desde.ExpPaso.Expresion.OperandoDer)
+                {
+                    EjecutarAsignar(Asignar(Desde.ExpPaso.Id,NuevaOperacion(Desde.ExpPaso.Expresion.OperandoIzq,Desde.ExpPaso.Expresion.OperandoDer,Desde.ExpPaso.Expresion.Tipo)), nuevo)                            
+                }
+                continue;
+            }
             else if (res)
             {
                 pilaCiclosSw.pop();
@@ -1440,7 +1487,6 @@
             TipoInstruccion: "funcion"
         }
     }
-
     function EjecutarFuncion(elemento,ent)
     {
         var nombrefuncion = elemento.Id + "$";
@@ -1450,6 +1496,7 @@
         // }
         if (ent.tablaSimbolos.has(nombrefuncion))//aca se permitiria la sobrecarga 
       	{
+            errores.push("La funcion ",elemento.Id," ya ha sido declarada");
             console.log("La funcion ",elemento.Id," ya ha sido declarada");
       		return;
       	}
@@ -1464,7 +1511,6 @@
             TipoInstruccion: "llamada"
         }
     }
-
     function EjecutarLlamada(Llamada,ent)
     {
         var nombrefuncion = Llamada.Id+"$";
@@ -1488,6 +1534,7 @@
             temp=temp.anterior;
         }
         if(!simboloFuncion){
+            errores.push("No se encontró la funcion \""+Llamada.Id + "\" con esa combinacion de parametros")
             console.log("No se encontró la funcion "+Llamada.Id + " con esa combinacion de parametros")
             return nuevoSimbolo("@error@","error");
         } 
@@ -1508,6 +1555,7 @@
             {
                 if(simboloFuncion.Tipo!="void")
                 {
+                    errores.push("No se esperaba un return")
                     console.log("No se esperaba un retorno");
                     retorno=nuevoSimbolo("@error@","error");
                 }
@@ -1521,6 +1569,7 @@
                 var exp = Evaluar(res,nuevo);
                 if(exp.Tipo!=simboloFuncion.Tipo)
                 {
+                    errores.push("El tipo del return no coincide");
                     console.log("El tipo del retorno no coincide");
                     retorno=nuevoSimbolo("@error@","error");
                 }
@@ -1534,6 +1583,7 @@
         {
             if(simboloFuncion.Tipo!="void")
             {
+                errores.push("Se esperaba un return")
                 console.log("Se esperaba un retorno");
                 retorno=nuevoSimbolo("@error@","error");
             }
@@ -1554,7 +1604,6 @@
             TipoInstruccion:"casteo"
         }
     }
-    
     function EjecutarCasteo(casteo,ent)
     {
         var aux = Evaluar(casteo.Valor,ent)
@@ -1565,6 +1614,8 @@
                 case "numero":
                     switch(casteo.Casteo)
                     {
+                        case "numero":
+                            return nuevoSimbolo(aux.Valor+"","numero");
                         case "cadena":
                             return nuevoSimbolo(aux.Valor+"","cadena");
                         case "decimal":
@@ -1572,6 +1623,7 @@
                         case "char":
                             return nuevoSimbolo(String.fromCharCode(aux.Valor)+"","char")
                         default:
+                            errores.push("Tipo de casteo no definida: ", casteo.Casteo)
                             console.log("Tipo de casteo no definida :c");
                             return nuevoSimbolo("@error@","error");
                     }
@@ -1580,9 +1632,12 @@
                     {
                         case "numero":
                             return nuevoSimbolo(Math.trunc(aux.Valor),"numero");
+                        case "decimal":
+                            return nuevoSimbolo(Math.trunc(aux.Valor),"decimal");
                         case "cadena":
                             return nuevoSimbolo(aux.Valor+"","cadena");
                         default:
+                            errores.push("Tipo de casteo no definida: ", casteo.Casteo)
                             console.log("Tipo de casteo no definida :c");
                             return nuevoSimbolo("@error@","error");
                     }
@@ -1591,9 +1646,12 @@
                     {
                         case "numero":
                             return nuevoSimbolo(aux.Valor.charCodeAt(0),"numero");
+                        case "char":
+                            return nuevoSimbolo(aux.Valor.charCodeAt(0),"char");
                         case "double":
                             return nuevoSimbolo(aux.Valor.charCodeAt(0),"decimal");
                         default:
+                            errores.push("Tipo de casteo no definida: ", casteo.Casteo)
                             console.log("Tipo de casteo no definida :c");
                             return nuevoSimbolo("@error@","error");
                     }
@@ -1631,6 +1689,7 @@
                     case "decimal":
                         return nuevoSimbolo(aux.Valor+"","cadena");
                     default:
+                        errores.push("Error Semantico: Tipo de casteo no definida: ", aux.Tipo)
                         console.log("Tipo de casteo no definida F");
                         return nuevoSimbolo("@error@","error");
                 }
@@ -1640,6 +1699,7 @@
                 {
                     return nuevoSimbolo(aux.Valor.toLowerCase(),"cadena");
                 }
+                errores.push("Error semantico: Funcion toLower esperaba un elemento de tipo String")
                 console.log("Error semantico en la funcion toLower")
                 return nuevoSimbolo("@error","error");
                 break;
@@ -1648,23 +1708,27 @@
                 {
                     return nuevoSimbolo(aux.Valor.toUpperCase(),"cadena");
                 }
-                console.log("Error semantico en la funcion toLower")
+                errores.push("Error semantico: Funcion toUpper esperaba un elemento de tipo String")
+                console.log("Error semantico en la funcion toUpper")
                 return nuevoSimbolo("@error","error");
                 break;
             case "truncate":
-                if(aux.Tipo=="decimal")
+                if(aux.Tipo=="decimal" || aux.Tipo == "numero")
                 {
                     return nuevoSimbolo(Math.trunc(aux.Valor),"numero")
                 }
-                console.log("Se esperaba una expresion de tipo double")
+                errores.push("Error semantico: Funcion truncate esperaba un elemento de tipo numerico")
+                console.log("Error semantico: Funcion truncate esperaba un elemento de tipo numerico")
                 return nuevoSimbolo("@error","error");
                 break;
             case "round":
                 if(aux.Tipo=="numero" || aux.Tipo=="decimal")
                 {
-                    return nuevoSimbolo(Math.round(casteo.Valor.Valor),"numero")
+                    return nuevoSimbolo(Math.round(aux.Valor),"numero")
                 }
-                console.log("Se esperaba una expresion de tipo double")
+                
+                errores.push("Error semantico: Funcion round esperaba un elemento de tipo numerico")
+                console.log("Error semantico: Funcion round esperaba un elemento de tipo numerico")
                 return nuevoSimbolo("@error","error"); 
                 break;
             case "length":
@@ -1702,7 +1766,8 @@
                         }
                         else
                         {
-                            console.log("No se puede realizar :c");
+                            errores.push("Error semantico: Funcion length no esperaba el tipo: "+aux.Tipo)
+                            console.log("Error semantico: Funcion length no esperaba el tipo: "+aux.Tipo)
                             return nuevoSimbolo("@error@","error");
                         }
                     
@@ -1742,6 +1807,7 @@
                         }
                          if(!encontrada)
                         {
+                            errores.push("No se encontro la variable a castear",casteo.Valor.Valor+"")
                             console.log("No se encontro la variable a castear");
                             return nuevoSimbolo("@error@","error");
                         }
@@ -1777,6 +1843,7 @@
 "string"            return "Rstring";
 "void"              return "Rvoid";
 "return"            return "Rretorno";
+"continue"          return "Rcontinue";
 "toString"          return "RtoString";
 "toLower"           return "RtoLower";
 "toUpper"           return "RtoUpper";
@@ -1861,10 +1928,10 @@
 %start INI
 
 %% /* Definición de la gramática */
-
+//console.log(JSON.stringify($1,null,2));
 INI
-    : LINS EOF  {console.log(JSON.stringify($1,null,2));EjecutarBloque($1, EntornoGlobal) }
-    | error EOF {console.log("Sintactico","Error en : '"+yytext+"'",this._$.first_line,this._$.first_column)}
+    : LINS EOF  {imprimibles = [];errores = [];EntornoGlobal = Entorno(null);EjecutarBloque($1, EntornoGlobal); return {Imprimibles:imprimibles,Errores:errores,Arbol:JSON.stringify($1,null,2)}}
+    | error EOF {errores.push("Sintactico","Error en : '"+yytext+"'",this._$.first_line,this._$.first_column); console.log("Sintactico","Error en : '"+yytext+"'",this._$.first_line,this._$.first_column)}
 ;
 
 LINS 
@@ -1882,10 +1949,11 @@ INS
     | FOR                             {$$ = $1}
     | SWITCH                          {$$ = $1}
     | Rbreak PTCOMA                   {$$ = Romper()}
+    | Rcontinue PTCOMA                {$$ = Continuar()}
     | FUNCIONES                       {$$ = $1}
     | LLAMADA  PTCOMA                 {$$ = $1}
     | RETORNO                         {$$ = $1}
-	| error INS {console.log("Se recupero en ",yytext," (",this._$.last_line,",",this._$.last_column,")");}
+	| error INS {errores.push("Se recupero en ",yytext," (",this._$.last_line,",",this._$.last_column,")"); console.log("Sintactico","Error en : '"+yytext+"'",this._$.first_line,this._$.first_column);console.log("Se recupero en ",yytext," (",this._$.last_line,",",this._$.last_column,")");}
 ;
 
 RETORNO   
@@ -1896,7 +1964,7 @@ RETORNO
 DECLARAR
     : TIPO ID                 {$$ = Crear($2,$1,null,null,null)}
     | TIPO ID IGUAL Exp       {$$ = Crear($2,$1,null,null,$4)}
-    | TIPO CORIZR CORDER ID IGUAL Rnew TIPO CORIZR Exp CORDER       {$$ = Crear($4,$1,$7,$9,null)}
+    | TIPO CORIZR CORDER ID IGUAL Rnew TIPO CORIZR Exp CORDER       {$$ = Crear($4,$1,$7,$9,null)} 
     | TIPO CORIZR CORDER ID IGUAL LLAVEIZQ L_EXP LLAVEDER           {$$ = Crear($4,$1,$1,null,$7)}
     | Rlist MENOR TIPO MAYOR ID IGUAL Rnew Rlist MENOR TIPO MAYOR  {$$ = Crear($5,$3,$10,null,null)}
     | TIPO error PTCOMA       {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")")}
@@ -1907,9 +1975,8 @@ FUNCIONES
     | Rvoid ID PARIZQ PARDER BLOQUE                 { $$ = Funcion($2,[],"void",$5); }
     | TIPO ID PARIZQ PARAMETROS PARDER BLOQUE       { $$ = Funcion($2,$4,$1,$6); }
     | Rvoid ID PARIZQ PARAMETROS PARDER BLOQUE      { $$ = Funcion($2,$4,"void",$6); }
-    | TIPO ID PARIZQ error LLAVEDER                 {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
+    | TIPO ID PARIZQ error BLOQUE                 {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
 ;
-
 PARAMETROS
     : PARAMETROS COMA TIPO ID   { $$=$1;$$.push(Crear($4,$3,null,null)) }
     | TIPO ID                   { $$=[];$$.push(Crear($2,$1,null,null)) }
@@ -1918,8 +1985,8 @@ PARAMETROS
 ASIGNAR
     : ID IGUAL Exp                                      {$$ = Asignar($1,$3,null)}
     | ID INCRE                                          {$$ = Asignar($1,NuevaOperacion(nuevoSimbolo($1,"ID"),nuevoSimbolo(parseFloat(1),"numero"),$2),null)}
-    | ID CORIZR Exp CORDER IGUAL Exp                    {$$ = Asignar($1,$6,$3)}
-    | ID PUNTO Radd PARIZQ Exp PARDER                   {$$ = Asignar($1,$5,nuevoSimbolo("","lista"))}
+    | ID CORIZR Exp CORDER IGUAL Exp                    {$$ = Asignar($1,$6,$3)}  
+    | ID PUNTO Radd PARIZQ Exp PARDER                   {$$ = Asignar($1,$5,nuevoSimbolo("","lista"))} 
     | ID CORIZR CORIZR Exp CORDER CORDER IGUAL Exp      {$$ = Asignar($1,$8,NuevaOperacion($4,nuevoSimbolo(parseFloat(1),"numero"),"+"))}
     | ID error PTCOMA           {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")")}
 ;
@@ -2013,32 +2080,31 @@ TIPO
     | Rboolean      {$$ = "bool"}
     | Rchar         {$$ = "char"}
 ;
-
 Exp 
-    : Exp MAS Exp                   { $$=NuevaOperacion($1,$3,"+"); }
-    | Exp MENOS Exp                 { $$=NuevaOperacion($1,$3,"-"); }
-    | Exp POR Exp                   { $$=NuevaOperacion($1,$3,"*"); }
-    | Exp DIV Exp                   { $$=NuevaOperacion($1,$3,"/"); }
-    | Exp POT Exp                   { $$=NuevaOperacion($1,$3,"^"); }
-    | Exp MOD Exp                   { $$=NuevaOperacion($1,$3,"%"); }
-    | Exp MENOR Exp                 { $$=NuevaOperacion($1,$3,"<"); }
-    | Exp MAYOR Exp                 { $$=NuevaOperacion($1,$3,">"); }
-    | Exp DIFERENTE Exp             { $$=NuevaOperacion($1,$3,"!="); }
-    | Exp IGUALDAD Exp              { $$=NuevaOperacion($1,$3,"=="); }
-    | Exp MAYORI Exp                { $$=NuevaOperacion($1,$3,">="); }
-    | Exp MENORI Exp                { $$=NuevaOperacion($1,$3,"<="); }
-    | Exp AND Exp                   { $$=NuevaOperacion($1,$3,"&&"); }
-    | Exp OR Exp                    { $$=NuevaOperacion($1,$3,"||"); }
-    | Exp MAS MAS                   { $$=NuevaOperacion($1,nuevoSimbolo(parseFloat(1),"numero"),"+")}
-    | Exp MENOS MENOS               { $$=NuevaOperacion($1,nuevoSimbolo(parseFloat(1),"numero"),"-")}
-    | NOT Exp                       { $$=NuevaOperacionUnario($2,"!"); }
-    | MENOS Exp %prec UMENOS        { $$=NuevaOperacionUnario($2,"umenos"); }
-    | Cadena                        { $$=nuevoSimbolo($1,"cadena"); }
-    | Char                          { $$=nuevoSimbolo($1,"char"); }
-    | ID							{ $$=nuevoSimbolo($1,"ID");}
-    | ID PARIZQ PARDER              { $$=nuevoSimbolo({Id:$1,Params:[]},"funcion"); }
-    | ID PARIZQ L_EXP PARDER        { $$=nuevoSimbolo({Id:$1,Params:$3},"funcion"); }
-    | ID CORIZR Exp CORDER          { $$=nuevoSimbolo({Id:$1,Params:$3},"vector")}
+    : Exp MAS Exp                                   { $$=NuevaOperacion($1,$3,"+"); }
+    | Exp MENOS Exp                                 { $$=NuevaOperacion($1,$3,"-"); }
+    | Exp POR Exp                                   { $$=NuevaOperacion($1,$3,"*"); }
+    | Exp DIV Exp                                   { $$=NuevaOperacion($1,$3,"/"); }
+    | Exp POT Exp                                   { $$=NuevaOperacion($1,$3,"^"); }
+    | Exp MOD Exp                                   { $$=NuevaOperacion($1,$3,"%"); }
+    | Exp MENOR Exp                                 { $$=NuevaOperacion($1,$3,"<"); }
+    | Exp MAYOR Exp                                 { $$=NuevaOperacion($1,$3,">"); }
+    | Exp DIFERENTE Exp                             { $$=NuevaOperacion($1,$3,"!="); }
+    | Exp IGUALDAD Exp                              { $$=NuevaOperacion($1,$3,"=="); }
+    | Exp MAYORI Exp                                { $$=NuevaOperacion($1,$3,">="); }
+    | Exp MENORI Exp                                { $$=NuevaOperacion($1,$3,"<="); }
+    | Exp AND Exp                                   { $$=NuevaOperacion($1,$3,"&&"); }
+    | Exp OR Exp                                    { $$=NuevaOperacion($1,$3,"||"); }
+    | Exp MAS MAS                                   { $$=NuevaOperacion($1,nuevoSimbolo(parseFloat(1),"numero"),"+")}
+    | Exp MENOS MENOS                               { $$=NuevaOperacion($1,nuevoSimbolo(parseFloat(1),"numero"),"-")}
+    | NOT Exp                                       { $$=NuevaOperacionUnario($2,"!"); }
+    | MENOS Exp %prec UMENOS                        { $$=NuevaOperacionUnario($2,"umenos"); }
+    | Cadena                                        { $$=nuevoSimbolo($1,"cadena"); }
+    | Char                                          { $$=nuevoSimbolo($1,"char"); }
+    | ID							                { $$=nuevoSimbolo($1,"ID");}
+    | ID PARIZQ PARDER                              { $$=nuevoSimbolo({Id:$1,Params:[]},"funcion"); }
+    | ID PARIZQ L_EXP PARDER                        { $$=nuevoSimbolo({Id:$1,Params:$3},"funcion"); }
+    | ID CORIZR Exp CORDER                          { $$=nuevoSimbolo({Id:$1,Params:$3},"vector")}
     | ID CORIZR CORIZR Exp CORDER CORDER            { $$=nuevoSimbolo({Id:$1,Params:$4},"lista")}
     | NUMERO                                        { $$=nuevoSimbolo(parseFloat($1),"numero"); }
     | DECIMAL                                       { $$=nuevoSimbolo(parseFloat($1),"decimal"); }
@@ -2046,7 +2112,7 @@ Exp
     | FALSE                                         { $$=nuevoSimbolo(false,"bool"); }
     | PARIZQ Exp PARDER                             { $$=$2}
     | PARIZQ TIPO2 PARDER Exp     %prec FCAST       { $$ = nuevoSimbolo({Id:$4,Tipo:$2}, "casteo") }
-    | RtoString PARIZQ Exp PARDER %prec FCAST       { $$ = nuevoSimbolo({Id:$3,Tipo:"cadena"}, "casteo") } //toString(10.5+10)
+    | RtoString PARIZQ Exp PARDER %prec FCAST       { $$ = nuevoSimbolo({Id:$3,Tipo:"cadena"}, "casteo") }
     | RtoLower PARIZQ Exp PARDER  %prec FCAST       { $$ = nuevoSimbolo({Id:$3,Tipo:"lower"}, "casteo") }
     | RtoUpper PARIZQ Exp PARDER  %prec FCAST       { $$ = nuevoSimbolo({Id:$3,Tipo:"upper"}, "casteo") } 
     | Rtruncate PARIZQ Exp PARDER  %prec FCAST      { $$ = nuevoSimbolo({Id:$3,Tipo:"truncate"}, "casteo") }
