@@ -155,7 +155,7 @@ El código debe de ser ingresado en el área de escritura posicionada en el lado
 > _R//_ *Suele suceder porque el código no cuenta con la estructura correspondiente.*
 
 ```java
-Universidad San Carlos de Guatelama 2021
+Universidad San Carlos de Guatemala 2021
 Programador: Diego Andrés Obín Rosales
 Carné: 201903865
 ```
