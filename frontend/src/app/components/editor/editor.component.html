@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light ">
+    <a class="navbar-brand" href="#">TYPESTY</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-link active">
+                <button (click)="analizar()" type="button" class="btn btn-dark">Analizar</button>
+            </li>
+            <li class="nav-link">
+                <button (click)="ast()" type="button" class="btn btn-dark">Visualizar AST</button>
+            </li>
+            <li class="nav-link">
+                <input style="display:none;" accept=".ty" type="file" (change)="abrir($event)" #archivo>
+                <button (click)="archivo.click()" type="button" class="btn btn-dark">Abrir</button>  
+            </li>
+            <li class="nav-link">
+                <button (click)="guardar()" type="button" class="btn btn-dark">Guardar</button>  
+            </li>
+            <li class="nav-link">
+                <button (click)="limpiar()" type="button" class="btn btn-dark">Limpiar</button>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card text-white bg-dark  mb-3">
+                        <div class="card-header">INPUT
+                        </div>
+                        <div class="card-body">
+                            <div style="width: auto; height: 700px;">
+                                <ngx-monaco-editor [formControl]="editorTexto" [options]="editorOptions"
+                                    [(ngModel)]="code" (init)="editorInit($event)" id="contenido"></ngx-monaco-editor>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card text-white bg-dark  mb-3">
+                        <div class="card-header">OUPUT</div>
+                        <div class="card-body">
+                            <div style="width: auto; height: 700px;">
+                                <ngx-monaco-editor [formControl]="consola" [options]="consoleOptions"
+                                    [(ngModel)]="console" (init)="editorInit($event)" aria-readonly="true">
+                                </ngx-monaco-editor>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>

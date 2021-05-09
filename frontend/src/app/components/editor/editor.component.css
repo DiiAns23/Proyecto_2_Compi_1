@@ -1,0 +1,59 @@
+  ngx-monaco-editor {
+    height: 400px;
+    width: 100%;
+    padding: 15px;
+  }
+
+  a:hover,
+a:focus{
+    text-decoration: none;
+    outline: none;
+}
+.tab{ font-family: 'Jura', sans-serif; }
+.tab .nav-tabs{ border: none; }
+.tab .nav-tabs li a{
+    color: #000a12;
+    background: transparent;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 11px 25px 8px;
+    margin: 0 5px 1px 0;
+    border: none;
+    border-radius: 30px 30px 0 0;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+.tab .nav-tabs li.active a,
+.tab .nav-tabs li.active a:hover{
+    color: #fff;
+    background-color: #000a12;
+    border: none;
+}
+.tab .nav-tabs li a:before{
+    content: '';
+    height: 70%;
+    width: 100%;
+    border: 2px solid #000a12;
+    border-bottom: none;
+    border-radius: 30px 30px 0 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 0.3s ease 0s;
+}
+.tab .nav-tabs li.active a:before,
+.tab .nav-tabs li a:hover:before{
+    height: 100%;
+}
+.tab .tab-content{
+    color: #000a12;
+    background: repeating-linear-gradient(45deg, transparent,transparent 10px,rgba(255,67,0,0.03) 10px, rgba(255,67,0,0.03) 20px);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    line-height: 25px;
+    padding: 25px 25px 20px;
+    border: 2px solid #000a12;
+    border-radius: 0 0 30px 30px;
+}
