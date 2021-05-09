@@ -84,24 +84,24 @@ Función |  Definición
 
 Función |  Definición 
 ------------ | -------------
-`Imprimir` | Realiza la escritura del archivo para generar el archivo dot.
-`Crear` | Realiza la adicion de Siguientes 
-`Asignar` | Recorre caracter por caracter la expresion ingresada en el archivo. 
-`Si` | Realiza la adicion de Siguientes }
-`Seleccionar` | Realiza la adicion de Siguientes 
-`Caso` | Realiza la adicion de Siguientes 
-`Romper` | Realiza la adicion de Siguientes 
-`Continuar` | Realiza la adicion de Siguientes 
-`Retorno` | Realiza la adicion de Siguientes 
-`Mientras` | Realiza la adicion de Siguientes 
-`HacerMientras` | Realiza la adicion de Siguientes 
-`Desde` | Realiza la adicion de Siguientes 
-`Actualizacion` | Realiza la adicion de Siguientes 
-`Funcion` | Realiza la adicion de Siguientes 
-`Llamada` | Realiza la adicion de Siguientes 
-`Casteo` | Realiza la adicion de Siguientes 
+`Imprimir` | Instruccion que es ejecutada en `EjecutarBloque`, permite la impresión de los datos.
+`Crear` | Devuelve el objeto con los datos de la nueva variable.
+`Asignar` | Devuelve los datos con los nuevos valores de la variable.
+`Si` | Regresa el objeto con los datos de la sentencia `if`.
+`Seleccionar` | Regresa el objeto con los datos de la sentencia `switch`. 
+`Caso` | Almacena y devuelve los casos a evaluar en la sentencias `switch`. 
+`Romper` | Devuelve la instruccion `break`. 
+`Continuar` | Devuelve la instruccion `continue`.
+`Retorno` | Devuelve la instruccion `return`. 
+`Mientras` | Regresa el objeto con los datos del ciclo `while`. 
+`HacerMientras` | Regresa el objeto con los datos del ciclo `do-while`. 
+`Desde` | Regresa el objeto con los datos del ciclo `for`.
+`Actualizacion` | Crea el objeto para realizar la adicion unaria.
+`Funcion` | Regresa el objeto con los datos para ejecutar las funciones.
+`Llamada` | Recibe y regresa la lista de datos necesarios para la ejecucion de una funcion .
+`Casteo` | Almacena y regresa los datos a castear.
 
-```
+```java
 Universidad San Carlos de Guatelama 2021
 Programador: Diego Andrés Obín Rosales
 Carné: 201903865

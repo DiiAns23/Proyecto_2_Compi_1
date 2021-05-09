@@ -1134,7 +1134,7 @@
                         var aux = Evaluar(asignar.Expresion2,ent)
                         if(aux.Tipo == "numero" && valor.Tipo == simbolotabla[0].Tipo)
                         {
-                            if(aux.Valor >=0 && aux.Valor<simbolotabla.length)// 2-> 0,1
+                            if(aux.Valor >=0 && aux.Valor<simbolotabla.length)
                             {
                                 simbolotabla[aux.Valor] = valor
                                 return;
@@ -1607,7 +1607,7 @@
     function EjecutarCasteo(casteo,ent)
     {
         var aux = Evaluar(casteo.Valor,ent)
-        if(casteo.Casteo != "cadena" && casteo.Casteo != "round" && casteo.Casteo != "truncate" && casteo.Casteo != "typeof" && casteo.Casteo != "length")
+        if(casteo.Casteo != "char" && casteo.Casteo != "cadena" && casteo.Casteo != "round" && casteo.Casteo != "truncate" && casteo.Casteo != "typeof" && casteo.Casteo != "length")
         {
             switch(aux.Tipo)
             {
@@ -1814,6 +1814,13 @@
                             return nuevoSimbolo("@error@","error");
                         }
                 }
+            case "char":
+                switch(aux.Tipo)
+                {
+                    case "cadena":
+                        return nuevoSimbolo("string","list")
+                }
+
         }
         
     } 
@@ -1861,6 +1868,7 @@
 "length"            return "Rlength";
 "typeof"            return "Rtypeof";
 "do"                return "Rdo";
+"toCharArray"       return "Rtochar"
 
 "."                 return "PUNTO";
 ":"                 return 'DPUNTOS'
@@ -1964,12 +1972,12 @@ RETORNO
 ;
 
 DECLARAR
-    : TIPO ID                 {$$ = Crear($2,$1,null,null,null)}
-    | TIPO ID IGUAL Exp       {$$ = Crear($2,$1,null,null,$4)}
+    : TIPO ID                                                       {$$ = Crear($2,$1,null,null,null)}
+    | TIPO ID IGUAL Exp                                             {$$ = Crear($2,$1,null,null,$4)}
     | TIPO CORIZR CORDER ID IGUAL Rnew TIPO CORIZR Exp CORDER       {$$ = Crear($4,$1,$7,$9,null)} 
     | TIPO CORIZR CORDER ID IGUAL LLAVEIZQ L_EXP LLAVEDER           {$$ = Crear($4,$1,$1,null,$7)}
-    | Rlist MENOR TIPO MAYOR ID IGUAL Rnew Rlist MENOR TIPO MAYOR  {$$ = Crear($5,$3,$10,null,null)}
-    | TIPO error PTCOMA       {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")")}
+    | Rlist MENOR TIPO MAYOR ID IGUAL Rnew Rlist MENOR TIPO MAYOR   {$$ = Crear($5,$3,$10,null,null)}
+    | TIPO error PTCOMA                                             {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")")}
 ;
 
 FUNCIONES
@@ -1977,7 +1985,7 @@ FUNCIONES
     | Rvoid ID PARIZQ PARDER BLOQUE                 { $$ = Funcion($2,[],"void",$5); }
     | TIPO ID PARIZQ PARAMETROS PARDER BLOQUE       { $$ = Funcion($2,$4,$1,$6); }
     | Rvoid ID PARIZQ PARAMETROS PARDER BLOQUE      { $$ = Funcion($2,$4,"void",$6); }
-    | TIPO ID PARIZQ error BLOQUE                 {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
+    | TIPO ID PARIZQ error BLOQUE                   {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
 ;
 PARAMETROS
     : PARAMETROS COMA TIPO ID   { $$=$1;$$.push(Crear($4,$3,null,null)) }
@@ -1990,7 +1998,7 @@ ASIGNAR
     | ID CORIZR Exp CORDER IGUAL Exp                    {$$ = Asignar($1,$6,$3)}  
     | ID PUNTO Radd PARIZQ Exp PARDER                   {$$ = Asignar($1,$5,nuevoSimbolo("","lista"))} 
     | ID CORIZR CORIZR Exp CORDER CORDER IGUAL Exp      {$$ = Asignar($1,$8,NuevaOperacion($4,nuevoSimbolo(parseFloat(1),"numero"),"+"))}
-    | ID error PTCOMA           {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")")}
+    | ID error PTCOMA                                   {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")")}
 ;
 
 INCRE
@@ -2012,8 +2020,8 @@ IF
 
 SWITCH
     : Rswitch PARIZQ Exp PARDER LLAVEIZQ LCASOS Rdefault DPUNTOS LINS LLAVEDER  {$$ = Seleccionar($3,$6,$9)}
-    | Rswitch PARIZQ Exp PARDER LLAVEIZQ LCASOS LLAVEDER                {$$ = Seleccionar($3,$6,null)}
-    | Rswitch error LLAVEDER                    {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
+    | Rswitch PARIZQ Exp PARDER LLAVEIZQ LCASOS LLAVEDER                        {$$ = Seleccionar($3,$6,null)}
+    | Rswitch error LLAVEDER                                                    {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
 ;
 
 ELSEIF
@@ -2047,18 +2055,18 @@ BLOQUE
 FOR
     :Rfor PARIZQ ASIGNAR PTCOMA Exp PTCOMA ACTUALIZAR PARDER BLOQUE         {$$ = Desde($3,$5,$7,$9)}
     |Rfor PARIZQ DECLARAR PTCOMA Exp PTCOMA ACTUALIZAR PARDER BLOQUE        {$$ = Desde($3,$5,$7,$9)}
-    |Rfor error LLAVEDER        {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
+    |Rfor error LLAVEDER                                                    {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
 ;
 
 ACTUALIZAR
     : ID IGUAL Exp         {$$ = Actualizacion($1,$3)}
     | ID INCRE             {$$ = Actualizacion($1,NuevaOperacion(nuevoSimbolo($1,"ID"),nuevoSimbolo(parseFloat(1),"numero"),$2))}
-    | ID error   {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
+    | ID error              {console.log("Se recupero en ",yytext," (", this._$.last_line,", ", this._$.last_column,")");}
 ;
 
 LLAMADA 
-    : ID PARIZQ PARDER            { $$=Llamada($1,[]); }
-    | ID PARIZQ L_EXP PARDER      { $$=Llamada($1,$3); }
+    : ID PARIZQ PARDER                  { $$=Llamada($1,[]); }
+    | ID PARIZQ L_EXP PARDER            { $$=Llamada($1,$3); }
     | Rexec ID PARIZQ PARDER            { $$=Llamada($2,[]); }
     | Rexec ID PARIZQ L_EXP PARDER      { $$=Llamada($2,$4); }
 ;

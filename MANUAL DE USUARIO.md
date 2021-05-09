@@ -127,7 +127,7 @@ El programa cuenta con una vista gráfica la cual facilita la interacción entre
 
 - Ventana Inicial: La _Ventana Inicial_ cuenta con las opciones: *_Analizar_*, *_Generar AST_*, *_Abrir_* y *_Guardar_*.
 
-![](https://github.com/DiiAns23/Prueba-2/blob/Master/img/Typesty.PNG)
+![](https://github.com/DiiAns23/Prueba-2/blob/Master/Typesty.PNG)
      
 El código debe de ser ingresado en el área de escritura posicionada en el lado izquierdo de la aplicación, el usuario generará el código que desea programar para posteriormente analizarlo presionando click sobre el boton `Analizar`, en la parte derecha de la aplicaciónn se mostrarán las salidas corresepondientes a las funciones `print` así como la lista de `errores` cometidos.
 
@@ -153,3 +153,9 @@ El código debe de ser ingresado en el área de escritura posicionada en el lado
 **5. ¿Por qué no me imprime nada mi código?** 
 
 > _R//_ *Suele suceder porque el código no cuenta con la estructura correspondiente.*
+
+```java
+Universidad San Carlos de Guatelama 2021
+Programador: Diego Andrés Obín Rosales
+Carné: 201903865
+```

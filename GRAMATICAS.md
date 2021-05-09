@@ -65,14 +65,16 @@ GRAMATICAS
 <div id='producciones'/>
 
 ## Producciones
-`start -> INI`
 
-`INI -> LINS  EOF`
+```typescript
+start -> INI
 
-`LINS -> LINS INS
-        | INS`
+INI -> LINS  EOF
 
-`INS -> Rprint PARIZQ Exp PARDER PTCOMA
+LINS -> LINS INS
+        | INS
+
+INS -> Rprint PARIZQ Exp PARDER PTCOMA
     | DECLARAR  PTCOMA               
     | ASIGNAR   PTCOMA               
     | IF                             
@@ -85,14 +87,136 @@ GRAMATICAS
     | FUNCIONES                      
     | LLAMADA  PTCOMA                
     | RETORNO                        
-	| error INS`
+	| error INS
 
-`RETORNO -> Rretorno Exp PTCOMA   
-    | Rretorno PTCOMA`
+RETORNO -> Rretorno Exp PTCOMA   
+    | Rretorno PTCOMA
 
-`DECLARAR-> TIPO ID                                                       
+DECLARAR -> TIPO ID                                                       
     | TIPO ID IGUAL Exp                                             
     | TIPO CORIZR CORDER ID IGUAL Rnew TIPO CORIZR Exp CORDER       
     | TIPO CORIZR CORDER ID IGUAL LLAVEIZQ L_EXP LLAVEDER           
     | Rlist MENOR TIPO MAYOR ID IGUAL Rnew Rlist MENOR TIPO MAYOR   
-    | TIPO error PTCOMA`                                             
+    | TIPO error PTCOMA                                            
+
+FUNCIONES -> TIPO ID PARIZQ PARDER BLOQUE                  
+    | Rvoid ID PARIZQ PARDER BLOQUE                 
+    | TIPO ID PARIZQ PARAMETROS PARDER BLOQUE       
+    | Rvoid ID PARIZQ PARAMETROS PARDER BLOQUE      
+    | TIPO ID PARIZQ error BLOQUE
+
+PARAMETROS -> PARAMETROS COMA TIPO ID   
+    | TIPO ID   
+
+ASIGNAR -> ID IGUAL Exp                                     
+    | ID INCRE                                         
+    | ID CORIZR Exp CORDER IGUAL Exp                   
+    | ID PUNTO Radd PARIZQ Exp PARDER                  
+    | ID CORIZR CORIZR Exp CORDER CORDER IGUAL Exp     
+    | ID error PTCOMA                                  
+
+INCRE -> MAS MAS   
+    | MENOS MENOS
+
+TERNARIO -> Exp RTER Exp DPUNTO
+    | Exp error PTCOMA  
+
+IF -> Rif PARIZQ Exp PARDER BLOQUE              
+    | Rif PARIZQ Exp PARDER BLOQUE Relse BLOQUE 
+    | Rif error LLAVEDER                        
+
+SWITCH -> Rswitch PARIZQ Exp PARDER LLAVEIZQ LCASOS Rdefault DPUNTOS LINS 
+
+LLAVEDER  
+    | Rswitch PARIZQ Exp PARDER LLAVEIZQ LCASOS LLAVEDER                        
+    | Rswitch error LLAVEDER                                                    
+
+LCASOS -> Rcase Exp DPUNTOS LINS       
+    |LCASOS Rcase Exp DPUNTOS LINS
+    |Rcase error PARDER           
+
+DOWHILE -> Rdo BLOQUE Rwhile PARIZQ Exp PARDER 
+    |Rdo error PTCOMA                    
+
+WHILE ->Rwhile PARIZQ Exp PARDER BLOQUE
+    |Rwhile error PARDER            
+
+BLOQUE -> LLAVEIZQ LINS LLAVEDER 
+    | LLAVEIZQ LLAVEDER      
+    | LLAVEDER error LLAVEDER
+
+FOR -> Rfor PARIZQ ASIGNAR PTCOMA Exp PTCOMA ACTUALIZAR PARDER BLOQUE   
+    |Rfor PARIZQ DECLARAR PTCOMA Exp PTCOMA ACTUALIZAR PARDER BLOQUE  
+    |Rfor error LLAVEDER                                              
+
+ACTUALIZAR -> ID IGUAL Exp 
+    | ID INCRE     
+    | ID error     
+
+LLAMADA -> ID PARIZQ PARDER            
+    | ID PARIZQ L_EXP PARDER      
+    | Rexec ID PARIZQ PARDER      
+    | Rexec ID PARIZQ L_EXP PARDER
+
+CASTEO -> PARIZQ TIPO2 PARDER Exp 
+    | PARIZQ error Exp        
+
+TIPO2 -> Rint    
+    | Rdouble 
+    | Rstring 
+    | Rchar   
+
+TIPO -> Rint    
+    | Rdouble 
+    | Rstring 
+    | Rboolean
+    | Rchar   
+
+Exp -> Exp MAS Exp                              
+    | Exp MENOS Exp                            
+    | Exp POR Exp                              
+    | Exp DIV Exp                              
+    | Exp POT Exp                              
+    | Exp MOD Exp                              
+    | Exp MENOR Exp                            
+    | Exp MAYOR Exp                            
+    | Exp DIFERENTE Exp                        
+    | Exp IGUALDAD Exp                         
+    | Exp MAYORI Exp                           
+    | Exp MENORI Exp                           
+    | Exp AND Exp                              
+    | Exp OR Exp                               
+    | Exp MAS MAS                              
+    | Exp MENOS MENOS                          
+    | NOT Exp                                  
+    | MENOS Exp %prec UMENOS                   
+    | Cadena                                   
+    | Char                                     
+    | ID							           
+    | ID PARIZQ PARDER                         
+    | ID PARIZQ L_EXP PARDER                   
+    | ID CORIZR Exp CORDER                     
+    | ID CORIZR CORIZR Exp CORDER CORDER       
+    | NUMERO                                   
+    | DECIMAL                                  
+    | TRUE                                     
+    | FALSE                                    
+    | PARIZQ Exp PARDER                        
+    | PARIZQ TIPO2 PARDER Exp     %prec FCAST  
+    | RtoString PARIZQ Exp PARDER %prec FCAST  
+    | RtoLower PARIZQ Exp PARDER  %prec FCAST  
+    | RtoUpper PARIZQ Exp PARDER  %prec FCAST  
+    | Rtruncate PARIZQ Exp PARDER  %prec FCAST 
+    | Rround PARIZQ Exp PARDER  %prec FCAST    
+    | Rlength PARIZQ Exp PARDER %prec FCAST    
+    | Rtypeof PARIZQ Exp PARDER %prec FCAST    
+
+L_EXP -> L_EXP COMA Exp
+    |Exp           
+```
+
+```java
+Universidad San Carlos de Guatelama 2021
+Programador: Diego Andrés Obín Rosales
+Carné: 201903865
+```
