@@ -294,7 +294,6 @@ void Principal(int start){
     FactorialIterativo(start);
     print("**************************************");
 }
-exec Principal(7);
 
 `)
 /*

@@ -24,6 +24,7 @@
             	case "print":
                     var res = Evaluar(elemento.Operacion, ent);
                     imprimibles.push(res.Valor+"");
+                    console.log(res.Valor);
                     break;
                 case "crear":
                     retorno = EjecutarCrear(elemento, ent);
@@ -1247,7 +1248,7 @@
       	var nuevo = Entorno(ent);
         for(var elemento of seleccionar.LCasos)
         {
-            var condicion=Evaluar(NuevaOperacion(seleccionar.Expresion,elemento.Expresion,"=="), ent)
+            var condicion = Evaluar(NuevaOperacion(seleccionar.Expresion,elemento.Expresion,"=="), ent)
             if(condicion.Tipo=="bool")
             {
               	if(condicion.Valor)//Se le puede poner || ejecutado para que evalue todas las demas expresiones aunque no se cumplan
@@ -1404,7 +1405,6 @@
                 pilaCiclosSw.pop();
                 return
             }
-
         }while(true);
         pilaCiclosSw.pop();
     }
@@ -1607,7 +1607,7 @@
     function EjecutarCasteo(casteo,ent)
     {
         var aux = Evaluar(casteo.Valor,ent)
-        if(casteo.Casteo != "char" && casteo.Casteo != "cadena" && casteo.Casteo != "round" && casteo.Casteo != "truncate" && casteo.Casteo != "typeof" && casteo.Casteo != "length")
+        if(casteo.Casteo != "cadena" && casteo.Casteo != "round" && casteo.Casteo != "truncate" && casteo.Casteo != "typeof" && casteo.Casteo != "length")
         {
             switch(aux.Tipo)
             {
@@ -1634,6 +1634,8 @@
                             return nuevoSimbolo(Math.trunc(aux.Valor),"numero");
                         case "decimal":
                             return nuevoSimbolo(Math.trunc(aux.Valor),"decimal");
+                        case "char":
+                            return nuevoSimbolo(String.fromCharCode(aux.Valor)+"","char");
                         case "cadena":
                             return nuevoSimbolo(aux.Valor+"","cadena");
                         default:
@@ -1648,7 +1650,7 @@
                             return nuevoSimbolo(aux.Valor.charCodeAt(0),"numero");
                         case "char":
                             return nuevoSimbolo(aux.Valor.charCodeAt(0),"char");
-                        case "double":
+                        case "decimal":
                             return nuevoSimbolo(aux.Valor.charCodeAt(0),"decimal");
                         default:
                             errores.push("Tipo de casteo no definida: ", casteo.Casteo)
@@ -1814,13 +1816,6 @@
                             return nuevoSimbolo("@error@","error");
                         }
                 }
-            case "char":
-                switch(aux.Tipo)
-                {
-                    case "cadena":
-                        return nuevoSimbolo("string","list")
-                }
-
         }
         
     } 

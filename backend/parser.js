@@ -2228,7 +2228,7 @@ _handle_error:
     function EjecutarCasteo(casteo,ent)
     {
         var aux = Evaluar(casteo.Valor,ent)
-        if(casteo.Casteo != "char" && casteo.Casteo != "cadena" && casteo.Casteo != "round" && casteo.Casteo != "truncate" && casteo.Casteo != "typeof" && casteo.Casteo != "length")
+        if(casteo.Casteo != "cadena" && casteo.Casteo != "round" && casteo.Casteo != "truncate" && casteo.Casteo != "typeof" && casteo.Casteo != "length")
         {
             switch(aux.Tipo)
             {
@@ -2255,6 +2255,8 @@ _handle_error:
                             return nuevoSimbolo(Math.trunc(aux.Valor),"numero");
                         case "decimal":
                             return nuevoSimbolo(Math.trunc(aux.Valor),"decimal");
+                        case "char":
+                            return nuevoSimbolo(String.fromCharCode(aux.Valor)+"","char");
                         case "cadena":
                             return nuevoSimbolo(aux.Valor+"","cadena");
                         default:
@@ -2269,7 +2271,7 @@ _handle_error:
                             return nuevoSimbolo(aux.Valor.charCodeAt(0),"numero");
                         case "char":
                             return nuevoSimbolo(aux.Valor.charCodeAt(0),"char");
-                        case "double":
+                        case "decimal":
                             return nuevoSimbolo(aux.Valor.charCodeAt(0),"decimal");
                         default:
                             errores.push("Tipo de casteo no definida: ", casteo.Casteo)
@@ -2435,13 +2437,6 @@ _handle_error:
                             return nuevoSimbolo("@error@","error");
                         }
                 }
-            case "char":
-                switch(aux.Tipo)
-                {
-                    case "cadena":
-                        return nuevoSimbolo("string","list")
-                }
-
         }
         
     } 
