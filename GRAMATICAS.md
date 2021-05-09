@@ -216,7 +216,7 @@ L_EXP -> L_EXP COMA Exp
 ```
 
 ```java
-Universidad San Carlos de Guatelama 2021
+Universidad San Carlos de Guatemala 2021
 Programador: Diego Andrés Obín Rosales
 Carné: 201903865
 ```
