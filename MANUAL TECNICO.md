@@ -102,7 +102,7 @@ Función |  Definición
 `Casteo` | Almacena y regresa los datos a castear.
 
 ```java
-Universidad San Carlos de Guatelama 2021
+Universidad San Carlos de Guatemala 2021
 Programador: Diego Andrés Obín Rosales
 Carné: 201903865
 ```
