@@ -1,27 +1,10 @@
 const parse = require('./parser');
 
 parse.parse(`
-
-int ackerman(int m, int n)
-{
-    if( (n<0) || (m<0) )
-    {
-        print("Parametros no validos");
-    }
-    if(m==0)
-    {
-        return (n+1);
-    }
-    if(n==0)
-    {
-        return ackerman(m-1,1);
-    }
-    return ackerman(m-1,ackerman(m,n-1));
-}
-
-exec ackerman(2,4);
-
-
+int [] fila = {1,2,4,5,6,7,8};
+string hola;
+hola = hola + tostring(fila[2]);
+print(hola);
 `)
 /*
   public int ackerman(int m, int n) throws Exception {
