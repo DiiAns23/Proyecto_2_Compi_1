@@ -4,7 +4,6 @@ MANUAL DE USUARIO 🕹️
 - [Introduccion](#introduccion)
 - [Descripción General del Sistema](#descrip)
 - [Aplicacion](#apli)
-- [Glosario](#glosario)
 - [FAQ](#questions)
 
 <div id='introduccion'/>
@@ -72,7 +71,7 @@ Además de poseer palabras reservadas para las declaraciones de variables, `Type
    | `toCharArray()` | Permite convertir un `string` en una `lista` de datos de tipo `char` |
 
   - **Ejemplo de Programación**:
-```
+```java
 double r_toRadians;
 double r_sine;
 void toRadians(double angle) {
@@ -124,32 +123,13 @@ exec Principal();
 
 ## Aplicación 🔲
 ### Interfaz Gráfica (GUI)
-El programa cuenta con una vista gráfica la cual facilita la interacción entre el sistema y el usuario final para un mejor desempeño del mismo. Por medio de dicha interfaz, al usuario se le permite seleccionar de forma _gráfica_ una archivo de entrada que contendrá las gramáticas a analizar. El usuario puede navegar por la aplicación seleccionando a través de botones la acción que desea realizar, si ocurre un error en el ingreso de datos el programa creara un archivo en donde se mostrará al usuario el tipo de error que se está cometiendo y el lugar exacto del mismo. 
+El programa cuenta con una vista gráfica la cual facilita la interacción entre el sistema y el usuario final para un mejor desempeño del mismo. Por medio de dicha interfaz, al usuario se le permite seleccionar de forma _gráfica_ una archivo de entrada que contendrá el código a analizar. El usuario puede navegar por la aplicación seleccionando a través de botones la acción que desea realizar, si ocurre un error en el ingreso de datos el programa mostrará un listado de los errores cometidos durante la lectura. 
 
-- Ventana Inicial: La _Ventana Inicial_ cuenta con las opciones: *_Archivo_*, *_Generar Gramaticas_* y *_Ver Imágenes_*.
+- Ventana Inicial: La _Ventana Inicial_ cuenta con las opciones: *_Analizar_*, *_Generar AST_*, *_Abrir_* y *_Guardar_*.
 
-![](https://github.com/DiiAns23/Prueba-2/blob/Master/img/InterfazGraficaOLC1.PNG)
-
-   | **Opción** | **Funcionalidad** |
-   | ---------- | ----------------- |
-   | Archivo   |Para esta funcion se desplegará un submenú en el cual el usuario debe de seleccionar _Abrir_  y se le mostraá una pestaña para seleccionar el archivo de entrada|
-   | Generar Gramaticas  | Generará todos los archivos correspondientes al archivo de entrada |
-   | Ver Imágenes  | Mostrará las opciones disponibles luego de generar las gramáticas |
-   |Siguiente| Mostrará la imagen siguiente correspondiente a la opción seleccionada en _Ver Imágenes_ |
-   |Anterior| Mostrará la imagen anterior correspondiente a la opción seleccionada en _Ver Imágenes_ |
+![](https://github.com/DiiAns23/Prueba-2/blob/Master/img/Typesty.PNG)
      
-
-<div id='glosario'/>
-
-## Glosario 📖
-
-| Palabra | Descripción | 
-| ------------------------------- | ----------------------------------------- |
-| Gramática | Reglas de un lenguaje |
-| Interfaz Gráfica | Interacción entre el usuario y el sistema |
-| Archivo de Entrada | Documento de extensión olc para el programa |
-| CONJ | Palabra reservada que significa Conjunto |
-| Preorden | Entrada que se lee RAIZ-IZQUIERDA-DERECHA |
+El código debe de ser ingresado en el área de escritura posicionada en el lado izquierdo de la aplicación, el usuario generará el código que desea programar para posteriormente analizarlo presionando click sobre el boton `Analizar`, en la parte derecha de la aplicaciónn se mostrarán las salidas corresepondientes a las funciones `print` así como la lista de `errores` cometidos.
 
 <div id='questions'/> 
 
@@ -158,18 +138,18 @@ El programa cuenta con una vista gráfica la cual facilita la interacción entre
 
 > _R//_ *No, el programa admite solo extensiones olc*
 
-**2. ¿Puedo correr el .jar desde otro dispositivo?** 
+**2. ¿Puedo correr el .py desde otro dispositivo?** 
 
-> _R//_ *Para MacOs los .jar no estan disponibles*
+> _R//_ *Sí, solo si tu ordenador debe contar con Node y Angular*
 
-**3. ¿Cuantas gramáticas puedo ingresar?** 
+**3. ¿Cuántos archivos puedo ingresar?** 
 
-> _R//_ *El programa no tiene un límite para el ingreso de gramáticas*
+> _R//_ *El programa no tiene un límite para el ingreso de arcchivos*
 
-**4.¿En donde se almacenan los archivos ingresados?** 
+**4.¿En donde se almacenan los archivos guardados?** 
 
-> _R//_ *Se almacenan en la misma carpeta en la que se encuentre el programa.*
+> _R//_ *El programa deberá preguntar/indicar el lugar en el cual deseas almacenar tu código*
 
-**5. ¿Por qué no me genera ningún archivo?** 
+**5. ¿Por qué no me imprime nada mi código?** 
 
-> _R//_ *Suele suceder porque el archivo no cuenta con la estructura correspondiente.*
+> _R//_ *Suele suceder porque el código no cuenta con la estructura correspondiente.*

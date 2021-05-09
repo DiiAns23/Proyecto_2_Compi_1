@@ -18,7 +18,7 @@ module.exports=(parser, app)=>{
             imprimibles = imprimibles.substring(0,imprimibles.length-1);
             var resultado = 
             {
-                arbol: imprimibles,
+                arbol: ast.Arbol,
                 consola: imprimibles
             }
             res.send(resultado)

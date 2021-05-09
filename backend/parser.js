@@ -2228,7 +2228,7 @@ _handle_error:
     function EjecutarCasteo(casteo,ent)
     {
         var aux = Evaluar(casteo.Valor,ent)
-        if(casteo.Casteo != "round" && casteo.Casteo != "truncate" && casteo.Casteo != "typeof" && casteo.Casteo != "length")
+        if(casteo.Casteo != "cadena" && casteo.Casteo != "round" && casteo.Casteo != "truncate" && casteo.Casteo != "typeof" && casteo.Casteo != "length")
         {
             switch(aux.Tipo)
             {
@@ -2302,15 +2302,17 @@ _handle_error:
         // Si no es casteo normal, entonces es un toString(), toLower(), toUpper(), truncate(), round(), length() o typeof()
         switch(casteo.Casteo)
         {
-            case "cadena":
+            case "cadena": 
                 switch(aux.Tipo)
                 {
                     case "bool":
                     case "numero":
                     case "decimal":
+                    case "cadena":
+                    case "char":
                         return nuevoSimbolo(aux.Valor+"","cadena");
                     default:
-                        errores.push("Error Semantico: Tipo de casteo no definida: ", aux.Tipo)
+                        errores.push("Error Semantico: Tipo de casteo no definida: "+ aux.Tipo)
                         console.log("Tipo de casteo no definida F");
                         return nuevoSimbolo("@error@","error");
                 }
