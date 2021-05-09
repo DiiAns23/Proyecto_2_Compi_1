@@ -645,6 +645,7 @@ _handle_error:
             	case "print":
                     var res = Evaluar(elemento.Operacion, ent);
                     imprimibles.push(res.Valor+"");
+                    console.log(res.Valor);
                     break;
                 case "crear":
                     retorno = EjecutarCrear(elemento, ent);
@@ -1755,7 +1756,7 @@ _handle_error:
                         var aux = Evaluar(asignar.Expresion2,ent)
                         if(aux.Tipo == "numero" && valor.Tipo == simbolotabla[0].Tipo)
                         {
-                            if(aux.Valor >=0 && aux.Valor<simbolotabla.length)// 2-> 0,1
+                            if(aux.Valor >=0 && aux.Valor<simbolotabla.length)
                             {
                                 simbolotabla[aux.Valor] = valor
                                 return;
@@ -1868,14 +1869,14 @@ _handle_error:
       	var nuevo = Entorno(ent);
         for(var elemento of seleccionar.LCasos)
         {
-            var condicion=Evaluar(NuevaOperacion(seleccionar.Expresion,elemento.Expresion,"=="), ent)
+            var condicion = Evaluar(NuevaOperacion(seleccionar.Expresion,elemento.Expresion,"=="), ent)
             if(condicion.Tipo=="bool")
             {
               	if(condicion.Valor)//Se le puede poner || ejecutado para que evalue todas las demas expresiones aunque no se cumplan
               	{
                 	//ejecutado=true;
                 	var res = EjecutarBloque(elemento.Bloque, nuevo)
-                	if(res && res.TipoInstruccion=="romper")
+                	if(res && res.TipoInstruccion=="break")
                 	{
                         pilaCiclosSw.pop();
                   		return
@@ -1933,9 +1934,9 @@ _handle_error:
     }
     function EjecutarMientras(mientras,ent)
     {
-        pilaCiclosSw.push("ciclo");        
         while(true)
         {
+            pilaCiclosSw.push("ciclo"); 
             nuevo = Entorno(ent);
         	var resultadoCondicion = Evaluar(mientras.Condicion, ent)
             if(resultadoCondicion.Tipo=="bool")
@@ -1943,7 +1944,7 @@ _handle_error:
             	if(resultadoCondicion.Valor)
             	{
                 	var res = EjecutarBloque(mientras.Bloque, nuevo);
-                	if(res && res.TipoInstruccion=="romper")
+                	if(res && res.TipoInstruccion=="break")
                 	{
                 		break;
                 	}
@@ -1984,12 +1985,12 @@ _handle_error:
     }
     function EjecutarHacerMientras(hacer,ent)
     {
-        pilaCiclosSw.push("ciclo")
         do
         {
+            pilaCiclosSw.push("ciclo")
             nuevo = Entorno(ent)
             var res = EjecutarBloque(hacer.Bloque, nuevo);
-            if(res && res.TipoInstruccion=="romper")
+            if(res && res.TipoInstruccion=="break")
             {
                 break;
             }
@@ -2010,7 +2011,7 @@ _handle_error:
                 pilaCiclosSw.pop();
                 return res
             }
-            var resultadoCondicion = Evaluar(hacer.Condicion, nuevo)
+            var resultadoCondicion = Evaluar(hacer.Condicion, ent)
             if(resultadoCondicion.Tipo == "bool")
             {
                 if(!resultadoCondicion.Valor)
@@ -2025,7 +2026,6 @@ _handle_error:
                 pilaCiclosSw.pop();
                 return
             }
-
         }while(true);
         pilaCiclosSw.pop();
     }
@@ -2072,7 +2072,7 @@ _handle_error:
             }
             var nuevo2 = Entorno(nuevo);
             var res = EjecutarBloque(Desde.Bloque, nuevo2);
-            if(res && res.TipoInstruccion=="romper")
+            if(res && res.TipoInstruccion=="break")
             {
                 break;
             }
@@ -2228,7 +2228,7 @@ _handle_error:
     function EjecutarCasteo(casteo,ent)
     {
         var aux = Evaluar(casteo.Valor,ent)
-        if(casteo.Casteo != "cadena" && casteo.Casteo != "round" && casteo.Casteo != "truncate" && casteo.Casteo != "typeof" && casteo.Casteo != "length")
+        if(casteo.Casteo != "char" && casteo.Casteo != "cadena" && casteo.Casteo != "round" && casteo.Casteo != "truncate" && casteo.Casteo != "typeof" && casteo.Casteo != "length")
         {
             switch(aux.Tipo)
             {
@@ -2435,6 +2435,13 @@ _handle_error:
                             return nuevoSimbolo("@error@","error");
                         }
                 }
+            case "char":
+                switch(aux.Tipo)
+                {
+                    case "cadena":
+                        return nuevoSimbolo("string","list")
+                }
+
         }
         
     } 
@@ -2834,98 +2841,100 @@ case 32:return "Rtypeof";
 break;
 case 33:return "Rdo";
 break;
-case 34:return "PUNTO";
+case 34:return "Rtochar"
 break;
-case 35:return 48
+case 35:return "PUNTO";
 break;
-case 36:return 11;
+case 36:return 48
 break;
-case 37:return 40;
+case 37:return 11;
 break;
-case 38:return 8;
+case 38:return 40;
 break;
-case 39:return 10;
+case 39:return 8;
 break;
-case 40:return 28;
+case 40:return 10;
 break;
-case 41:return 29;
+case 41:return 28;
 break;
-case 42:return 31;
+case 42:return 29;
 break;
-case 43:return "LLAVEDER";
+case 43:return 31;
 break;
-case 44:return 83;
+case 44:return "LLAVEDER";
 break;
-case 45:return 84;
+case 45:return 83;
 break;
-case 46:return 74;
+case 46:return 84;
 break;
-case 47:return 75;
+case 47:return 74;
 break;
-case 48:return 73;
+case 48:return 75;
 break;
-case 49:return 72;
+case 49:return 73;
 break;
-case 50:return 27;
+case 50:return 72;
 break;
-case 51:return 44;
+case 51:return 27;
 break;
-case 52:return 45;
+case 52:return 44;
 break;
-case 53:return 68;
+case 53:return 45;
 break;
-case 54:return 69;
+case 54:return 68;
 break;
-case 55:return 71;
+case 55:return 69;
 break;
-case 56:return 70;
+case 56:return 71;
 break;
-case 57:return 47;
+case 57:return 70;
 break;
-case 58:return 36;
+case 58:return 47;
 break;
-case 59:return 35;
+case 59:return 36;
 break;
-case 60:return 76;
+case 60:return 35;
 break;
-case 61:return 77;
+case 61:return 76;
 break;
-case 62:return 78;
+case 62:return 77;
 break;
-case 63:return 26;
+case 63:return 78;
 break;
-case 64:return 82;  
+case 64:return 26;
 break;
-case 65:return 81;  
+case 65:return 82;  
 break;
-case 66:cadena="";this.begin("string");
+case 66:return 81;  
 break;
-case 67:cadena+=yy_.yytext;
+case 67:cadena="";this.begin("string");
 break;
-case 68:cadena+="\"";
+case 68:cadena+=yy_.yytext;
 break;
-case 69:cadena+="\n";
+case 69:cadena+="\"";
 break;
-case 70:cadena+="\t";
+case 70:cadena+="\n";
 break;
-case 71:cadena+="\\";
+case 71:cadena+="\t";
 break;
-case 72:cadena+="\'";
+case 72:cadena+="\\";
 break;
-case 73:yy_.yytext=cadena; this.popState(); return 79;
+case 73:cadena+="\'";
 break;
-case 74: yy_.yytext = yy_.yytext.substr(1,yy_.yyleng-2); return 80; 
+case 74:yy_.yytext=cadena; this.popState(); return 79;
 break;
-case 75: yy_.yytext = yy_.yytext.substr(1,yy_.yyleng-2); return 'TEMPLATE'; 
+case 75: yy_.yytext = yy_.yytext.substr(1,yy_.yyleng-2); return 80; 
 break;
-case 76:return 5;
+case 76: yy_.yytext = yy_.yytext.substr(1,yy_.yyleng-2); return 'TEMPLATE'; 
 break;
-case 77: console.error('Este es un error léxico: ' + yy_.yytext + ', en la linea: ' + yy_.yylloc.first_line + ', en la columna: ' + yy_.yylloc.first_column); 
+case 77:return 5;
+break;
+case 78: console.error('Este es un error léxico: ' + yy_.yytext + ', en la linea: ' + yy_.yylloc.first_line + ', en la columna: ' + yy_.yylloc.first_column); 
 break;
 }
 },
-rules: [/^(?:\/\/.*)/i,/^(?:[ \r\t]+)/i,/^(?:\n)/i,/^(?:(\/\/).*)/i,/^(?:[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/])/i,/^(?:print\b)/i,/^(?:if\b)/i,/^(?:else\b)/i,/^(?:switch\b)/i,/^(?:case\b)/i,/^(?:default\b)/i,/^(?:int\b)/i,/^(?:double\b)/i,/^(?:boolean\b)/i,/^(?:char\b)/i,/^(?:string\b)/i,/^(?:void\b)/i,/^(?:return\b)/i,/^(?:continue\b)/i,/^(?:toString\b)/i,/^(?:toLower\b)/i,/^(?:toUpper\b)/i,/^(?:round\b)/i,/^(?:truncate\b)/i,/^(?:while\b)/i,/^(?:break\b)/i,/^(?:for\b)/i,/^(?:new\b)/i,/^(?:list\b)/i,/^(?:add\b)/i,/^(?:exec\b)/i,/^(?:length\b)/i,/^(?:typeof\b)/i,/^(?:do\b)/i,/^(?:\.)/i,/^(?::)/i,/^(?:;)/i,/^(?:,)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\{)/i,/^(?:\})/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:>=)/i,/^(?:<=)/i,/^(?:==)/i,/^(?:!=)/i,/^(?:=)/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:%)/i,/^(?:\^)/i,/^(?:\?)/i,/^(?:>)/i,/^(?:<)/i,/^(?:&&)/i,/^(?:\|\|)/i,/^(?:!)/i,/^(?:[a-zA-Z][a-zA-Z0-9_]*)/i,/^(?:[0-9]+(\.[0-9]+)+\b)/i,/^(?:[0-9]+\b)/i,/^(?:["])/i,/^(?:[^"\\]+)/i,/^(?:\\")/i,/^(?:\\n)/i,/^(?:\\t)/i,/^(?:\\\\)/i,/^(?:\\\\')/i,/^(?:["])/i,/^(?:'((\\')|[^\n\'])*')/i,/^(?:`[^\n\`]*`)/i,/^(?:$)/i,/^(?:.)/i],
-conditions: {"string":{"rules":[67,68,69,70,71,72,73],"inclusive":false},"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,74,75,76,77],"inclusive":true}}
+rules: [/^(?:\/\/.*)/i,/^(?:[ \r\t]+)/i,/^(?:\n)/i,/^(?:(\/\/).*)/i,/^(?:[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/])/i,/^(?:print\b)/i,/^(?:if\b)/i,/^(?:else\b)/i,/^(?:switch\b)/i,/^(?:case\b)/i,/^(?:default\b)/i,/^(?:int\b)/i,/^(?:double\b)/i,/^(?:boolean\b)/i,/^(?:char\b)/i,/^(?:string\b)/i,/^(?:void\b)/i,/^(?:return\b)/i,/^(?:continue\b)/i,/^(?:toString\b)/i,/^(?:toLower\b)/i,/^(?:toUpper\b)/i,/^(?:round\b)/i,/^(?:truncate\b)/i,/^(?:while\b)/i,/^(?:break\b)/i,/^(?:for\b)/i,/^(?:new\b)/i,/^(?:list\b)/i,/^(?:add\b)/i,/^(?:exec\b)/i,/^(?:length\b)/i,/^(?:typeof\b)/i,/^(?:do\b)/i,/^(?:toCharArray\b)/i,/^(?:\.)/i,/^(?::)/i,/^(?:;)/i,/^(?:,)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\{)/i,/^(?:\})/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:>=)/i,/^(?:<=)/i,/^(?:==)/i,/^(?:!=)/i,/^(?:=)/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:%)/i,/^(?:\^)/i,/^(?:\?)/i,/^(?:>)/i,/^(?:<)/i,/^(?:&&)/i,/^(?:\|\|)/i,/^(?:!)/i,/^(?:[a-zA-Z][a-zA-Z0-9_]*)/i,/^(?:[0-9]+(\.[0-9]+)+\b)/i,/^(?:[0-9]+\b)/i,/^(?:["])/i,/^(?:[^"\\]+)/i,/^(?:\\")/i,/^(?:\\n)/i,/^(?:\\t)/i,/^(?:\\\\)/i,/^(?:\\\\')/i,/^(?:["])/i,/^(?:'((\\')|[^\n\'])*')/i,/^(?:`[^\n\`]*`)/i,/^(?:$)/i,/^(?:.)/i],
+conditions: {"string":{"rules":[68,69,70,71,72,73,74],"inclusive":false},"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,75,76,77,78],"inclusive":true}}
 });
 return lexer;
 })();

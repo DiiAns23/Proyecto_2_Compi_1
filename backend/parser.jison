@@ -1254,7 +1254,7 @@
               	{
                 	//ejecutado=true;
                 	var res = EjecutarBloque(elemento.Bloque, nuevo)
-                	if(res && res.TipoInstruccion=="romper")
+                	if(res && res.TipoInstruccion=="break")
                 	{
                         pilaCiclosSw.pop();
                   		return
@@ -1312,9 +1312,9 @@
     }
     function EjecutarMientras(mientras,ent)
     {
-        pilaCiclosSw.push("ciclo");        
         while(true)
         {
+            pilaCiclosSw.push("ciclo"); 
             nuevo = Entorno(ent);
         	var resultadoCondicion = Evaluar(mientras.Condicion, ent)
             if(resultadoCondicion.Tipo=="bool")
@@ -1322,7 +1322,7 @@
             	if(resultadoCondicion.Valor)
             	{
                 	var res = EjecutarBloque(mientras.Bloque, nuevo);
-                	if(res && res.TipoInstruccion=="romper")
+                	if(res && res.TipoInstruccion=="break")
                 	{
                 		break;
                 	}
@@ -1363,12 +1363,12 @@
     }
     function EjecutarHacerMientras(hacer,ent)
     {
-        pilaCiclosSw.push("ciclo")
         do
         {
+            pilaCiclosSw.push("ciclo")
             nuevo = Entorno(ent)
             var res = EjecutarBloque(hacer.Bloque, nuevo);
-            if(res && res.TipoInstruccion=="romper")
+            if(res && res.TipoInstruccion=="break")
             {
                 break;
             }
@@ -1389,7 +1389,7 @@
                 pilaCiclosSw.pop();
                 return res
             }
-            var resultadoCondicion = Evaluar(hacer.Condicion, nuevo)
+            var resultadoCondicion = Evaluar(hacer.Condicion, ent)
             if(resultadoCondicion.Tipo == "bool")
             {
                 if(!resultadoCondicion.Valor)
@@ -1451,7 +1451,7 @@
             }
             var nuevo2 = Entorno(nuevo);
             var res = EjecutarBloque(Desde.Bloque, nuevo2);
-            if(res && res.TipoInstruccion=="romper")
+            if(res && res.TipoInstruccion=="break")
             {
                 break;
             }
