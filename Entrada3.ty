@@ -1,0 +1,242 @@
+/*
+    DECLARAMOS UN VECTOR DE 15 POSICIONES
+    SE IMPRIMRÁ Y POSTERIORMENTE SE ORDENARÁ
+*/
+int[] vectorNumeros = new int[15];
+vectorNumeros[0] = 200;
+vectorNumeros[1] = 26;
+vectorNumeros[2] = 1;
+vectorNumeros[3] = 15;
+vectorNumeros[4] = 167;
+vectorNumeros[5] = 0;
+vectorNumeros[6] = 76;
+vectorNumeros[7] = 94;
+vectorNumeros[8] = 25;
+vectorNumeros[9] = 44;
+vectorNumeros[10] = 5;
+vectorNumeros[11] = 59;
+vectorNumeros[12] = 95;
+vectorNumeros[13] = 10;
+vectorNumeros[14] = 23;
+
+/*
+    DECLARAMOS UNA LISTA
+*/
+list<string> frase = new list<string>;
+
+void Hanoi(int discos, int origen, int auxiliar, int destino) {
+    if (discos == 1) {
+        print("Mover disco de " + origen + " a " + destino);
+    } else {
+        Hanoi(discos - 1, origen, destino, auxiliar);
+        print("Mover disco de " + origen + " a " + destino);
+        Hanoi(discos - 1, auxiliar, origen, destino);
+    }
+}
+
+void imprimirVector(){
+    for (int i = 0; i < length(vectorNumeros); i++) {
+        print("vectorNumeros[" + i + "] = " + vectorNumeros[i]);
+    }
+}
+
+void BubbleSort(){
+    for (int i = 0; i < length(vectorNumeros); i++)
+    {
+        for (int j = 0; j < length(vectorNumeros) - i - 1; j++)
+        {
+            if (vectorNumeros[j] > vectorNumeros[j + 1]) {
+                int temp;
+                temp = vectorNumeros[j];
+                vectorNumeros[j] = vectorNumeros[j + 1];
+                vectorNumeros[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void agregarValorLista(string letra){
+    frase.add(letra);
+}
+
+void imprimirLista(){
+    for (int i = 0; i < length(frase); i++) {
+        print("frase[[" + i + "]] = " + frase[[i]]);
+    }
+}
+
+string mensajeVolteado(){
+    string mensaje="";
+    for(int i=length(frase)-1;i>=0;i--){
+        mensaje=mensaje+frase[[i]];
+    }
+    return mensaje;
+}
+
+void ParoImpar(int a) {
+    if (par(a) == 1) { // El número es Par
+        print("El numero '" + a + "'" + " es Par");
+    } else { // El número es impar
+        print("El numero '" + a + "'" + " es Impar");
+    }
+}
+
+int par(int nump) {
+    if (nump == 0) {
+        return 1;
+    }
+    return impar(nump - 1);
+}
+
+int impar(int numi) {
+    if (numi == 0) {
+        return 0;
+    }
+    return par(numi - 1);
+}
+
+int ackermanPuntosMenos(int m, int n)
+{
+    if (m == 0) {
+        return n + 1;
+    }if (m > 0 && n == 0) {
+        return ackermanPuntosMenos(m - 1, 1);
+    } else {
+        return ackermanPuntosMenos(m - 1, ackermanPuntosMenos(m, n - 1));
+    }
+}
+
+void Casteos(){
+    print("int a "+typeof((double) 1789));
+    print("double a "+ typeof((int) 258.2));
+    print("char  a "+ typeof((double) 'F'));
+    print("int a "+typeof((char) 98));
+    print("double a "+typeof(toString(2589.97)));
+}
+
+void FuncionesEspecialesNativas(){
+    print("------------------LENGTH-------------------");
+    print("vectorNumero es de "+length(vectorNumeros)+" elementos");
+    print("La lista frase tiene "+length(frase)+" elementos");
+    int a = 15;
+    print("------------------TOLOWER-------------------");
+    print("SIN TOLOWER");
+    print(toLower("CON TOLOWER"));
+    print("------------------TOUPPER-------------------");
+    print("sin toupper");
+    print(toUpper("con toupper"));
+    print("------------------TRUNCATE------------------");
+    double b=17.8;
+    print("sin truncate: "+b);
+    int b1=truncate(b);
+    print("con truncate "+b1);
+    print("------------------ROUND-------------------");
+    double c=26.5;
+    print("sin round: "+c);
+    int c1=round(c);
+    print("con round "+c1);
+    double cc=26.4;
+    print("sin round: "+cc);
+    int cc1=round(cc);
+    print("con round "+cc1);
+    print("-----------------TYPEOF--------------------");
+    string x="soy una cadena";
+    int y = 50;
+    double z = 78.5;
+    char xx = 'a';
+    boolean yy = true;
+    print("tipo: "+typeof(x));
+    print("tipo: "+typeof(y));
+    print("tipo: "+typeof(z));
+    print("tipo: "+typeof(xx));
+    print("tipo: "+typeof(yy));
+    print("------------------LENGTH-------------------");
+    string cadena="soy una cadena";
+    print("tamaño: "+length(cadena));
+    print("------------------TOSTRING-------------------");
+    int numero=105;
+    print("tipo: "+typeof(numero));
+    print("tipo: "+typeof(toString(numero)));
+    print("----------------TOCHARARRAY------------------");
+}
+
+
+void imprimir_fibonacci(int valor) {
+    print("Resultado de fibonacci(" + valor + ") = " + fibonacci(valor));
+}
+
+int fibonacci(int n) {
+    if (n > 1) {
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }if (n == 1) {
+        return 1;
+    }if (n == 0) {
+        return 0;
+    } else {
+        print("error");
+        return 0;
+    }
+}
+void Archivo3(){
+    print("====================ARCHIVO 3====================");
+    print("**************SECCION DE VECTORES****************");
+    print("---Vector Desordenado---");
+    imprimirVector();
+    BubbleSort();
+    print("-----Vector Ordenado----");
+    imprimirVector();
+    print("************FIN DE SECCION VECTORES***************");
+    print("****************SECCION DE LISTAS****************");
+    //agregamos valores a la lista
+    agregarValorLista(")");
+    agregarValorLista(":");
+    agregarValorLista(" ");
+    agregarValorLista("1");
+    agregarValorLista("I");
+    agregarValorLista("P");
+    agregarValorLista("M");
+    agregarValorLista("O");
+    agregarValorLista("C");
+    agregarValorLista(" ");
+    agregarValorLista("E");
+    agregarValorLista("L");
+    agregarValorLista("A");
+    agregarValorLista("S");
+    agregarValorLista(" ");
+    agregarValorLista("I");
+    agregarValorLista("S");
+    imprimirLista();
+    print("El mensaje es:");
+    print(mensajeVolteado());
+    print("************FIN DE SECCION DE LISTAS**************");
+    print("**************SECCION DE CASTEOS***************");
+    Casteos();
+    print("************FIN DE SECCION DE CASTEOS*************");
+    print("**************SECCION DE NATIVAS***************");
+    FuncionesEspecialesNativas();
+    print("************FIN DE SECCION DE NATIVAS*************");
+    print("***********SECCION DE RECURSIVIDAD***************");
+    print("---------------FUNCION FIBONACCI-----------------");
+    imprimir_fibonacci(4);
+    print("-------------------------------------------------");
+    print("---------------FUNCION PAR-IMPAR-----------------");
+    ParoImpar(71);
+    print("-------------------------------------------------");
+    print("----------------TORRES DE HANOI------------------");
+    int discos = 3;
+    int origen = 1;
+    int auxiliar = 2;
+    int destino = 3;
+    Hanoi(discos, origen, auxiliar, destino);
+    print("-------------------------------------------------");
+    print("---------------FUNCION ACKERMANN-----------------");
+    int m = 3;
+    int n = 4;
+    //print("Funcion de Ackerman (" + m + ", " + n + ") = " + ackerman(m, n));
+    print("Funcion de Ackerman Puntos Menos (" + m + ", " + n + ") = " + ackermanPuntosMenos(m, n));
+    print("-------------------------------------------------");
+    print("*************FIN DE RECURSIVIDAD*****************");
+    print("=================================================");
+}
+
+exec Archivo3();
