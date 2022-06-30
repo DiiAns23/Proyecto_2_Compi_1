@@ -40,6 +40,9 @@ export class EditorComponent implements OnInit {
   consola = new FormControl('');
   arbol = "";
 
+  getErrores: Array<any> = [];
+  mostrarTabla: boolean = false;
+
   constructor(private monacoLoaderService: MonacoEditorLoaderService, private analizarService: AnalizarService) {
     this.monacoLoaderService.isMonacoLoaded$
       .pipe(
@@ -137,6 +140,26 @@ export class EditorComponent implements OnInit {
     }, err=>{
       console.log(err)
     });
+  }
+
+  errores(){
+    // var getErrores: Array<String>
+    this.mostrarTabla = true;
+    var texto = {
+      prueba: this.editorTexto.value
+    }
+    this.analizarService.ejecutar(texto).subscribe((res:any)=>{
+      this.getErrores = res.errores;
+      var aux: Array<any> = []
+      for (var x = 0; x < this.getErrores.length; x = x+1){
+        var efe = this.getErrores[x];
+        var a2 = {
+          'desc': efe,
+        }
+        aux.push(a2)
+      }
+      this.getErrores = aux
+    })
   }
   
 }

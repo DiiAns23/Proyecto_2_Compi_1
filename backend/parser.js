@@ -84,7 +84,7 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
-imprimibles = [];errores = [];EntornoGlobal = Entorno(null);EjecutarBloque($$[$0-1], EntornoGlobal); return {Imprimibles:imprimibles,Errores:errores,Arbol:JSON.stringify($$[$0-1],null,2)}
+imprimibles = [];errores = [];EntornoGlobal = Entorno(null);EjecutarBloque($$[$0-1], EntornoGlobal); return {Entorno:EntornoGlobal, Imprimibles:imprimibles,Errores:errores,Arbol:JSON.stringify($$[$0-1],null,2)}
 break;
 case 2:
 errores.push("Sintactico","Error en : '"+yytext+"'",this._$.first_line,this._$.first_column); console.log("Sintactico","Error en : '"+yytext+"'",this._$.first_line,this._$.first_column)
@@ -643,9 +643,9 @@ _handle_error:
         	switch(elemento.TipoInstruccion)
           	{
             	case "print":
+                    // console.log(elemento);
                     var res = Evaluar(elemento.Operacion, ent);
                     imprimibles.push(res.Valor+"");
-                    console.log(res.Valor);
                     break;
                 case "crear":
                     retorno = EjecutarCrear(elemento, ent);
@@ -761,11 +761,25 @@ _handle_error:
                     if(temp.tablaSimbolos.has(Operacion.Valor))
                     {
                         var valorID = temp.tablaSimbolos.get(Operacion.Valor);
-                        return nuevoSimbolo(valorID.Valor,valorID.Tipo);
+                        if (Array.isArray(valorID))
+                        {
+                            var datos = "[";
+                            for (var i = 0; i < valorID.length; i++) {
+                                datos += valorID[i].Valor + ",";
+                            }
+                            datos = datos.substring(0, datos.length - 1);
+                            datos += "]";
+                            return nuevoSimbolo(datos,'cadena');
+                        }
+                        else
+                        {
+                            return nuevoSimbolo(valorID.Valor,valorID.Tipo);
+                        }
                     }
                     temp=temp.anterior;
                 }
                 console.log("No existe la variable " + Operacion.Valor);
+                errores.push("No existe la variable " + Operacion.Valor);
                 return nuevoSimbolo("@error@","error");
             case "vector":
                 var aux1 = Evaluar(Operacion.Valor.Params,ent)
@@ -1694,6 +1708,8 @@ _handle_error:
         }
         //Crear objeto a insertar  []
         ent.tablaSimbolos.set(crear.Id, valor);
+        console.log("ENTORNO")
+        console.log(ent);
     }
     //Asignar
     const Asignar = function(id,Expresion,Expresion2)

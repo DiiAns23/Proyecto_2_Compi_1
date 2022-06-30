@@ -10,7 +10,7 @@
                 <button (click)="analizar()" type="button" class="btn btn-dark">Analizar</button>
             </li>
             <li class="nav-link">
-                <button (click)="ast()" type="button" class="btn btn-dark">Visualizar AST</button>
+                <button (click)="errores()" type="button" class="btn btn-dark">Errores</button>
             </li>
             <li class="nav-link">
                 <input style="display:none;" accept=".ty" type="file" (change)="abrir($event)" #archivo>
@@ -61,3 +61,24 @@
     </div>
     <br>
 </div>
+
+<div>
+    <div class="bg-black">
+        <div align="center" *ngIf="mostrarTabla">
+            <div class="col-md-9 bg-warning">
+                <h1>Tabla de errores</h1>
+                <table class="table table-dark">
+                    <thead>
+                        <tr class="bg-dark  ">
+                            <th>Descripcion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--  -->
+                        <tr *ngFor="let e of getErrores">
+                            <td>{{e.desc}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
